@@ -10,7 +10,7 @@
 
   
   <meta name="description" content=" Blog Archive 2015 使用octopress搭建github博客
-Jan 04 2015 Recent Posts 使用octopress搭建github博客 GitHub Repos Status updating... ">
+Jan 04 2015 Recent Posts 使用octopress搭建github博客 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,33 +103,6 @@ Jan 04 2015 Recent Posts 使用octopress搭建github博客 GitHub Repos Status u
       </li>
     
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'langyapojun',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
