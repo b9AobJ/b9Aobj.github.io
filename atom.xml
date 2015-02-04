@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-02-05T00:01:03+08:00</updated>
+  <updated>2015-02-05T00:20:52+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -128,7 +128,7 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'> _gaq.push([&#39;_trackPageview&#39;]);
+</pre></td><td class='code'><pre><code class='html'><span class='line'> __gaq.push([&#39;_trackPageview&#39;]);
 </span><span class='line'>
 </span><span class='line'> (function() {
 </span><span class='line'> var ga = document.createElement(&#39;script&#39;); ga.type = &#39;text/javascript&#39;; ga.async = true;
