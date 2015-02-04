@@ -48,7 +48,7 @@
   
 </ul>
   
-<form action="http://202.39.143.69/search?q=" method="get">
+<form action="http://www.gfsoso.com/?q=" method="get">
   <fieldset role="search">
     <input type="hidden" name="sitesearch" value="langyapojun.github.io">
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -56,8 +56,10 @@
 </form>
   
 <ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">存档</a></li>
+  <li><a href="/blog/projects">项目</a></li>
+  <li><a href="/blog/aboutme">关于我</a></li>
 </ul>
 
 </nav>
@@ -85,6 +87,9 @@
 
 
 <div class="entry-content"><p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
+
+<!--more-->
+
 
 <ol>
 <li>学习一门新的不同风格的编程语言</li>
@@ -146,6 +151,18 @@
       
 
 
+      
+
+<DIV style="font-size:12px;BORDER-BOTTOM: #bbbbbb 1px solid; BORDER-LEFT: #bbbbbb 1px solid; BACKGROUND: #f6f6f6; HEIGHT: 180px; BORDER-TOP: #bbbbbb 1px solid; BORDER-RIGHT: #bbbbbb 1px solid" class=oec2003right> 
+<DIV style="MARGIN-TOP: 10px; FLOAT: left; MARGIN-LEFT: 5px; MARGIN-RIGHT: 10px"> 
+<IMG alt="" src="http://tp4.sinaimg.cn/1904603471/180/5634921263/1" width=90 height=100></DIV> 
+<DIV style="LINE-HEIGHT: 200%; MARGIN-TOP: 10px; COLOR: #000000"> 
+作者： <A href="http://langyapojun.github.io/">钟锡霖</A> <BR> 
+出处： <A href="http://langyapojun.github.io/">github</A> 
+<BR>本文基于<a target="_blank" title="Creative Commons Attribution 2.5 China Mainland License" href="http://creativecommons.org/licenses/by/2.5/cn/"> 
+署名 2.5 中国大陆</a>许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 
+<a href="http://langyapojun.github.io/">钟锡霖</a>（包含链接）。 </DIV></DIV> 
+
     </p>
     
       <div class="sharing">
@@ -166,13 +183,34 @@
   </footer>
 </article>
 
+｛% if site.duoshuo_short_name and site.duoshuo_comments == true and page.comments == true %｝
+  <section>
+    <h1>Comments</h1>
+    <div id="comments" aria-live="polite">｛% include post/duoshuo1.html %｝</div>
+  </section>
+｛% endif %｝
 </div>
 
 <aside class="sidebar">
   
     <section>
-  <h1>Recent Posts</h1>
+  <h1>关于我</h1>
+  <p><img src="/images/123.jpg"></p>
+  <p>iOS程序员，步入开发两年有余</p>
+  <p>爱电子产品，爱Dota/Dota2, 爱骑行</p> 
+  <p>喜欢做些让自己开心的事，比如看电影</p>
+  <p>邮箱：zhongxilin@gmail.com</p>
+  <p>QQ：413232030</p>
+</section><section
+	<h1>SinaWeiBo</h1>
+	<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="yes" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=300&skin=3&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1904603471&verifier=2cf42040&dpc=1"></iframe>
+</section><section>
+  <h1>最新文章</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/04/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/">搭建一个自己的octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/">用UIWebView来load图片很慢的方法</a>
@@ -192,10 +230,35 @@
     
   </ul>
 </section>
+<section>
+	<h1>最新评论</h1>
+	<!-- 多说最新评论 start -->
+	<div class="ds-recent-comments" data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1" data-show-admin="1" data-excerpt-length="70"></div>
+<!-- 多说最新评论 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"langyapojun"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
 
-
-
-
+<DIV style="font-size:12px;BORDER-BOTTOM: #bbbbbb 1px solid; BORDER-LEFT: #bbbbbb 1px solid; BACKGROUND: #f6f6f6; HEIGHT: 180px; BORDER-TOP: #bbbbbb 1px solid; BORDER-RIGHT: #bbbbbb 1px solid" class=oec2003right> 
+<DIV style="MARGIN-TOP: 10px; FLOAT: left; MARGIN-LEFT: 5px; MARGIN-RIGHT: 10px"> 
+<IMG alt="" src="http://tp4.sinaimg.cn/1904603471/180/5634921263/1" width=90 height=100></DIV> 
+<DIV style="LINE-HEIGHT: 200%; MARGIN-TOP: 10px; COLOR: #000000"> 
+作者： <A href="http://langyapojun.github.io/">钟锡霖</A> <BR> 
+出处： <A href="http://langyapojun.github.io/">github</A> 
+<BR>本文基于<a target="_blank" title="Creative Commons Attribution 2.5 China Mainland License" href="http://creativecommons.org/licenses/by/2.5/cn/"> 
+署名 2.5 中国大陆</a>许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 
+<a href="http://langyapojun.github.io/">钟锡霖</a>（包含链接）。 </DIV></DIV> 
 
   
 </aside>

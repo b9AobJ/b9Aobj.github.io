@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-01-30T15:38:44+08:00</updated>
+  <updated>2015-02-05T00:01:03+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[搭建一个自己的octopress]]></title>
+    <link href="http://langyapojun.github.io/blog/2015/02/04/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/"/>
+    <updated>2015-02-04T23:40:24+08:00</updated>
+    <id>http://langyapojun.github.io/blog/2015/02/04/da-jian-[?]-ge-zi-ji-de-octopress</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用UIWebView来load图片很慢的方法]]></title>
@@ -28,6 +37,9 @@
     <updated>2015-01-06T09:11:21+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
     <content type="html"><![CDATA[<p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
+
+<!--more-->
+
 
 <ol>
 <li>学习一门新的不同风格的编程语言</li>
@@ -81,8 +93,12 @@
     <content type="html"><![CDATA[<h2>唠嗑唠嗑</h2>
 
 
-<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p>
-<b1>What the hell!</b1></p>
+<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
+
+<!--more-->
+
+
+<p><b1>What the hell!</b1></p>
 
 <hr />
 
