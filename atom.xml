@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-15T15:45:58+08:00</updated>
+  <updated>2015-06-15T15:50:11+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -15,6 +15,7 @@
   
   <entry>
     <title type="html"><![CDATA[Xcode的调味瓶（翻）]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/03/23/xcodede-diao-wei-ping-(fan-)/"/>
     <updated>2015-03-23T11:27:01+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/03/23/xcodede-diao-wei-ping-(fan-)</id>
@@ -37,6 +38,7 @@
   
   <entry>
     <title type="html"><![CDATA[使用MWPhotoBrowser时出现的一些坑]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng/"/>
     <updated>2015-03-17T09:40:11+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-[?]-xie-keng</id>
@@ -51,6 +53,7 @@
   
   <entry>
     <title type="html"><![CDATA[Da Jian [?] Ge Zi Ji De Octopress]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/02/04/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/"/>
     <updated>2015-02-04T00:00:00+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/02/04/da-jian-[?]-ge-zi-ji-de-octopress</id>
@@ -147,6 +150,7 @@ int const *a const;
   
   <entry>
     <title type="html"><![CDATA[用UIWebView来load图片很慢的方法]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/"/>
     <updated>2015-01-20T00:48:29+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa</id>
@@ -156,6 +160,7 @@ int const *a const;
   
   <entry>
     <title type="html"><![CDATA[给自己的2015来份计划表]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao/"/>
     <updated>2015-01-06T09:11:21+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
@@ -210,6 +215,7 @@ int const *a const;
   
   <entry>
     <title type="html"><![CDATA[解决Octopress访问慢和一些设置问题]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/"/>
     <updated>2015-01-04T13:55:57+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-[?]-xie-she-zhi-wen-ti</id>
@@ -424,6 +430,7 @@ int const *a const;
   
   <entry>
     <title type="html"><![CDATA[使用octopress搭建github博客]]></title>
+    
     <link href="http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke/"/>
     <updated>2015-01-04T11:05:25+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke</id>
