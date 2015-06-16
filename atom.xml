@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-15T15:50:11+08:00</updated>
+  <updated>2015-06-15T22:41:16+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -14,25 +14,41 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Xcode的调味瓶（翻）]]></title>
+    <title type="html"><![CDATA[octopress使用技巧]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/03/23/xcodede-diao-wei-ping-(fan-)/"/>
-    <updated>2015-03-23T11:27:01+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/03/23/xcodede-diao-wei-ping-(fan-)</id>
-    <content type="html"><![CDATA[<h1>注:本文源地址：<a href="http://www.raizlabs.com/dev/2015/03/spicing-up-xcode/">http://www.raizlabs.com/dev/2015/03/spicing-up-xcode/</a>,如果英文可以最好看原文吧。</h1>
+    <link href="http://langyapojun.github.io/blog/2015/06/15/octopressshi-yong-ji-qiao/"/>
+    <updated>2015-06-15T16:18:57+08:00</updated>
+    <id>http://langyapojun.github.io/blog/2015/06/15/octopressshi-yong-ji-qiao</id>
+    <content type="html"><![CDATA[<p>为自己的博客网站添加想要的功能和样式<!--more-->
+<a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html</a></p>
 
-<h3>Mac快捷键</h3>
+<h2>octopress基本操作</h2>
 
-<p>⌘ Command<br/>
-⇧ Shift<br/>
-⌥ Option<br/>
-⌃ Control<br/>
-↩ Return<br/>
-← ↓ → ↑ Arrow Keys</p>
+<ul>
+<li>新建博客文章，<code>rake new_post['blog_name']</code></li>
+<li>产生HTML文件， <code>rake generate</code></li>
+<li>预览博客效果， <code>rake preview</code></li>
+<li>推送内容到github， <code>rake deploy</code> 或者 <code>rake gen_deploy</code></li>
+<li>保存到github项目中<br/>
+  <code>git add .</code><br/>
+  <code>git commit -m "modified note"</code><br/>
+  <code>git push [for first time](origin source)</code></li>
+</ul>
 
-<h4>1、control-arrows to jump</h4>
 
-<p>使用</p>
+<h2>一些配置</h2>
+
+<h3>更换主题</h3>
+
+<pre><code>git clone https://github.com/jeremyrea/slimpress .theme/slimpress  
+rake install['slimpress']  
+</code></pre>
+
+<h3>修改<code>_config.yml</code></h3>
+
+<p><em>日期格式： <code>date-formate: %Y年-%m月-%d日</code><br/>
+</em>分类前缀显示为中文：<code>category_title_prefix: &ldquo;分类&rdquo;</code>
+*继续阅读/阅读全文：<code>excerpt_link: &ldquo;阅读全文 &arr;&rdquo;</code></p>
 ]]></content>
   </entry>
   
@@ -42,7 +58,7 @@
     <link href="http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng/"/>
     <updated>2015-03-17T09:40:11+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-[?]-xie-keng</id>
-    <content type="html"><![CDATA[<p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。<br/>
+    <content type="html"><![CDATA[<p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。  <!--more-->
 先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的</p>
 
 <h3>改动1</h3>
@@ -52,24 +68,18 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Da Jian [?] Ge Zi Ji De Octopress]]></title>
+    <title type="html"><![CDATA[iOS面试题目]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/02/04/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/"/>
-    <updated>2015-02-04T00:00:00+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/02/04/da-jian-[?]-ge-zi-ji-de-octopress</id>
-    <content type="html"><![CDATA[<p>//&mdash;
-layout: post
-title: &ldquo;iOS面试题目&rdquo;
-date: 2015-03-03 22:35:24 +0800
-comments: true</p>
-
-<h2>categories: </h2>
+    <link href="http://langyapojun.github.io/blog/2015/03/03/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/"/>
+    <updated>2015-03-03T22:35:24+08:00</updated>
+    <id>http://langyapojun.github.io/blog/2015/03/03/da-jian-[?]-ge-zi-ji-de-octopress</id>
+    <content type="html"><![CDATA[<p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少<!--more--></p>
 
 <h3>1.#import和#include的区别，@class的作用是什么？</h3>
 
-<pre><code>#import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。
-所以一般来说，在interface中引用一个类，就用@class，它会把这个类作为一个类型来使用，而在实现这个interface的文件中，如果需要引用这个类的实体变量或者方法之类的，还是需要import这个在@class中声明的类。
-#import比起#include的好处就是不会引起重复包含。
+<pre><code>    #import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。    
+    所以一般来说，在interface中引用一个类，就用@class，它会把这个类作为一个类型来使用，而在实现这个interface的文件中，如果需要引用这个类的实体变量或者方法之类的，还是需要import这个在@class中声明的类。
+    #import比起#include的好处就是不会引起重复包含。
 </code></pre>
 
 <h3>2.方法前加号和减号的区别</h3>
@@ -154,7 +164,8 @@ int const *a const;
     <link href="http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/"/>
     <updated>2015-01-20T00:48:29+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa</id>
-    <content type="html"><![CDATA[<p><a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview"><a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview</a></a><br></p>
+    <content type="html"><![CDATA[<p>load的慢不是错，不去解决才是错<!--more--><br/>
+<a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview"><a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview</a></a><br></p>
 ]]></content>
   </entry>
   
@@ -164,10 +175,7 @@ int const *a const;
     <link href="http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao/"/>
     <updated>2015-01-06T09:11:21+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
-    <content type="html"><![CDATA[<p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
-
-<!--more-->
-
+    <content type="html"><![CDATA[<p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。<!--more-->也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
 
 <ol>
 <li>学习一门新的不同风格的编程语言</li>
@@ -222,10 +230,7 @@ int const *a const;
     <content type="html"><![CDATA[<h2>唠嗑唠嗑</h2>
 
 
-<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
-
-<!--more-->
-
+<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。<!--more-->And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
 
 <p><b1>What the hell!</b1></p>
 
@@ -434,22 +439,13 @@ int const *a const;
     <link href="http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke/"/>
     <updated>2015-01-04T11:05:25+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke</id>
-    <content type="html"><![CDATA[<h3>小记</h3>
-
-
-
-
-<p><a href="http://octopress.org/"><code>Octopress</code></a>是利用<a href="http://github.com/mojombo/jekyll"><code>Jekyll</code></a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。号称是hacker专属的一个博客系统(<code>A blogging framework for hackers.</code>)</p>
+    <content type="html"><![CDATA[<p><a href="http://octopress.org/"><code>Octopress</code></a>是利用<a href="http://github.com/mojombo/jekyll"><code>Jekyll</code></a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
+<!--more-->号称是hacker专属的一个博客系统(<code>A blogging framework for hackers.</code>)</p>
 
 
 
 
 <p>本文只讲自己在苹果电脑(OS X 10.10)利用Octopress搭建一个Github博客,内容参照<code><a href ="http://beyondvincent.com/blog/2013/08/03/108-creating-a-github-blog-using-octopress/">破船之家</a>，<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">唐巧_boy</a></code></p>
-
-
-
-
-<!--more-->
 
 
 
