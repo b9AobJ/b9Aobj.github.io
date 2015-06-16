@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-15T22:41:16+08:00</updated>
+  <updated>2015-06-16T10:02:00+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -227,10 +227,7 @@ int const *a const;
     <link href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/"/>
     <updated>2015-01-04T13:55:57+08:00</updated>
     <id>http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-[?]-xie-she-zhi-wen-ti</id>
-    <content type="html"><![CDATA[<h2>唠嗑唠嗑</h2>
-
-
-<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。<!--more-->And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
+    <content type="html"><![CDATA[<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。<!--more-->And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
 
 <p><b1>What the hell!</b1></p>
 
