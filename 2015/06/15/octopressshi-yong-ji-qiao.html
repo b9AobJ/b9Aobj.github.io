@@ -4,17 +4,17 @@
 
 <head>
   <meta charset="utf-8"/>
-  <title>使用MWPhotoBrowser时出现的一些坑 — X0专业去码</title>
+  <title>octopress使用技巧 — X0专业去码</title>
   <meta name="author" content="X0"/>
 
   
-  <meta name="description" content=""/>
+  <meta name="description" content="octopress使用强技能"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   
-  <link rel="canonical" href="http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng"/>
+  <link rel="canonical" href="http://langyapojun.github.io/2015/06/15/octopressshi-yong-ji-qiao.html"/>
   <link href="/favicon.png" rel="icon"/>
   <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
@@ -72,8 +72,10 @@
 </div>
 <ul class="nav main-navigation">
   <li><a href="/">Home</a></li>
-  <li><a href="/about">About</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/archives">Archives</a></li>  
+  <li><a href="/blog/projects">Projects</a></li>
+  <li><a href="/blog/gallery">Gallery</a></li>
+  <li><a href="/blog/aboutme">About</a></li>
 </ul>
 
 </nav>
@@ -88,7 +90,7 @@
         
       
       
-      <h1 class="entry-title">使用MWPhotoBrowser时出现的一些坑</h1>
+      <h1 class="entry-title">Octopress使用技巧</h1>
       
     
     
@@ -106,18 +108,42 @@
 
 
 
-<time datetime="2015-03-17T09:40:11+08:00" data-updated="true"></time>
+<time datetime="2015-06-15T16:18:57+08:00" data-updated="true"></time>
       </p>
     
   </header>
 
 
-<div class="entry-content lettrine"><p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。  <!--more-->
-先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的</p>
+<div class="entry-content lettrine"><p>为自己的博客网站添加想要的功能和样式<!--more-->
+<a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html</a></p>
 
-<h3>改动1</h3>
+<h2>octopress基本操作</h2>
 
-<p>&emsp;&emsp;&emsp;因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:</p>
+<ul>
+<li>新建博客文章，<code>rake new_post['blog_name']</code></li>
+<li>产生HTML文件， <code>rake generate</code></li>
+<li>预览博客效果， <code>rake preview</code></li>
+<li>推送内容到github， <code>rake deploy</code> 或者 <code>rake gen_deploy</code></li>
+<li>保存到github项目中<br/>
+  <code>git add .</code><br/>
+  <code>git commit -m "modified note"</code><br/>
+  <code>git push [for first time](origin source)</code></li>
+</ul>
+
+
+<h2>一些配置</h2>
+
+<h3>更换主题</h3>
+
+<pre><code>git clone https://github.com/jeremyrea/slimpress .theme/slimpress  
+rake install['slimpress']  
+</code></pre>
+
+<h3>修改<code>_config.yml</code></h3>
+
+<p><em>日期格式： <code>date-formate: %Y年-%m月-%d日</code><br/>
+</em>分类前缀显示为中文：<code>category_title_prefix: &ldquo;分类&rdquo;</code>
+*继续阅读/阅读全文：<code>excerpt_link: &ldquo;阅读全文 &arr;&rdquo;</code></p>
 </div>
 
 
@@ -141,7 +167,7 @@
 
 
 
-<time datetime="2015-03-17T09:40:11+08:00" data-updated="true"></time>
+<time datetime="2015-06-15T16:18:57+08:00" data-updated="true"></time>
       
 
 
@@ -149,10 +175,8 @@
     <p class="meta">
       
         
-          <a class="basic-alignment left" href="/blog/2015/03/03/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/" title="Previous Post: iOS面试题目">&larr;<span class="hide-mobile">&nbsp;iOS面试题目</span></a>
+          <a class="basic-alignment left" href="/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng.html" title="Previous Post: 使用MWPhotoBrowser时出现的一些坑">&larr;<span class="hide-mobile">&nbsp;使用MWPhotoBrowser时出现的一些坑</span></a>
         
-        
-          <a class="basic-alignment right" href="/blog/2015/06/15/octopressshi-yong-ji-qiao/" title="Next Post: octopress使用技巧"><span class="hide-mobile">octopress使用技巧&nbsp;</span>&rarr;</a>
         
       
     </p>

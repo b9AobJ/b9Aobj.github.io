@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-16T10:21:53+08:00</updated>
+  <updated>2015-06-16T14:54:56+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -16,9 +16,9 @@
   <entry>
     <title type="html"><![CDATA[octopress使用技巧]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/06/15/octopressshi-yong-ji-qiao/"/>
+    <link href="http://langyapojun.github.io/2015/06/15/octopressshi-yong-ji-qiao.html"/>
     <updated>2015-06-15T16:18:57+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/06/15/octopressshi-yong-ji-qiao</id>
+    <id>http://langyapojun.github.io/2015/06/15/octopressshi-yong-ji-qiao</id>
     <content type="html"><![CDATA[<p>为自己的博客网站添加想要的功能和样式<!--more-->
 <a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html</a></p>
 
@@ -55,9 +55,9 @@ rake install['slimpress']
   <entry>
     <title type="html"><![CDATA[使用MWPhotoBrowser时出现的一些坑]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng/"/>
+    <link href="http://langyapojun.github.io/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng.html"/>
     <updated>2015-03-17T09:40:11+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-[?]-xie-keng</id>
+    <id>http://langyapojun.github.io/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-[?]-xie-keng</id>
     <content type="html"><![CDATA[<p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。  <!--more-->
 先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的</p>
 
@@ -70,9 +70,9 @@ rake install['slimpress']
   <entry>
     <title type="html"><![CDATA[iOS面试题目]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/03/03/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress/"/>
+    <link href="http://langyapojun.github.io/2015/03/03/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress.html"/>
     <updated>2015-03-03T22:35:24+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/03/03/da-jian-[?]-ge-zi-ji-de-octopress</id>
+    <id>http://langyapojun.github.io/2015/03/03/da-jian-[?]-ge-zi-ji-de-octopress</id>
     <content type="html"><![CDATA[<p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少<!--more--></p>
 
 <h3>1.#import和#include的区别，@class的作用是什么？</h3>
@@ -161,9 +161,9 @@ int const *a const;
   <entry>
     <title type="html"><![CDATA[用UIWebView来load图片很慢的方法]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/"/>
+    <link href="http://langyapojun.github.io/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa.html"/>
     <updated>2015-01-20T00:48:29+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa</id>
+    <id>http://langyapojun.github.io/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa</id>
     <content type="html"><![CDATA[<p>load的慢不是错，不去解决才是错<!--more--><br/>
 <a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview"><a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview</a></a><br></p>
 ]]></content>
@@ -172,9 +172,9 @@ int const *a const;
   <entry>
     <title type="html"><![CDATA[给自己的2015来份计划表]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao/"/>
+    <link href="http://langyapojun.github.io/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao.html"/>
     <updated>2015-01-06T09:11:21+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
+    <id>http://langyapojun.github.io/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
     <content type="html"><![CDATA[<p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。<!--more-->也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
 
 <ol>
@@ -224,9 +224,9 @@ int const *a const;
   <entry>
     <title type="html"><![CDATA[解决Octopress访问慢和一些设置问题]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/"/>
+    <link href="http://langyapojun.github.io/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti.html"/>
     <updated>2015-01-04T13:55:57+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-[?]-xie-she-zhi-wen-ti</id>
+    <id>http://langyapojun.github.io/2015/01/04/jie-jue-octopressfang-wen-man-he-[?]-xie-she-zhi-wen-ti</id>
     <content type="html"><![CDATA[<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。<!--more-->And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
 
 <p><b1>What the hell!</b1></p>
@@ -433,9 +433,9 @@ int const *a const;
   <entry>
     <title type="html"><![CDATA[使用octopress搭建github博客]]></title>
     
-    <link href="http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke/"/>
+    <link href="http://langyapojun.github.io/2015/01/04/shi-yong-octopressda-jian-githubbo-ke.html"/>
     <updated>2015-01-04T11:05:25+08:00</updated>
-    <id>http://langyapojun.github.io/blog/2015/01/04/shi-yong-octopressda-jian-githubbo-ke</id>
+    <id>http://langyapojun.github.io/2015/01/04/shi-yong-octopressda-jian-githubbo-ke</id>
     <content type="html"><![CDATA[<p><a href="http://octopress.org/"><code>Octopress</code></a>是利用<a href="http://github.com/mojombo/jekyll"><code>Jekyll</code></a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
 <!--more-->号称是hacker专属的一个博客系统(<code>A blogging framework for hackers.</code>)</p>
 
