@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8"/>
-  <title>Xcode_7_beta模拟器iOS9无法连接网络 — X0专业去码</title>
+  <title>Swift 2 Playground注释使用markdown — X0专业去码</title>
   <meta name="author" content="X0"/>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   
-  <link rel="canonical" href="http://langyapojun.github.io/2015/06/25/guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa.html"/>
+  <link rel="canonical" href="http://langyapojun.github.io/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown.html"/>
   <link href="/favicon.png" rel="icon"/>
   <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
@@ -91,10 +91,10 @@
       
       
         <div data-caption="" class="cover-image">
-        <img alt="" src="/img/2015/11.jpg" width="640"/>
+        <img alt="" src="/img/2015/12.jpg" width="640"/>
         </div>
       
-      <h1 class="entry-title">Xcode_7_beta模拟器iOS9无法连接网络</h1>
+      <h1 class="entry-title">Swift 2 Playground注释使用markdown</h1>
       
     
     
@@ -112,18 +112,28 @@
 
 
 
-<time datetime="2015-06-25T10:38:33+08:00" data-updated="true"></time>
+<time datetime="2015-06-30T11:40:29+08:00" data-updated="true"></time>
       </p>
     
   </header>
 
 
-<div class="entry-content lettrine"><p>he resource could not be loaded because the App Transport Security policy requires the use of a secure connection. <!--more--></p>
+<div class="entry-content lettrine"><p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。<!--more--><br/>
+标准代码注释可以是单行注释、多行注释：<br/>
+<code>//A Single line comment</code> <br/>
+<code>/*</code><br/>
+<code>A block comment</code><br/>
+<code>over two lines</code><br/>
+<code>*/</code></p>
 
-<p>&emsp;&emsp;在iOS9的iPhone模拟器中来调试的时候出现“<code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.</code>”
-&emsp;&emsp;一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。<a href="https://github.com/meteor/meteor/issues/4560">原文</a> <br/>
-&emsp;&emsp;解决方法：在App中的<code>info.plist</code>中添加<code>NSAppTransportSecurity</code>(Dictionary)，在其中添加一个key,<code>NSAllowsArbitraryLoads</code>(Boolean)并设置为<code>YES</code>.<br/>
-希望可以帮助到大家。</p>
+<p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个<code>:</code>即可：<br/>
+<code>//: _Rich text_ single line *comment* thanks to __markdown__</code><br/>
+<img src="/img/2015/06/playground/playground1.png" alt="" /><br/>
+　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择<code>Editor</code>&ndash;<code>Show Rendered Markup</code>，然后就可以看到效果了。</p>
+
+<p><img src="/img/2015/06/playground/playground2.png" alt="" /></p>
+
+<p><img src="/img/2015/06/playground/playground3.png" alt="" /></p>
 </div>
 
 
@@ -147,7 +157,7 @@
 
 
 
-<time datetime="2015-06-25T10:38:33+08:00" data-updated="true"></time>
+<time datetime="2015-06-30T11:40:29+08:00" data-updated="true"></time>
       
 
 
@@ -155,10 +165,8 @@
     <p class="meta">
       
         
-          <a class="basic-alignment left" href="/2015/06/15/octopressshi-yong-ji-qiao.html" title="Previous Post: octopress使用技巧">&larr;<span class="hide-mobile">&nbsp;octopress使用技巧</span></a>
+          <a class="basic-alignment left" href="/2015/06/25/guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa.html" title="Previous Post: Xcode_7_beta模拟器iOS9无法连接网络">&larr;<span class="hide-mobile">&nbsp;Xcode_7_beta模拟器iOS9无法连接网络</span></a>
         
-        
-          <a class="basic-alignment right" href="/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown.html" title="Next Post: Swift 2 Playground注释使用markdown"><span class="hide-mobile">Swift 2 Playground注释使用markdown&nbsp;</span>&rarr;</a>
         
       
     </p>

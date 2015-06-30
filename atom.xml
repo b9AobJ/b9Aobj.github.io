@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-25T11:05:41+08:00</updated>
+  <updated>2015-06-30T14:15:47+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Swift 2 Playground注释使用markdown]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown.html"/>
+    <updated>2015-06-30T11:40:29+08:00</updated>
+    <id>http://langyapojun.github.io/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown</id>
+    <content type="html"><![CDATA[<p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。<!--more--><br/>
+标准代码注释可以是单行注释、多行注释：<br/>
+<code>//A Single line comment</code> <br/>
+<code>/*</code><br/>
+<code>A block comment</code><br/>
+<code>over two lines</code><br/>
+<code>*/</code></p>
+
+<p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个<code>:</code>即可：<br/>
+<code>//: _Rich text_ single line *comment* thanks to __markdown__</code><br/>
+<img src="http://langyapojun.github.io/img/2015/06/playground/playground1.png" alt="" /><br/>
+　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择<code>Editor</code>&ndash;<code>Show Rendered Markup</code>，然后就可以看到效果了。</p>
+
+<p><img src="http://langyapojun.github.io/img/2015/06/playground/playground2.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/06/playground/playground3.png" alt="" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Xcode_7_beta模拟器iOS9无法连接网络]]></title>
