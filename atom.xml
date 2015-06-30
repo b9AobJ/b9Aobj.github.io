@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-30T15:57:05+08:00</updated>
+  <updated>2015-06-30T22:45:22+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -12,16 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[test]]></title>
-    
-    <link href="http://langyapojun.github.io/2015/06/30/test.html"/>
-    <updated>2015-06-30T15:35:33+08:00</updated>
-    <id>http://langyapojun.github.io/2015/06/30/test</id>
-    <content type="html"><![CDATA[<p><video width='720' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'><source src='http://183.62.106.109/youku/677359A64D7397EFC0B6844DF/0300200100559145727D4706257BB658F76C1B-2995-01B3-8EE0-5D7F20BC9C8A.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video></p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swift 2 Playground注释使用markdown]]></title>
