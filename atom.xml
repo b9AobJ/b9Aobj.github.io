@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-06-30T22:45:22+08:00</updated>
+  <updated>2015-10-27T16:11:39+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[xib中的scrollview使用autolayout]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout.html"/>
+    <updated>2015-10-27T13:53:52+08:00</updated>
+    <id>http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[将docset转换为epub或者mobi给kindle使用]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/10/27/jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong.html"/>
+    <updated>2015-10-27T13:52:53+08:00</updated>
+    <id>http://langyapojun.github.io/2015/10/27/jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong</id>
+    <content type="html"><![CDATA[<p>手机看书逼格不够的，还是拿本kindle耍耍吧<!--more--></p>
+
+<p>　　偶然间在github大洋中遨游的时候发现了有人将iOS.docset文档转换成一个个mobi文件可以供kindle使用。自己兴趣一下子提升了起来，由于该脚本原作者已将源码删除，因此找了将近一天时间终于在另一位github贡献者那里找到一份<a href="https://github.com/darvin/docset2ebook">源码</a>,二话不说先<a href="https://github.com/langyapojun/docset2ebook">fork</a>过来先.<br/>
+　　</p>
+
+<h2>使用方法</h2>
+
+<p>使用方法已经在里面有了，这里粗略讲解一下:<br/>
+1. 先去下载<strong>kindlegen</strong>;<br/>
+2. 将<strong>kindlegen</strong>的脚本路径放入$PATH中，这里我将其加入/Users/用户名/.bash_profile(注意，这是一个隐藏文件，请显示隐藏文件)中,<br/>
+　　<pre><code>export PATH=$PATH:/Users/用户名/Desktop/KindleGen_Mac_i386_v2_9</code>  </pre><br/>
+3. 下载docset2ebook的源码，解压出来后打开fetch_and_convert.sh,可以看到：<br/>
+    <pre><code>##!/bin/sh
+FORMAT=epub
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&ldquo;python docset2kindle.py&rdquo;
+mkdir $OUTPUT_DIR</p>
+
+<p>$COMMAND /Developer/Documentation/DocSets -o $OUTPUT_DIR/XCode -f $FORMAT
+$COMMAND /Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleSnowLeopard.CoreReference.docset -o $OUTPUT_DIR/OSX  -f $FORMAT</p>
+
+<p>wget <a href="http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar">http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar</a>
+xar -xf com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar
+$COMMAND com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.docset -o $OUTPUT_DIR/iOS -f $FORMAT</code></pre><br/>
+    这里可以看到这是转换epub格式的，如果你想换成mobi，只需修改<strong>FORMAT=mobi</strong>,然后是找到iOS.docset的位置，在Mac OS 10.11当中，iOS.docset位置已不是这个位置，在这里我只需要iOS的文档，所以Mac OS的文档转换我全部注释了：<br/>
+    <pre><code>##!/bin/sh
+FORMAT=mobi
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&ldquo;python docset2kindle.py&rdquo;
+mkdir $OUTPUT_DIR</p>
+
+<p>$COMMAND /Users/Sidney/Library/Developer/Shared/Documentation/DocSets/ -o $OUTPUT_DIR/XCode -f $FORMAT</code></pre>
+4.打开终端，运行sh脚本,静待佳音。<br/>
+<img src="http://langyapojun.github.io/img/2015/10/terminal.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/10/directory.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/10/kindle.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode Instruments测试部分错误指正]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/07/13/xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng.html"/>
+    <updated>2015-07-13T09:42:46+08:00</updated>
+    <id>http://langyapojun.github.io/2015/07/13/xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng</id>
+    <content type="html"><![CDATA[<h3>Automation Error： ScriptAgent signaled.</h3>
+
+<p>当自动script数值不能在真机跑并出现以上错误的时候，<!--more-->我们需要在真机<code>设置</code>-<code>开发者</code>-<code>Enable UI Automation</code>打开即可。并且你还需要打开<code>logging</code>-<code>start recording</code>选项。</p>
+
+<h3>Script threw an uncaught JavaScript error: target.frontMostApp().alert().buttons()[&ldquo;取消&rdquo;] could not be tapped</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swift 2 Playground注释使用markdown]]></title>
