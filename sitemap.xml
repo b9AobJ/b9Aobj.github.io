@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://langyapojun.github.io/2015/10/30/xcodechang-yong-cha-jian-da-fa.html</loc>
+    <lastmod>2015-10-30T10:03:35+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout.html</loc>
     <lastmod>2015-10-27T13:53:52+08:00</lastmod>
     <priority>0.8</priority>
@@ -62,49 +67,49 @@
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/dota2/1.html</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/404.html</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/gallery/</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/projects/</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/aboutme/</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/archives/</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://langyapojun.github.io/blog/aboutme/index___.html</loc>
-    <lastmod>2015-10-27T16:11:39+08:00</lastmod>
+    <lastmod>2015-10-30T10:33:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
