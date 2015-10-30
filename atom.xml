@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2015-10-30T11:11:02+08:00</updated>
+  <updated>2015-10-30T13:48:53+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -149,7 +149,7 @@ Double click on the cell view to open the control in browser.</p>
 </code></pre>
 
 <p>以上就是我用的比较常的插件，记住，插件有时候还会导致Xcode出现卡顿或者闪退的现象，所以插件这东西有好有坏，大家慎重考虑，不强求；一下是本人使用的插件图：<br/>
-<img src="http://langyapojun.github.io/img/2015/10/XcodePlugin" alt="" /></p>
+<img src="http://langyapojun.github.io/img/2015/10/XcodePlugin.png" alt="" /></p>
 ]]></content>
   </entry>
   
@@ -159,7 +159,18 @@ Double click on the cell view to open the control in browser.</p>
     <link href="http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout.html"/>
     <updated>2015-10-27T13:53:52+08:00</updated>
     <id>http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>更新之后要学会autolayout。</p>
+
+<p><div data-caption="string">
+<div class="dropdown">
+  <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="http://langyapojun.github.io/page.html">
+    Dropdown
+    <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    &hellip;
+  </ul>
+</div></p>
 ]]></content>
   </entry>
   
