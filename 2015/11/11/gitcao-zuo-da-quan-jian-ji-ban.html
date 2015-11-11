@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>Git操作大全简洁版 — X0专业去码</title>
+  <meta name="author" content="X0"/>
+
+  
+  <meta name="description" content=""/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  
+  <link rel="canonical" href="http://langyapojun.github.io/2015/11/11/gitcao-zuo-da-quan-jian-ji-ban.html"/>
+  <link href="/favicon.png" rel="icon"/>
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+  <link href="/atom.xml" rel="alternate" title="X0专业去码" type="application/atom+xml"/>
+
+  
+  
+
+  
+  
+  <script src="//cdn.jsdelivr.net/jquery/1.11/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.min.js"><\/script>')</script>
+  
+  <script src="//cdn.jsdelivr.net/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  <script>(typeof jQuery().modal === "function") || document.write('<script src="/js/vendor/bootstrap.min.js"><\/script>')</script>
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+</head>
+
+<body >
+  
+  <header role="banner" class="hidden">
+  <h1><a href="/">X0专业去码</a></h1>
+
+
+  <h2>A blogging framework for X0.</h2>
+
+
+</header>
+  
+  <nav class="navbar navbar-static-top" role="navigation"><div class="nav-collapse collapse">
+<ul class="nav subscription pull-right" data-subscription="rss">
+  <li><a href="/atom.xml" rel="alternate" data-type="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form class="navbar-search pull-right" action="http://cn.bing.com/search?q=" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sites" value="langyapojun.github.io" />
+    <input type="hidden" name="q" value="site:langyapojun.github.io" />
+    <input class="search search-query" type="text" id="q" name="q"
+      placeholder="Search"
+       />
+  </fieldset>
+  
+</form>
+  
+</div>
+<ul class="nav main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>  
+  <li><a href="/blog/projects">Projects</a></li>
+  <li><a href="/blog/gallery">Gallery</a></li>
+  <li><a href="/blog/aboutme">About</a></li>
+</ul>
+
+</nav>
+  <div id="content" class="container">
+    <article class="hentry span10 offset1" role="article">
+  
+  <header>
+    
+      
+        
+          
+        
+      
+      
+        <div data-caption="" class="cover-image">
+        <img alt="" src="/img/2015/gitfront.jpg" width="640"/>
+        </div>
+      
+      <h1 class="entry-title">Git操作大全简洁版</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-11-11T11:45:49+08:00" data-updated="true"></time>
+      </p>
+    
+  </header>
+
+
+<div class="entry-content lettrine"><p><b> <em>HEAD</em> 表示当前分支<!--more--><br/>
+ <em>master</em>表示只想提交<br/>
+ <em>Origin</em> 表示远程库  </b></p>
+
+<h5>1、<code>git init</code></h5>
+
+<p>创建git仓库</p>
+
+<h5>2、<code>git add xxx.x</code></h5>
+
+<p>把文件添加到仓库</p>
+
+<h5>3、<code>git commit -m “…”</code></h5>
+
+<p>把文件提交到仓库</p>
+
+<h5>4、<code>git status</code></h5>
+
+<p>查看仓库当前的状态</p>
+
+<h5>5、<code>git diff</code></h5>
+
+<p>查看difference</p>
+
+<h5>6、<code>git log</code></h5>
+
+<p>显示从最近到最远的提交日志‘<br/>
+<code>git log —pretty=oneline</code><br/>
+省略显示</p>
+
+<h5>7、<code>git reset --hard HEAD^</code></h5>
+
+<p>会退到上一个版本</p>
+
+<h5>8、<code>git reflog</code></h5>
+
+<p>查看你的命令</p>
+
+<h5>9、Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。</h5>
+
+<p><img src="/img/2015/10/gitTree.jpeg" alt="" /> <br/>
+前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：<br/>
+第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区；<br/>
+第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。<br/>
+因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以，现在，git commit就是往master分支上提交更改。</p>
+
+<h5>10、modified 被修改；</h5>
+
+<p>untracked：没添加过；</p>
+
+<h5>11、第一次修改 -> <code>git add</code> -> 第二次修改 -> <code>git commit</code></h5>
+
+<p>你看，我们前面讲了，Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。  <br/>
+提交后，用<code>git diff HEAD -- readme.txt</code>命令可以查看工作区和版本库里面最新版本的区别：<br/>
+最终：第一次修改 -> <code>git add</code> -> 第二次修改 -> <code>git add</code> -> <code>git commit</code></p>
+
+<h5>12、<code>git checkout -- file</code></h5>
+
+<p>撤销文件在工作区的修改，有两种情况：<br/>
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；<br/>
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。<br/>
+总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
+
+<h5>13、<code>git add</code>到暂存区还没commit,要撤销：</h5>
+
+<h5>14、 git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。暂存区干净了；</h5>
+
+<p>丢弃工作区的修改：<code>git checkout -- xxx.x</code><br/>
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout &ndash; file。<br/>
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。<br/>
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
+
+<h5>15、<code>git rm file</code></h5>
+
+<p>删除文件</p>
+
+<h5>16、<code>git push</code></h5>
+
+<p>把本地库的内容推送到远程<br/>
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+
+<h6><em>小结</em></h6>
+
+<p>要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；<br/>
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；<br/>
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；<br/>
+分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！</p>
+
+<h5>17、<code>git clone</code></h5>
+
+<p>克隆一个本地库</p>
+
+<h5>18、创建分支，然后切换到分区</h5>
+
+<p>~$ git checkout -b dev
+~Switched to a new branch &lsquo;dev&rsquo;</p>
+
+<p><code>git checkout</code>命令加上<code>-b</code>参数表示创建并切换，相当于以下两条命令：<br/>
+~$ git branch dev<br/>
+~$ git checkout dev<br/>
+~Swtiched to a new branch &lsquo;dev&rsquo;</p>
+
+<h5>19、<code>git branch</code></h5>
+
+<p>查看当前分支，列出所有分支，当前分支前面带<code>*</code>号</p>
+
+<h5>20、{合并}分支</h5>
+
+<p>切换回主线master<br/>
+~$ git checkout master<br/>
+~Switched to branch &lsquo;master&rsquo;<br/>
+合并分支<br/>
+~$ git merge dev<br/>
+~Updating xxxxxxxx<br/>
+~Fast-forward<br/>
+~    &hellip;..<br/>
+~    1 file changed, 1 insertion(+)<br/>
+合并完成后，可以删除dev分支<br/>
+~$ git branch -d dev</p>
+
+<h6><em>小结</em></h6>
+
+<p>Git鼓励大量使用分支：<br/>
+查看分支：<code>git branch</code><br/>
+创建分支：<code>git branch &lt;name&gt;</code><br/>
+切换分支：<code>git checkout &lt;name&gt;</code><br/>
+创建+切换分支：<code>git checkout -b &lt;name&gt;</code><br/>
+合并某分支到当前分支：<code>git merge &lt;name&gt;</code><br/>
+删除分支：<code>git branch -d &lt;name&gt;</code></p>
+
+<h5>21、<strong>解决冲突</strong></h5>
+
+<p><code>git status</code>可以告诉我们冲突的文件<br/>
+Git用<em>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</em>，<em>=======</em>，<em>>>>>>>></em>标记出不同分支的内容<br/>
+先手动修改冲突，再提交合并。</p>
+
+<p>用带参数的<strong>git log</strong>看到分支的合并情况<br/>
+<code>git log --graph --pretty=oneline --abbrev-commit</code></p>
+
+<h5>22、<code>git merge --no-ff -m "merge with no-ff" dev</code></h5>
+
+<p>不使用<strong>fast forward</strong>模式分支合并，合并分支时，加上&ndash;no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+
+<h5>23、<strong>分支策略</strong></h5>
+
+<p>在实际开发中，我们应该按照几个基本原则进行分支管理：<br/>
+首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；<br/>
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；<br/>
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。<br/>
+所以，团队合作的分支看起来就像这样：<br/>
+<img src="/img/2015/10/gitBranch.png" alt="" /></p>
+
+<h5>24、Bug分支</h5>
+
+<p>软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。</p>
+
+<p>修复bug时，需创建分支来修复它，但现在手上的工作还没做完不可提交的状态，可以用<strong>stash</strong>功能，把工作现场“储藏”起来，等以后回复现场后继续工作；<br/>
+~$ git stash<br/>
+~Saved working directory and index state WIP on dev: 6224937 add merge<br/>
+~HEAD is now at 6224937 add merge</p>
+
+<p>   现在切换值需要修复的分支上创建临时分支：<br/>
+~$ git check master<br/>
+~$ git checkout -b issue-101<br/>
+修复提交<br/>
+~$ git add xxx.x<br/>
+~$ git commit -m &ldquo;fix bug 101&rdquo;<br/>
+修复完成后，切换到master分支，完成合并，删除bug分支：<br/>
+~$ git checkout master<br/>
+~$ git merge &ndash;no-ff -m &ldquo;merged bug fix 101&rdquo; issue-101<br/>
+~$ git branch -d issue-101</p>
+
+<p>返回原工作区<br/>
+~$ git checkout dev<br/>
+~$ git status<br/>
+此时工作区是干净的，需要我们找回工作现场：<br/>
+~$ git stash list<br/>
+需要恢复一下，有两个办法：<br/>
+一是用<strong>git stash apply</strong>恢复，但是恢复后，stash内容并不删除，你需要用<strong>git stash drop</strong>来删除；<br/>
+另一种方式是用<strong>git stash pop</strong>，恢复的同时把stash内容也删了;<br/>
+你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：<br/>
+~$ git stash apply stash@{0}</p>
+
+<h5>25、Feature分支</h5>
+
+<p>添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。<br/>
+开发一个新feature，最好新建一个分支；<br/>
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。</p>
+
+<h5>26、<strong>多人协作</strong></h5>
+
+<p>要查看远程库的信息，用<code>git remote</code><br/>
+或者用<code>git remote -v</code>显示更详细的信息<br/>
+哪些分支需要推送，哪些不需要呢？<br/>
+    • master分支是主分支，因此要时刻与远程同步； 
+    • dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步； 
+    • bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug； 
+    • feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</p>
+
+<p>抓取分支。</p>
+
+<p><strong>多人协作</strong>的工作模式通常是这样：
+    1.  首先，可以试图用git push origin branch-name推送自己的修改； 
+    2.  如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并； 
+    3.  如果合并有冲突，则解决冲突，并在本地提交；   
+    4.  没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！   
+如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch &ndash;set-upstream branch-name origin/branch-name。</p>
+
+<p><strong>小结</strong><br/>
+    • 查看远程库信息，使用git remote -v；<br/>
+     
+    • 本地新建的分支如果不推送到远程，对其他人就是不可见的；<br/>
+     
+    • 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；<br/>
+     
+    • 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；<br/>
+             
+    • 建立本地分支和远程分支的关联，使用git branch &ndash;set-upstream branch-name origin/branch-name；<br/>
+    • 从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。   </p>
+
+<h5>27、<em>创建标签</em></h5>
+
+<p><code>git tag &lt;name&gt;</code><br/>
+如果忘了打标签，可以查历史提交的commit id，<br/>
+<code>git tag &lt;name&gt; commit_id</code><br/>
+查看标签信息：<br/>
+<code>git show &lt;tagName&gt;</code><br/>
+创建带有说明的标签，用<code>-a</code>指定标签名，<code>-m</code>指定说明文字：<br/>
+<code>git tag -a v0.1 -m "version 0.1 released" 3628164</code><br/>
+删除标签：<br/>
+<code>git tag -d v0.1</code><br/>
+推送某个标签到远程，用命令<code>git push origin &lt;tagname&gt;</code>:<br/>
+或者一次性推送全部尚未推送的标签：<code>git push origin --tags</code></p>
+
+<p>删除远程标签：<br/>
+先从本地删除：<code>git tag -d v0.9</code><br/>
+再远程删除：<code>git push origin :refs/tags/v0.9</code></p>
+
+<p><strong>小结</strong><br/>
+    • 命令git push origin <tagname>可以推送一个本地标签；<br/>
+     
+    • 命令git push origin &ndash;tags可以推送全部未推送过的本地标签；<br/>
+     
+    • 命令git tag -d <tagname>可以删除一个本地标签；<br/>
+             
+    • 命令git push origin :refs/tags/<tagname>可以删除一个远程标签。 </p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">X0</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-11-11T11:45:49+08:00" data-updated="true"></time>
+      
+
+
+    </p>
+    <p class="meta">
+      
+        
+          <a class="basic-alignment left" href="/2015/10/30/xcodechang-yong-cha-jian-da-fa.html" title="Previous Post: Xcode常用插件大法">&larr;<span class="hide-mobile">&nbsp;Xcode常用插件大法</span></a>
+        
+        
+      
+    </p>
+  </footer>
+	
+</article>
+
+  </div>
+  <footer role="contentinfo"><a rel="license" href="/license" class="CC">
+  <img alt="Creative Commons License" src="/img/cc-by-nc-small.png">
+</a>
+
+<script src="/js/typo.js"></script>
+</footer>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>
