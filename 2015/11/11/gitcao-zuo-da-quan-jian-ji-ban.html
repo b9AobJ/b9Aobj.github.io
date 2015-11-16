@@ -314,20 +314,25 @@ Git用<em>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</em>，<em>=======</em>，<em>>>>>>>></em
 
 <p>要查看远程库的信息，用<code>git remote</code><br/>
 或者用<code>git remote -v</code>显示更详细的信息<br/>
-哪些分支需要推送，哪些不需要呢？<br/>
-    • master分支是主分支，因此要时刻与远程同步； 
-    • dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步； 
-    • bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug； 
-    • feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</p>
+哪些分支需要推送，哪些不需要呢？</p>
+
+<pre><code>• master分支是主分支，因此要时刻与远程同步； 
+• dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步； 
+• bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug； 
+• feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+</code></pre>
 
 <p>抓取分支。</p>
 
-<p><strong>多人协作</strong>的工作模式通常是这样：
-    1.  首先，可以试图用git push origin branch-name推送自己的修改； 
-    2.  如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并； 
-    3.  如果合并有冲突，则解决冲突，并在本地提交；   
-    4.  没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！   
-如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch &ndash;set-upstream branch-name origin/branch-name。</p>
+<p><strong>多人协作</strong>的工作模式通常是这样：</p>
+
+<pre><code>1.  首先，可以试图用git push origin branch-name推送自己的修改； 
+2.  如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并； 
+3.  如果合并有冲突，则解决冲突，并在本地提交；   
+4.  没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！   
+</code></pre>
+
+<p>如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch &ndash;set-upstream branch-name origin/branch-name。</p>
 
 <p><strong>小结</strong><br/>
     • 查看远程库信息，使用git remote -v；<br/>
