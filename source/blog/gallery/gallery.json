@@ -1,0 +1,9 @@
+---
+---
+
+{
+  "images": [{% for post in site.posts reverse %}
+{% unless post.cover_in_gallery == false %}{% unless post.cover == nil %}{% include gallery_photo.json %}{% endunless %}{% endunless %}
+{% unless forloop.last %}{% unless post.cover_in_gallery == false %}{% unless post.cover == nil %},{% endunless %}{% endunless %}{% endunless %}{% endfor %}
+  ]
+}
