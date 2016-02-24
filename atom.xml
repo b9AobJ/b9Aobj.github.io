@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[X0专业去码]]></title>
+  <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
+  <link href="http://langyapojun.github.io/"/>
+  <updated>2015-11-16T09:45:23+08:00</updated>
+  <id>http://langyapojun.github.io/</id>
+  <author>
+    <name><![CDATA[X0]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git操作大全简洁版]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/11/11/gitcao-zuo-da-quan-jian-ji-ban.html"/>
+    <updated>2015-11-11T11:45:49+08:00</updated>
+    <id>http://langyapojun.github.io/2015/11/11/gitcao-zuo-da-quan-jian-ji-ban</id>
+    <content type="html"><![CDATA[<p><b> <em>HEAD</em> 表示当前分支<!--more--><br/>
+ <em>master</em>表示只想提交<br/>
+ <em>Origin</em> 表示远程库  </b></p>
+
+<h5>1、<code>git init</code></h5>
+
+<p>创建git仓库</p>
+
+<h5>2、<code>git add xxx.x</code></h5>
+
+<p>把文件添加到仓库</p>
+
+<h5>3、<code>git commit -m “…”</code></h5>
+
+<p>把文件提交到仓库</p>
+
+<h5>4、<code>git status</code></h5>
+
+<p>查看仓库当前的状态</p>
+
+<h5>5、<code>git diff</code></h5>
+
+<p>查看difference</p>
+
+<h5>6、<code>git log</code></h5>
+
+<p>显示从最近到最远的提交日志‘<br/>
+<code>git log —pretty=oneline</code><br/>
+省略显示</p>
+
+<h5>7、<code>git reset --hard HEAD^</code></h5>
+
+<p>会退到上一个版本</p>
+
+<h5>8、<code>git reflog</code></h5>
+
+<p>查看你的命令</p>
+
+<h5>9、Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。</h5>
+
+<p><img src="http://langyapojun.github.io/img/2015/10/gitTree.jpeg" alt="" /> <br/>
+前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：<br/>
+第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区；<br/>
+第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。<br/>
+因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以，现在，git commit就是往master分支上提交更改。</p>
+
+<h5>10、modified 被修改；</h5>
+
+<p>untracked：没添加过；</p>
+
+<h5>11、第一次修改 -> <code>git add</code> -> 第二次修改 -> <code>git commit</code></h5>
+
+<p>你看，我们前面讲了，Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。  <br/>
+提交后，用<code>git diff HEAD -- readme.txt</code>命令可以查看工作区和版本库里面最新版本的区别：<br/>
+最终：第一次修改 -> <code>git add</code> -> 第二次修改 -> <code>git add</code> -> <code>git commit</code></p>
+
+<h5>12、<code>git checkout -- file</code></h5>
+
+<p>撤销文件在工作区的修改，有两种情况：<br/>
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；<br/>
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。<br/>
+总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
+
+<h5>13、<code>git add</code>到暂存区还没commit,要撤销：</h5>
+
+<h5>14、 git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。暂存区干净了；</h5>
+
+<p>丢弃工作区的修改：<code>git checkout -- xxx.x</code><br/>
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout &ndash; file。<br/>
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。<br/>
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
+
+<h5>15、<code>git rm file</code></h5>
+
+<p>删除文件</p>
+
+<h5>16、<code>git push</code></h5>
+
+<p>把本地库的内容推送到远程<br/>
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。</p>
+
+<h6><em>小结</em></h6>
+
+<p>要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；<br/>
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；<br/>
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；<br/>
+分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！</p>
+
+<h5>17、<code>git clone</code></h5>
+
+<p>克隆一个本地库</p>
+
+<h5>18、创建分支，然后切换到分区</h5>
+
+<p>~$ git checkout -b dev
+~Switched to a new branch &lsquo;dev&rsquo;</p>
+
+<p><code>git checkout</code>命令加上<code>-b</code>参数表示创建并切换，相当于以下两条命令：<br/>
+~$ git branch dev<br/>
+~$ git checkout dev<br/>
+~Swtiched to a new branch &lsquo;dev&rsquo;</p>
+
+<h5>19、<code>git branch</code></h5>
+
+<p>查看当前分支，列出所有分支，当前分支前面带<code>*</code>号</p>
+
+<h5>20、{合并}分支</h5>
+
+<p>切换回主线master<br/>
+~$ git checkout master<br/>
+~Switched to branch &lsquo;master&rsquo;<br/>
+合并分支<br/>
+~$ git merge dev<br/>
+~Updating xxxxxxxx<br/>
+~Fast-forward<br/>
+~    &hellip;..<br/>
+~    1 file changed, 1 insertion(+)<br/>
+合并完成后，可以删除dev分支<br/>
+~$ git branch -d dev</p>
+
+<h6><em>小结</em></h6>
+
+<p>Git鼓励大量使用分支：<br/>
+查看分支：<code>git branch</code><br/>
+创建分支：<code>git branch &lt;name&gt;</code><br/>
+切换分支：<code>git checkout &lt;name&gt;</code><br/>
+创建+切换分支：<code>git checkout -b &lt;name&gt;</code><br/>
+合并某分支到当前分支：<code>git merge &lt;name&gt;</code><br/>
+删除分支：<code>git branch -d &lt;name&gt;</code></p>
+
+<h5>21、<strong>解决冲突</strong></h5>
+
+<p><code>git status</code>可以告诉我们冲突的文件<br/>
+Git用<em>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</em>，<em>=======</em>，<em>>>>>>>></em>标记出不同分支的内容<br/>
+先手动修改冲突，再提交合并。</p>
+
+<p>用带参数的<strong>git log</strong>看到分支的合并情况<br/>
+<code>git log --graph --pretty=oneline --abbrev-commit</code></p>
+
+<h5>22、<code>git merge --no-ff -m "merge with no-ff" dev</code></h5>
+
+<p>不使用<strong>fast forward</strong>模式分支合并，合并分支时，加上&ndash;no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。</p>
+
+<h5>23、<strong>分支策略</strong></h5>
+
+<p>在实际开发中，我们应该按照几个基本原则进行分支管理：<br/>
+首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；<br/>
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；<br/>
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。<br/>
+所以，团队合作的分支看起来就像这样：<br/>
+<img src="http://langyapojun.github.io/img/2015/10/gitBranch.png" alt="" /></p>
+
+<h5>24、Bug分支</h5>
+
+<p>软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。</p>
+
+<p>修复bug时，需创建分支来修复它，但现在手上的工作还没做完不可提交的状态，可以用<strong>stash</strong>功能，把工作现场“储藏”起来，等以后回复现场后继续工作；<br/>
+~$ git stash<br/>
+~Saved working directory and index state WIP on dev: 6224937 add merge<br/>
+~HEAD is now at 6224937 add merge</p>
+
+<p>   现在切换值需要修复的分支上创建临时分支：<br/>
+~$ git check master<br/>
+~$ git checkout -b issue-101<br/>
+修复提交<br/>
+~$ git add xxx.x<br/>
+~$ git commit -m &ldquo;fix bug 101&rdquo;<br/>
+修复完成后，切换到master分支，完成合并，删除bug分支：<br/>
+~$ git checkout master<br/>
+~$ git merge &ndash;no-ff -m &ldquo;merged bug fix 101&rdquo; issue-101<br/>
+~$ git branch -d issue-101</p>
+
+<p>返回原工作区<br/>
+~$ git checkout dev<br/>
+~$ git status<br/>
+此时工作区是干净的，需要我们找回工作现场：<br/>
+~$ git stash list<br/>
+需要恢复一下，有两个办法：<br/>
+一是用<strong>git stash apply</strong>恢复，但是恢复后，stash内容并不删除，你需要用<strong>git stash drop</strong>来删除；<br/>
+另一种方式是用<strong>git stash pop</strong>，恢复的同时把stash内容也删了;<br/>
+你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：<br/>
+~$ git stash apply stash@{0}</p>
+
+<h5>25、Feature分支</h5>
+
+<p>添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。<br/>
+开发一个新feature，最好新建一个分支；<br/>
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。</p>
+
+<h5>26、<strong>多人协作</strong></h5>
+
+<p>要查看远程库的信息，用<code>git remote</code><br/>
+或者用<code>git remote -v</code>显示更详细的信息<br/>
+哪些分支需要推送，哪些不需要呢？</p>
+
+<pre><code>• master分支是主分支，因此要时刻与远程同步；     
+• dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；    
+• bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；   
+• feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+</code></pre>
+
+<p>抓取分支。</p>
+
+<p><strong>多人协作</strong>的工作模式通常是这样：</p>
+
+<pre><code>1.  首先，可以试图用git push origin branch-name推送自己的修改；  
+2.  如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；        
+3.  如果合并有冲突，则解决冲突，并在本地提交；    
+4.  没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！      
+</code></pre>
+
+<p>如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch &ndash;set-upstream branch-name origin/branch-name。</p>
+
+<p><strong>小结</strong><br/>
+    • 查看远程库信息，使用git remote -v；<br/>
+     
+    • 本地新建的分支如果不推送到远程，对其他人就是不可见的；<br/>
+     
+    • 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；<br/>
+     
+    • 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；<br/>
+             
+    • 建立本地分支和远程分支的关联，使用git branch &ndash;set-upstream branch-name origin/branch-name；<br/>
+    • 从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。   </p>
+
+<h5>27、<em>创建标签</em></h5>
+
+<p><code>git tag &lt;name&gt;</code><br/>
+如果忘了打标签，可以查历史提交的commit id，<br/>
+<code>git tag &lt;name&gt; commit_id</code><br/>
+查看标签信息：<br/>
+<code>git show &lt;tagName&gt;</code><br/>
+创建带有说明的标签，用<code>-a</code>指定标签名，<code>-m</code>指定说明文字：<br/>
+<code>git tag -a v0.1 -m "version 0.1 released" 3628164</code><br/>
+删除标签：<br/>
+<code>git tag -d v0.1</code><br/>
+推送某个标签到远程，用命令<code>git push origin &lt;tagname&gt;</code>:<br/>
+或者一次性推送全部尚未推送的标签：<code>git push origin --tags</code></p>
+
+<p>删除远程标签：<br/>
+先从本地删除：<code>git tag -d v0.9</code><br/>
+再远程删除：<code>git push origin :refs/tags/v0.9</code></p>
+
+<p><strong>小结</strong><br/>
+    • 命令git push origin <tagname>可以推送一个本地标签；<br/>
+     
+    • 命令git push origin &ndash;tags可以推送全部未推送过的本地标签；<br/>
+     
+    • 命令git tag -d <tagname>可以删除一个本地标签；<br/>
+             
+    • 命令git push origin :refs/tags/<tagname>可以删除一个远程标签。 </p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode常用插件大法]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/10/30/xcodechang-yong-cha-jian-da-fa.html"/>
+    <updated>2015-10-30T10:03:35+08:00</updated>
+    <id>http://langyapojun.github.io/2015/10/30/xcodechang-yong-cha-jian-da-fa</id>
+    <content type="html"><![CDATA[<p>正所谓&ndash;工欲善其事，必先利其器<!--more--></p>
+
+<p>　　目前版主使用的是Xcode7.1，基本上以下插件都安装使用过，实用性还是非常强的，这些插件可以用插件管理器<strong>alcatraz</strong>来进行管理；当使用插件的时候部分没法使用的插件可以会导致整个插件库都无法使用，所以有些插件不可使用的话最好不要安装，如第一个codeSnippet插件，在版主安装之后导致全部插件无法使用，包括<strong>alcatraz</strong>，具体可以检查<strong>alatraz</strong>是否存在于menu->Window->Packge Manager这个包管理选项，如存在说明未失效，插件可用；如果消失，说明有插件无法使用导致整个插件库不可使用，需要一一排除。</p>
+
+<h3>ACCodeSnippetRepositoryPlugin</h3>
+
+<p>ACCodeSnippetRepositoryPlugin is a Xcode plugin for seemless synchronization of snippets with a git repository.</p>
+
+<p>The snippets are synchronized as human-readable text (and not an obscure .codesnippet plist).</p>
+
+<p>Build Status</p>
+
+<p>If you want to know more about snippets in Xcode, I recommend reading <a href="http://nshipster.com/xcode-snippets/">Xcode Snippets on NSHipster</a>.</p>
+
+<p>Want to try the plugin with an existing public repository? Try <a href="https://github.com/acoomans/xcode-snippets">acoomans</a> or <a href="https://github.com/mattt/Xcode-Snippets.git">mattt&rsquo;s</a> snippets.</p>
+
+<p>注：目前作者并未做对于Xcode6.2的支持</p>
+
+<h3>AdjustFontSize</h3>
+
+<p>A simple plugin for Xcode to adjust font size without going into Settings → Fonts &amp; Colors and changing each source type.</p>
+
+<p>Simply hit ⌘ + or ⌘ - and all fonts will be adjusted. Plugin respects different font sizes per each syntax type.</p>
+
+<p>NOTE keep in mind that it modifies the current theme file.</p>
+
+<h3>AllTargets</h3>
+
+<p>AllTargets is a plugin for Xcode. The plugin intends to auto select all targets when you add files to the project.</p>
+
+<h3>Auto Importer for Xcode(Xcode6.2不可使用)</h3>
+
+<p>Quickly import your headers on the fly without having to manually go to the top of your file and type the import statement.</p>
+
+<h4>Usage</h4>
+
+<p>⌘ + ctrl + H after selecting some text (or you can have no selection at all)
+If the selected text matches the name of a class/protocol or category method, it will import the header and you&rsquo;re done, otherwise it will show a list of filtered identifiers and headers&hellip;
+start typing the keyword of your import
+use ↑ or ↓ keys to navigate
+press ↵ or double click to add an import
+NOTE: on the list, classes are shown as [C], protocols as [P] and category methods as [ClassExtended()]</p>
+
+<h3>BBUDebuggerTuckAway</h3>
+
+<p>Xcode plugin for auto-hiding the debugger once you start typing in the source code editor.</p>
+
+<h3>BBUUtilitiesTuckAway</h3>
+
+<p>Xcode plugin for auto-hiding the utilities area once you start typing in the source code editor.</p>
+
+<h3>BlockJump</h3>
+
+<p>在方法之间跳转<br/>
+Default Key Combination:</p>
+
+<p>CTRL + [ : jump up<br/>
+CTRL + ] : jump down</p>
+
+<p>CocoaControlsPlugin<br/>
+OS X native application with Xcode plugin for browsing, searching, integrating, cloning controls in <a href="http://cocoacontrols.com/">http://cocoacontrols.com/</a>.</p>
+
+<p>All the commands are laid at the bottom of the menu View.</p>
+
+<p>Use the menu Cocoa Controls to open CocoaControls.app immediately.<br/>
+Click on the left image view to open the image in a new window.<br/>
+Click on the pod button to integrate pod.<br/>
+Click on the computer button to clone the source.<br/>
+Double click on the cell view to open the control in browser.</p>
+
+<p>DXXcodeConsoleUnicodePlugin<br/>
+转换 Xcode 控制台中一些不可阅读的字符。</p>
+
+<h6>使用方法：</h6>
+
+<p>两种：</p>
+
+<p>1.快捷键 option+c 会转换当前 剪贴板 中的内容并用一个对话框把转换后的内容显示出来。</p>
+
+<p>2.在 Xcode 的 Edit 菜单中勾选 ConvertUnicodeInConsole(Beta)，然后 console 中再出现 \u4e0e 时，就会自动转换成 与 显示。</p>
+
+<p>IntelliPaste-for-XCode<br/>
+在.m文件中选中方法函数后cmd+c，在头文件使用shift+cmd+v将只复制出方法名；</p>
+
+<h3>CATweaker</h3>
+
+<p>A helper tool for creating beautiful CAMediaTimingFunction curve.</p>
+
+<h3>LinkedLog Xcode Plugin</h3>
+
+<p>LinkedLog is a Xcode plugin that includes a Xcode PCH file template that adds the macros LLog and LLogF. The LLog macro will work like NSLog but additionally prints the file name and line number of the call.</p>
+
+<p>LinkedLog then parses the logs and adds links to the corresponding file and line.
+可直接在console上直接定位log位置，并可以直接跳转到该行代码文件；</p>
+
+<h3>OMColorSense</h3>
+
+<p>ColorSense is an Xcode plugin that makes working with UIColor (and NSColor) more visual.
+在输入颜色代码时显示具体颜色;</p>
+
+<h3>VVDocumenter-Xcode</h3>
+
+<p>大神的需要，///就可以给出注释格式</p>
+
+<h3>XBookmark</h3>
+
+<p>书签管理器，定位器除了断点外的好使用</p>
+
+<h3>Xcode Delete Line</h3>
+
+<p>command+D 删除行，增加代码键盘手的操作性</p>
+
+<h3>HTYCopyIssue</h3>
+
+<p>Makes Copy Xcode Issue Description Easy, Support Finding Answers in Google or StackOverflow Directly；<br/>
+如果有些错误和waring想复制去谷歌的时候会连位置和问题都复制，操作麻烦，这个插件就可以直接复制出问题来；</p>
+
+<h3>FuzzyAutocomplete</h3>
+
+<p>补全代码功能，例:dictionaryWithContentsOfFile:方法直接输入dictWFile即可找到</p>
+
+<h3>DXXcodeConsoleUnicodePlugin</h3>
+
+<p>将终端输出的Unicode编码转换成中文，这个很实用
+统一删除插件方法</p>
+
+<pre><code>    rm -r ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/AutoImporter.xcplugin/
+</code></pre>
+
+<p>以上就是我用的比较常的插件，记住，插件有时候还会导致Xcode出现卡顿或者闪退的现象，所以插件这东西有好有坏，大家慎重考虑，不强求；一下是本人使用的插件图：<br/>
+<img src="http://langyapojun.github.io/img/2015/10/XcodePlugin.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[xib中的scrollview使用autolayout]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout.html"/>
+    <updated>2015-10-27T13:53:52+08:00</updated>
+    <id>http://langyapojun.github.io/2015/10/27/xibzhong-de-scrollviewshi-yong-autolayout</id>
+    <content type="html"><![CDATA[<p>更新之后要学会autolayout。  111</p>
+
+<p><div data-caption="string">
+<div class="dropdown">
+  <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="http://langyapojun.github.io/page.html">
+    Dropdown
+    <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    &hellip;
+  </ul>
+</div></p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Awesome code snippet</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">rectangle</span> <span class="nl">setX</span><span class="p">:</span> <span class="mi">10</span> <span class="nl">y</span><span class="p">:</span> <span class="mi">10</span> <span class="nl">width</span><span class="p">:</span> <span class="mi">20</span> <span class="nl">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>3</p>
+
+<p><figure class='code'><figcaption><span>Time to be Awesome - awesome.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Awesome!&quot;</span> <span class="k">unless</span> <span class="n">lame</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">arr1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">arrayLength</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">arr2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">element0</span><span class="p">,</span> <span class="nx">element1</span><span class="p">,</span> <span class="p">&hellip;,</span> <span class="nx">elementN</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[将docset转换为epub或者mobi给kindle使用]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/10/27/jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong.html"/>
+    <updated>2015-10-27T13:52:53+08:00</updated>
+    <id>http://langyapojun.github.io/2015/10/27/jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong</id>
+    <content type="html"><![CDATA[<p>手机看书逼格不够的，还是拿本kindle耍耍吧<!--more--></p>
+
+<p>　　偶然间在github大洋中遨游的时候发现了有人将iOS.docset文档转换成一个个mobi文件可以供kindle使用。自己兴趣一下子提升了起来，由于该脚本原作者已将源码删除，因此找了将近一天时间终于在另一位github贡献者那里找到一份<a href="https://github.com/darvin/docset2ebook">源码</a>,二话不说先<a href="https://github.com/langyapojun/docset2ebook">fork</a>过来先.<br/>
+　　</p>
+
+<h2>使用方法</h2>
+
+<p>使用方法已经在里面有了，这里粗略讲解一下:<br/>
+1. 先去下载<strong>kindlegen</strong>;<br/>
+2. 将<strong>kindlegen</strong>的脚本路径放入$PATH中，这里我将其加入/Users/用户名/.bash_profile(注意，这是一个隐藏文件，请显示隐藏文件)中,<br/>
+　　<pre><code>export PATH=$PATH:/Users/用户名/Desktop/KindleGen_Mac_i386_v2_9</code>  </pre><br/>
+3. 下载docset2ebook的源码，解压出来后打开fetch_and_convert.sh,可以看到：<br/>
+    <pre><code>##!/bin/sh
+FORMAT=epub
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&ldquo;python docset2kindle.py&rdquo;
+mkdir $OUTPUT_DIR</p>
+
+<p>$COMMAND /Developer/Documentation/DocSets -o $OUTPUT_DIR/XCode -f $FORMAT
+$COMMAND /Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleSnowLeopard.CoreReference.docset -o $OUTPUT_DIR/OSX  -f $FORMAT</p>
+
+<p>wget <a href="http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar">http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar</a>
+xar -xf com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar
+$COMMAND com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.docset -o $OUTPUT_DIR/iOS -f $FORMAT</code></pre><br/>
+    这里可以看到这是转换epub格式的，如果你想换成mobi，只需修改<strong>FORMAT=mobi</strong>,然后是找到iOS.docset的位置，在Mac OS 10.11当中，iOS.docset位置已不是这个位置，在这里我只需要iOS的文档，所以Mac OS的文档转换我全部注释了：<br/>
+    <pre><code>##!/bin/sh
+FORMAT=mobi
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&ldquo;python docset2kindle.py&rdquo;
+mkdir $OUTPUT_DIR</p>
+
+<p>$COMMAND /Users/Sidney/Library/Developer/Shared/Documentation/DocSets/ -o $OUTPUT_DIR/XCode -f $FORMAT</code></pre>
+4.打开终端，运行sh脚本,静待佳音。<br/>
+<img src="http://langyapojun.github.io/img/2015/10/terminal.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/10/directory.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/10/kindle.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode Instruments测试部分错误指正]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/07/13/xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng.html"/>
+    <updated>2015-07-13T09:42:46+08:00</updated>
+    <id>http://langyapojun.github.io/2015/07/13/xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng</id>
+    <content type="html"><![CDATA[<h3>Automation Error： ScriptAgent signaled.</h3>
+
+<p>当自动script数值不能在真机跑并出现以上错误的时候，<!--more-->我们需要在真机<code>设置</code>-<code>开发者</code>-<code>Enable UI Automation</code>打开即可。并且你还需要打开<code>logging</code>-<code>start recording</code>选项。</p>
+
+<h3>Script threw an uncaught JavaScript error: target.frontMostApp().alert().buttons()[&ldquo;取消&rdquo;] could not be tapped</h3>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Swift 2 Playground注释使用markdown]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown.html"/>
+    <updated>2015-06-30T11:40:29+08:00</updated>
+    <id>http://langyapojun.github.io/2015/06/30/swift-2-playgroundzhu-shi-shi-yong-markdown</id>
+    <content type="html"><![CDATA[<p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。<!--more--><br/>
+标准代码注释可以是单行注释、多行注释：<br/>
+<code>//A Single line comment</code> <br/>
+<code>/*</code><br/>
+<code>A block comment</code><br/>
+<code>over two lines</code><br/>
+<code>*/</code></p>
+
+<p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个<code>:</code>即可：<br/>
+<code>//: _Rich text_ single line *comment* thanks to __markdown__</code><br/>
+<img src="http://langyapojun.github.io/img/2015/06/playground/playground1.png" alt="" /><br/>
+　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择<code>Editor</code>&ndash;<code>Show Rendered Markup</code>，然后就可以看到效果了。</p>
+
+<p><img src="http://langyapojun.github.io/img/2015/06/playground/playground2.png" alt="" /></p>
+
+<p><img src="http://langyapojun.github.io/img/2015/06/playground/playground3.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode_7_beta模拟器iOS9无法连接网络]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/06/25/guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa.html"/>
+    <updated>2015-06-25T10:38:33+08:00</updated>
+    <id>http://langyapojun.github.io/2015/06/25/guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa</id>
+    <content type="html"><![CDATA[<p>he resource could not be loaded because the App Transport Security policy requires the use of a secure connection. <!--more--></p>
+
+<p>&emsp;&emsp;在iOS9的iPhone模拟器中来调试的时候出现“<code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.</code>”
+&emsp;&emsp;一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。<a href="https://github.com/meteor/meteor/issues/4560">原文</a> <br/>
+&emsp;&emsp;解决方法：在App中的<code>info.plist</code>中添加<code>NSAppTransportSecurity</code>(Dictionary)，在其中添加一个key,<code>NSAllowsArbitraryLoads</code>(Boolean)并设置为<code>YES</code>.<br/>
+希望可以帮助到大家。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[octopress使用技巧]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/06/15/octopressshi-yong-ji-qiao.html"/>
+    <updated>2015-06-15T16:18:57+08:00</updated>
+    <id>http://langyapojun.github.io/2015/06/15/octopressshi-yong-ji-qiao</id>
+    <content type="html"><![CDATA[<p>为自己的博客网站添加想要的功能和样式<!--more-->
+<a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html</a></p>
+
+<h2>octopress基本操作</h2>
+
+<ul>
+<li>新建博客文章，<code>rake new_post['blog_name']</code></li>
+<li>产生HTML文件， <code>rake generate</code></li>
+<li>预览博客效果， <code>rake preview</code></li>
+<li>推送内容到github， <code>rake deploy</code> 或者 <code>rake gen_deploy</code></li>
+<li>保存到github项目中<br/>
+  <code>git add .</code><br/>
+  <code>git commit -m "modified note"</code><br/>
+  <code>git push [for first time](origin source)</code></li>
+</ul>
+
+
+<h2>一些配置</h2>
+
+<h3>更换主题</h3>
+
+<pre><code>git clone https://github.com/jeremyrea/slimpress .theme/slimpress  
+rake install['slimpress']  
+</code></pre>
+
+<h3>修改<code>_config.yml</code></h3>
+
+<p><em>日期格式： <code>date-formate: %Y年-%m月-%d日</code><br/>
+</em>分类前缀显示为中文：<code>category_title_prefix: &ldquo;分类&rdquo;</code>
+*继续阅读/阅读全文：<code>excerpt_link: &ldquo;阅读全文 &arr;&rdquo;</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用MWPhotoBrowser时出现的一些坑]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-%5B%3F%5D-xie-keng.html"/>
+    <updated>2015-03-17T09:40:11+08:00</updated>
+    <id>http://langyapojun.github.io/2015/03/17/shi-yong-mwphotobrowsershi-chu-xian-de-[?]-xie-keng</id>
+    <content type="html"><![CDATA[<p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。  <!--more-->
+先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的</p>
+
+<h3>改动1</h3>
+
+<p>&emsp;&emsp;&emsp;因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS面试题目]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/03/03/da-jian-%5B%3F%5D-ge-zi-ji-de-octopress.html"/>
+    <updated>2015-03-03T22:35:24+08:00</updated>
+    <id>http://langyapojun.github.io/2015/03/03/da-jian-[?]-ge-zi-ji-de-octopress</id>
+    <content type="html"><![CDATA[<p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少<!--more--></p>
+
+<h3>1.#import和#include的区别，@class的作用是什么？</h3>
+
+<pre><code>    #import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。    
+    所以一般来说，在interface中引用一个类，就用@class，它会把这个类作为一个类型来使用，而在实现这个interface的文件中，如果需要引用这个类的实体变量或者方法之类的，还是需要import这个在@class中声明的类。
+    #import比起#include的好处就是不会引起重复包含。
+</code></pre>
+
+<h3>2.方法前加号和减号的区别</h3>
+
+<pre><code>加号：类方法  
+减号：实例方法
+</code></pre>
+
+<h3>3.MVC是什么？有什么特性？ </h3>
+
+<pre><code>MVC是一种设计模式，由模型、视图、控制器3部分组成。  
+模型：保存应用程序数据的类，处理业务逻辑的类   
+视图：窗口，控件和其他用户能看到的并且能交互的元素  
+控制器：将模型和试图绑定在一起，确定如何处理用户输入的类
+</code></pre>
+
+<h3>4.obj-c有多重继承么?不是的话有什么替代方法?</h3>
+
+<pre><code>oc不支持多重继承，用protocol委托代理来替代
+</code></pre>
+
+<h3>5.NSNotification和KVO的区别和用法是什么？什么时候应该使用通知，什么时候应该使用KVO，它们的实现上有什么区别吗？如果用protocol和delegate（或者delegate的Array）来实现类似的功能可能吗？如果可能，会有什么潜在的问题？如果不能，为什么？</h3>
+
+<pre><code>KVO只能监测属性的变化，通过NSString类型的属性名来实现。但是实现了自动监测，当属性值变化时，会自动通知观察者，不用再添加代码了。 NSNotification比较灵活，可以监测的内容较多，但是需要被观察者手动发送通知，观察者才能响频。 protocol通过添加一个NSArray也能实现类似的功能，但是实现上需要自己处理delegate的添加与删除，自己在属性变化时手动通知，较繁琐，易出错。
+</code></pre>
+
+<h3>6.您是否做过异步的网络处理和通讯方面的工作？如果有，能具体介绍一些实现策略么？</h3>
+
+<pre><code>做过。 通过注册代码或者block的方式，实现回调。在网络处理方面，统一处理出错的情况，没出错的情况下，将数据分别发送给接收者。
+</code></pre>
+
+<h3>7.你实现过一个框架或者库以供别人使用么？如果有，请谈一谈构建框架或者库时候的经验；如果没有，请设想和设计框架的public的API，并指出大概需要如何做、需要注意一些什么方面，来使别人容易地使用你的框架。</h3>
+
+<pre><code>曾经移植过一个框架，把C++的一套类库移植到OC上面，主要工作就是做一个oc++的接口层。做的过程中，遇到的问题就是在原来框架中，很多头文件中用结构体或者类的地方，没有用指针，导致不能用声明的方式来使用类和结构体，必须在头文件中把其它头文件导入，这样导致整个接口需要提供的头文件太多了。 还封装过供他人调用的接口。建议就是调用方法尽可能简单，做好传入参数的安全检查及错误提醒。因为你无法确定你的调用者给你传什么样的数据进来。如果实现方法中耗时较长，需要用异步的方式进行结果返回，可以选用delegate或者block的方式。
+参见唐巧的[http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/](博客)
+</code></pre>
+
+<h3>8.NSOperation vs Grand Central Dispatch</h3>
+
+<pre><code>GCD is a low-level C-based API that enables very simple use of a task-based concurrency model. NSOperation and NSOperationQueue are Objective-C classes that do a similar thing. NSOperation was introduced first, but as of 10.6 and iOS 4, NSOperationQueue and friends are internally implemented using GCD.
+
+    In general, you should use the highest level of abstraction that suits your needs. This means that you should usually use NSOperationQueue instead of GCD, unless you need to do something that NSOperationQueue doesn't support.
+
+    Note that NSOperationQueue isn't a "dumbed-down" version of GCD; in fact, there are many things that you can do very simply with NSOperationQueue that take a lot of work with pure GCD. (Examples: bandwidth-constrained queues that only run N operations at a time; establishing dependencies between operations. Both very simple with NSOperation, very difficult with GCD.) Apple's done the hard work of leveraging GCD to create a very nice object-friendly API with NSOperation. Take advantage of their work unless you have a reason not to.
+
+    Caveat: On the other hand, if you really just need to send off a block, and don't need any of the additional functionality that NSOperationQueue provides, there's nothing wrong with using GCD. Just be sure it's the right tool for the job.
+</code></pre>
+
+<h3>9.static的作用</h3>
+
+<pre><code>作用范围为该函数体，不同于auto变量。
+1）该变量的内存只被分配一次，因此其值在下次调用时扔维持上次的值；
+2）在模块内的static全局变量尅被模块内所用函数访问，但不能被模块外其他函数访问；
+3）在模块内的static函数只可被这一模块内的其他函数调用，这个函数的使用范围被限制在它的模块内；
+4）在类中的static成员变量属于整个类所拥有，对类的所有对象只有一份拷贝；
+5）在类中的static成员函数属于整个类所拥有，这个函数不接收this指针，因而只能访问类的static成员变量。
+</code></pre>
+
+<h3>10.const的作用</h3>
+
+<pre><code>const意味着“只读”，例子：
+const int a;
+int const a;
+const int *a;
+int * const a;
+int const *a const;
+前两个作用一样，a是一个长整数型，第三个意味着a是一个指向常整数型的指针；第四个a是一个指向整数型的常指针；第五个a是一个指向常整数型的常指针；
+欲阻止一个变量被改变，可以使用 const 关键字。
+（1）在定义该 const 变量时，通常需要对它进行初始化，因为以后就没有机会再去改变它了；
+（2）对指针来说，可以指定指针本身为 const，也可以指定指针所指的数据为 const，或二者同时指
+定为 const；
+（3）在一个函数声明中，const 可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
+（4）对于类的成员函数，若指定其为 const 类型，则表明其是一个常函数，不能修改类的成员变量；
+（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用UIWebView来load图片很慢的方法]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa.html"/>
+    <updated>2015-01-20T00:48:29+08:00</updated>
+    <id>http://langyapojun.github.io/2015/01/20/yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa</id>
+    <content type="html"><![CDATA[<p>load的慢不是错，不去解决才是错<!--more--><br/>
+<a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview"><a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview</a></a><br></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[给自己的2015来份计划表]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao.html"/>
+    <updated>2015-01-06T09:11:21+08:00</updated>
+    <id>http://langyapojun.github.io/2015/01/06/gei-zi-ji-de-2015lai-fen-ji-hua-biao</id>
+    <content type="html"><![CDATA[<p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。<!--more-->也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。</p>
+
+<ol>
+<li>学习一门新的不同风格的编程语言</li>
+</ol>
+
+
+<p>这是很需要的一件事，因为如果我们只了解一种语言，它就会局限你解决问题的能力和你的职业发展。所以在新的一年，你应该花些时间学习一门新的语言，体验不同的编程风格，并学以致用。所以，要学会一门脚本语言PHP或者Python吧。</p>
+
+<ol>
+<li>提高你的已有技能</li>
+</ol>
+
+
+<p>跟随各大神的脚步，多去github，code4app,cocoacontrol,cocoaChina等开源社区逛逛，要深入了解那些优秀源代码，去读去理解，不要只知道拿来项目引用，强化自己的技术，加深对知识的理解。如果可以的话，可以到当地的大学听课学习。</p>
+
+<ol>
+<li>活动你的手指，但不是在键盘上</li>
+</ol>
+
+
+<p>从你的书架上拿起“刺客信条”或其它游戏，用手柄和方向盘操纵游戏，活动你的关节和手指，当然还可以减压。哟哟，还有就是运动了，不要忘记自己要多运动，时间是抽出来的，没事多出去骑骑车，打打球，不要老宅在家了。</p>
+
+<ol>
+<li>按时交付每一个项目</li>
+</ol>
+
+
+<p>当然，这一点你不能完全控制，但是你要确保你的文档按时交付，不拖累整个项目的进展。保证项目进度，不能干事的员工只会慢慢疏远公司体制和亲和力。</p>
+
+<ol>
+<li>更多的时间远离计算机</li>
+</ol>
+
+
+<p>让自己有更多的时间在做饭、骑车、旅行或者学习艺术，总之多做一些不需要总盯着电脑屏幕的事情，到户外闻一闻花香，感受一下自然气息。</p>
+
+<ol>
+<li>关注更多信息</li>
+</ol>
+
+
+<p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解决Octopress访问慢和一些设置问题]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti.html"/>
+    <updated>2015-01-04T13:55:57+08:00</updated>
+    <id>http://langyapojun.github.io/2015/01/04/jie-jue-octopressfang-wen-man-he-[?]-xie-she-zhi-wen-ti</id>
+    <content type="html"><![CDATA[<p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。<!--more-->And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。<p></p>
+
+<p><b1>What the hell!</b1></p>
+
+<hr />
+
+<p>好吧，结素，开始正题！</p>
+内容来自各大大的blog，由<a href="http://beyondvincent.com/blog/2013/07/27/107-hello-page-of-github/"><code>破船之家</code></a>，<a href="http://droidyue.com/blog/2014/06/22/fix-octopress-slow-loading-speed-issue-in-china-mainland/"><code>技术小黑屋</code></a></p></p>
+
+<h2>1、初级问题</h2>
+
+
+<p>首先打开：<code>_config.yml</code></p>
+我一狠心将Github，Twitter,Google +1, Google Plus, Pinboard, Delicious, Disqus, Google analytics, Facebook一律封杀了&hellip;&hellip;艾玛，好残忍⇀ ⇀ </p>
+全部前面加#注释了</p></p>
+
+<h2>2、关键问题</h2>
+
+
+<p>Octopress很多依赖于Google的库和资源，So,google拜拜<del>(>_&lt;)</del> </p></p>
+
+<p>对于使用Google Analytics来说，加在ga.js这个文件简直是要命的慢，这里我使用自己存放在七牛CDN上的js.<a href="http://droidyue-tools.qiniudn.com/ga.js"><a href="http://droidyue-tools.qiniudn.com/ga.js">http://droidyue-tools.qiniudn.com/ga.js</a></a> 已验证，完全可以正常收集数据。
+参考如下，修改<code>source/_includes/google_analytics.html</code></p></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> __gaq.push([&#39;_trackPageview&#39;]);
+</span><span class='line'>
+</span><span class='line'> (function() {
+</span><span class='line'> var ga = document.createElement(&#39;script&#39;); ga.type = &#39;text/javascript&#39;; ga.async = true;
+</span><span class='line'> ga.src=&#39;http://droidyue-tools.qiniudn.com/ga.js&#39;;
+</span><span class='line'> var s = document.getElementsByTagName(&#39;script&#39;)[0]; s.parentNode.insertBefore(ga, s);
+</span><span class='line'> })();
+</span><span class='line'>   <span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>解决fonts.googleapis.com蜗牛慢</h3>
+
+
+
+
+<p>这里我们使用数字公司提供的Google Fonts大陆解决方案，使用<code>fonts.useso.com</code>替换<code>fonts.googleapis.com</code>。<br/>
+修改文件<code>/source/_includes/custom/head.html</code></p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="c">&lt;!--Fonts from Google&quot;s Web font directory at http://google.com/webfonts --&gt;</span>
+</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>解决ajax.googleapis.com慢的问题</h3>
+
+
+
+
+<p>修改<code>source/_includes/head.html</code></p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>   <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/stylesheets/screen.css&quot;</span> <span class="na">media=</span><span class="s">&quot;screen, projection&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/atom.xml&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">title=</span><span class="s">&quot;技术小黑屋&quot;</span> <span class="na">type=</span><span class="s">&quot;application/atom+xml&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/modernizr-2.0.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.useso.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;script&gt;</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">&amp;&amp;</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">unescape</span><span class="p">(</span><span class="s1">&#39;%3Cscript src=&quot;./javascripts/lib/jquery.min.js&quot;%3E%3C/script%3E&#39;</span><span class="p">))</span><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/javascripts/octopress.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p></p>
+
+<p>好了，到此的话就可以了，基本上访问慢得问题解决了，现在我们来添加评论功能，评论我们用&lt; a href=&ldquo;<a href="http://duoshuo.com/">http://duoshuo.com/</a>&rdquo;><code>多说</code></a></p></p>
+
+<h2>添加评论</h2>
+
+
+<h4>进入多说官网，注册账号</h4>
+
+
+<h4>在_config.yml文件添加</h4>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># duoshuo comments
+</span><span class='line'>duoshuo_comments: true
+</span><span class='line'>duoshuo_short_name: yourname</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h4>在<code>source/_layouts/post.html</code>中添加多说评论模块</h4>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>｛% if site.duoshuo_short_name and site.duoshuo_comments == true and page.comments == true %｝
+</span><span class='line'>  &lt;section&gt;
+</span><span class='line'>    &lt;h1&gt;Comments&lt;/h1&gt;
+</span><span class='line'>    &lt;div id="comments" aria-live="polite"&gt;｛% include post/duoshuo1.html %｝&lt;/div&gt;
+</span><span class='line'>  &lt;/section&gt;
+</span><span class='line'>｛% endif %｝</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h4>创建<code>source/_includes/post/duoshuo.html</code>，并填入如下内容</h4>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers">
+<span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''>
+<span class='line'>&lt;!-- Duoshuo Comment BEGIN --&gt;
+</span><span class='line'>&lt;div class="ds-thread"&gt;&lt;/div&gt;
+</span><span class='line'>&lt;script type="text/javascript"&gt;
+</span><span class='line'>  var duoshuoQuery = {short_name:"beyondvincent"};
+</span><span class='line'>  (function() {
+</span><span class='line'>    var ds = document.createElement('script');
+</span><span class='line'>    ds.type = 'text/javascript';ds.async = true;
+</span><span class='line'>    ds.src = 'http://static.duoshuo.com/embed.js';
+</span><span class='line'>    ds.charset = 'UTF-8';
+</span><span class='line'>    (document.getElementsByTagName('head')[0] 
+</span><span class='line'>    || document.getElementsByTagName('body')[0]).appendChild(ds);
+</span><span class='line'>  })();
+</span><span class='line'>&lt;/script&gt;
+</span><span class='line'>&lt;!-- Duoshuo Comment END --&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h4>发布到站点</h4>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers">
+<span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''>
+<span class='line'>$ rake generate
+</span><span class='line'>$ git add .
+</span><span class='line'>$ git commit -am "添加多说评论" 
+</span><span class='line'>$ git push origin source
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>百度统计</h3>
+
+
+<p>从百度统计获取脚本，然后添加到文件source/_includes/after_footer.html文件</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用octopress搭建github博客]]></title>
+    
+    <link href="http://langyapojun.github.io/2015/01/04/shi-yong-octopressda-jian-githubbo-ke.html"/>
+    <updated>2015-01-04T11:05:25+08:00</updated>
+    <id>http://langyapojun.github.io/2015/01/04/shi-yong-octopressda-jian-githubbo-ke</id>
+    <content type="html"><![CDATA[<p><a href="http://octopress.org/"><code>Octopress</code></a>是利用<a href="http://github.com/mojombo/jekyll"><code>Jekyll</code></a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
+<!--more-->号称是hacker专属的一个博客系统(<code>A blogging framework for hackers.</code>)</p>
+
+
+
+
+<p>本文只讲自己在苹果电脑(OS X 10.10)利用Octopress搭建一个Github博客,内容参照<code><a href ="http://beyondvincent.com/blog/2013/08/03/108-creating-a-github-blog-using-octopress/">破船之家</a>，<a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">唐巧_boy</a></code></p>
+
+
+
+
+<h3>目录</h3>
+
+
+
+
+<ul>
+<li>1、安装Ruby</li>
+<li>2、安装Octopress</li>
+<li>3、配置Octopress</li>
+<li>4、将博客部署到GitHub上</li>
+<li>5、开始写博客</li>
+<li>6、更多操作</li>
+<li>7、小结</li>
+</ul>
+
+
+
+
+<h3>1、安装Ruby</h3>
+
+
+
+
+<p>Octopress需要Ruby环境，RVM(Ruby Version Manager)负责安装和管理Ruby的环境。所以我们先在终端输入如下命令，来安装RVM：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>接着是安装Ruby 1.9.3，在终端依次运行如下命令：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rvm install 1.9.3
+</span><span class='line'>rvm use 1.9.3
+</span><span class='line'>rvm rubygems latest</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>完成上面的操作之后，运行<code>ruby --version</code>应该可以看到ruby 1.9.3环境已经安装好了。🐷：波煮在这里说句，这个ruby version着实让我心塞，搞了好久好久，以至于后来放弃搭建，到现在闲暇之余才努力研究将其解决，具体问题具体谷歌( ⊙ o ⊙ )啊！</p>
+
+
+
+
+<p>参考：<a href="http://octopress.org/docs/setup/rvm/">Installing Ruby With RVM</a></p>
+
+
+
+
+<h3>2、安装Octopress</h3>
+
+
+
+
+<p>在安装Octopress之前，请确保你的电脑上已经安装有git了，在终端输入<code>git --version</code>.
+
+<p>git安装之后，利用git命令将octopress从github上clone到本机，如下命令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress    # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+</span><span class='line'>ruby --version  # Should report Ruby 1.9.3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接着安装相关依赖项：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后安装默认的Octopress 主题。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考： <a href="http://octopress.org/docs/setup/">Octopress Setup</a></p>
+
+<h3>3、配置Octopress</h3>
+
+<p>配置<code>_config.yml</code>和<code>Rakefile</code>文件。</p>
+其中Rakefile是跟博客部署相关，一般情况下并不需要修改这个文件，除非使用了rsync。</p>
+
+
+
+
+<p><em>config.yml是博客重要的一个配置文件，在</em>config.yml文件中有三大配置项：<code>Main Configs</code>、<code>Jekyll &amp; Plugins</code>和<code>3rd Party Settings</code>。</p>
+
+
+
+
+<p>一般，该文件中其中<code>url</code>是必须要填写的，这里的url是在github上创建的一个仓库地址，具体请看第四步中创建的地址。另外再修改一下<code>title</code>、<code>subtitle</code>和<code>author</code>，根据需求，在开启一些第三方组件服务。</p>
+
+
+<p><b><code>再注：</code>波煮将在下篇文章中说明一些搭建之后在拥有全球超级局域网的天朝的一些令人心塞令人烦闷的墙内话</b></p></p>
+
+<p>关于_config.yml文件中的更多内容，请看这里的内容：<a href="http://octopress.org/docs/configuring/">Configuring Octopress</a></p>
+
+
+
+
+<h3>4、将博客部署到GitHub上</h3>
+
+
+
+
+<p>Github的<a href="http://pages.github.com/"><code>Page service</code></a>可以免费托管博客，并且还可以自定义域名。</p>
+
+
+
+
+<p>首先需要在GitHub上<a href="https://github.com/new"><code>创建一个仓库</code></a>，并将仓库名称按照这样的方式进行命名：<code>username.github.com</code>或<code>organization.github.com</code>。等后面配置完毕之后，我们就可以在浏览器中使用页面地址<code>http://username.github.com</code>来访问我们的博客。一般来说，我们希望在将博客的源码放到source分支下，并把生成的内容提交到master分支。</p>
+
+
+
+
+<p>创建好仓库之后，我们需要利用octopress的一个<code>配置rake任务</code>来自动配置上面创建的仓库：可以让我们方便的部署GitHub page。在终端输入如下命令：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>上面的命令会做一些事情(详细介绍看下面给出的参考链接)。其中最主要的就是创建一个<code>_deploy</code>目录，目录用来存放部署到master分支的内容。期间会要求你输入仓库的url，根据提示，进行输入即可。</p>
+
+
+
+
+<p>完成上面的命令之后，我们就可以生成博客并真正的部署到仓库中了。执行如下命令：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>上面的命令首先生成博客文件，并将生成的博客文件拷贝到<code>_deploy/</code>目录下，然后将这些内容添加到git中，并commit和push到仓库的master分支。</p>
+
+
+
+
+<p>现在可以访问<code>http://username.github.com</code>了。注意：有时候可能会有延时，要等几分钟才能打开。</p>
+
+
+
+
+<p>至此，我们的博客已经完成基本的部署，不过博客的source需要单独提交，执行如下命令就可以将source提交到仓库的source分支下。</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m 'Initial source commit'
+</span><span class='line'>$ git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>如果在部署到仓库之前，需要先预览一下博客，可以在终端输入<code>rake preview</code>命令，然后就能在浏览器中进行本地预览访问了：<code>http://127.0.0.1:4000/</code>或<code>http://localhost:4000/</code>，效果跟仓库中的一样。</p>
+
+
+
+
+<p>参考：<a href="http://octopress.org/docs/deploying/">Deploying to Github Pages</a></p>
+
+
+
+
+<h3>5、开始写博客</h3>
+
+
+
+
+<p>Octopress为我们提供了一些task来创建博文和页面。博文必须存储在<code>source/_posts</code>目录下，并且需要按照Jekyll的命名规范对文章进行命名：<code>YYYY-MM-DD-post-title.markdown</code>。文章的名字会被当做url的一部分，而其中的日期用于对博文的区分和排序。</p>
+
+
+
+
+<p>通过Octopress提供的task可以正确的按照命名规范创建一个博文，并且在博文中会附带常用的一些yaml元数据。只需要在终端输入如下命令：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"]</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>其中title为博文的文件名，创建出来的文件默认是markdown格式。上面的命令会创建出这样一个文件：<code>source/_posts/2013-08-03-title.markdown</code>。打开这个文件，可以看到里面有如下一些内容了(告诉Jekyll博客引擎如何处理博文和页面)：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>layout: post
+</span><span class='line'>title: "title"
+</span><span class='line'>date: 2013-08-03 16:36
+</span><span class='line'>comments: true
+</span><span class='line'>categories: 
+</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>接着我们就可以在这个文件中写我们的博文啦。完成之后，我们可以预览和部署博文。下面是创建并部署博文的一个完整过程：</p>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake new_post["New Post"]
+</span><span class='line'>$ rake generate
+</span><span class='line'>$ git add .
+</span><span class='line'>$ git commit -am "Some comment here." 
+</span><span class='line'>$ git push origin source
+</span><span class='line'>$ rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>参考：<a href="http://octopress.org/docs/blogging/">Blogging Basics</a></p>
+
+
+
+
+<h3>6、后续</h3>
+
+
+
+
+<p>在搭建博客后，你会发现打开很慢很慢，所以我们需要对其做一个优化，这些内容写在另外一篇文章中，<a href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/"><code>跳吧，年轻人</code></a>。</p>
+
+]]></content>
+  </entry>
+  
+</feed>
