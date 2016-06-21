@@ -4,7 +4,7 @@
   <title><![CDATA[X0专业去码]]></title>
   <link href="http://langyapojun.github.io/atom.xml" rel="self"/>
   <link href="http://langyapojun.github.io/"/>
-  <updated>2016-03-09T20:34:21+08:00</updated>
+  <updated>2016-06-21T10:42:06+08:00</updated>
   <id>http://langyapojun.github.io/</id>
   <author>
     <name><![CDATA[X0]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode8 beta1新特性]]></title>
+    
+    <link href="http://langyapojun.github.io/2016/06/21/xcode8-beta1xin-te-xing.html"/>
+    <updated>2016-06-21T10:01:36+08:00</updated>
+    <id>http://langyapojun.github.io/2016/06/21/xcode8-beta1xin-te-xing</id>
+    <content type="html"><![CDATA[<p>   WWDC 2016已经结束，伴随着iOS10的发布，新的Xcode8beta1也出来了，虽然是beta，以前也被beta版本各种蹂躏，但还是需要亲自下载来体验一波的。 <!--more--></p>
+
+<h3>Swift 3</h3>
+
+<p>   Swift 3 是第一个主要的release版本。这个release版本统一核心API命名规则,,旨在增强代码的一致性和清晰。流行的系统API，如Core Graphics和 Grand Central Dispatch 与Swfit有着更丰富的表现力和协调力。</p>
+
+<h3>Interface Builder</h3>
+
+<p>Interface Builder 设计画布已经彻底再造工程，让你更快地工作并且提供更大的控制。在任何充满活力的苹果设备上看到一个完全实时的应用程序预览。你可以在不同的设备之间快速切换，看到不同设备中的界面显示效果。平移和缩放非常快，甚至你可以缩小故事板鸟瞰图时编辑你的界面。总体来说，Xcode8的interface builder胜过之前任何的版本，遥想当年使用sb，整台macBook卡死在那里的日子😂😂😂😂<br/>
+<img src="http://langyapojun.github.io/img/2016/06/interfacebuilder.png" alt="" /></p>
+
+<h3>运行时问题 Runtime Issues</h3>
+
+<p>这Xcode新特性,自动识别跟踪找到漏洞并且报告问题, 有些很难跟踪的bug，直到您的应用程序到了用户手中,也可能没有被发现。</p>
+
+<h6>Thread Sanitizer spots:新的线程污点清理器，解决多线程情况下的资源竞争条件,数据的变化和其它相关线程的bug</h6>
+
+<h6>View Debugger:使用更新的带有更大的保真度和视觉精度检查UI约束问题的视图调试器</h6>
+
+<h6>Memory Debugger:可以用新的内存调试跟踪器跟踪发出的内存泄漏警报</h6>
+
+<p><img src="http://langyapojun.github.io/img/2016/06/viewmemory.png" alt="" /></p>
+
+<h3>签名变的简单而强大 Signing Made Easy and Powerful</h3>
+
+<p>设备设置和代码签名有了极大的简化，新的自动化代码管理系统可以帮开发者自动签署他们需要的资源，从而让代码在你苹果设备的应用程序中正确地签名、调用和执行。开发者也可以选择手动配置文件，并且设置每个构建配置的签名程序，如果遇到任何问题，报告导航器会用需要改进的错误消息和日志提醒你。当你有个多个Mac的时候,Xcode会在每个Mac中自动生成对应的开发者证书。</p>
+
+<p>在你的苹果设备上开发和运行您的应用程序和进入Xcode的偏好设置输入Apple ID一样容易。苹果开发者账号不是必需的。</p>
+
+<p>Provisioning Profile 文件选取，已经从Buiid Settings移动到了General中,Buiid Settings中已经标识了 Deprecated。
+<img src="http://langyapojun.github.io/img/2016/06/sign.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2016找工作实录]]></title>
+    
+    <link href="http://langyapojun.github.io/2016/04/25/2016zhao-gong-zuo-shi-lu.html"/>
+    <updated>2016-04-25T13:15:23+08:00</updated>
+    <id>http://langyapojun.github.io/2016/04/25/2016zhao-gong-zuo-shi-lu</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Git操作大全简洁版]]></title>
