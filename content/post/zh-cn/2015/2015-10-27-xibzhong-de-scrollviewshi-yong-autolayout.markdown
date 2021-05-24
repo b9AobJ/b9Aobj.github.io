@@ -32,19 +32,3 @@ tags:
     ...
   </ul>
 </div>
-
-{% codeblock %}
-Awesome code snippet
-{% endcodeblock %}
-{% codeblock lang:objc %}
-[rectangle setX: 10 y: 10 width: 20 height: 20];
-{% endcodeblock %}3
-
-{% codeblock Time to be Awesome - awesome.rb %}
-puts "Awesome!" unless lame
-{% endcodeblock %}
-
-{% codeblock Javascript Array Syntax lang:js http://j.mp/pPUUmW MDN Documentation %}
-var arr1 = new Array(arrayLength);
-var arr2 = new Array(element0, element1, ..., elementN);
-{% endcodeblock %}
