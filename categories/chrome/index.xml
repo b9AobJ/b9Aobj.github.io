@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chrome on X•O专业去码</title><link>https://example.com/categories/chrome/</link><description>Recent content in Chrome on X•O专业去码</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Mon, 10 May 2021 18:07:16 +0800</lastBuildDate><atom:link href="https://example.com/categories/chrome/index.xml" rel="self" type="application/rss+xml"/><item><title>Chrome的console调试</title><link>https://example.com/post/zh-cn/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</link><pubDate>Mon, 10 May 2021 18:07:16 +0800</pubDate><guid>https://example.com/post/zh-cn/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</guid><description>
+&lt;p>1、$_&lt;/p>
+&lt;p>&lt;code>$_&lt;/code>上次结果的引用&lt;/p>
+&lt;p>2、$i&lt;/p>
+&lt;p>需要Chrome插件:(Console Importer)[https://chrome.google.com/webstore/detail/console-importer/hgajpakhafplebkdljleajgbpdmplhie/related]，可以快速的在console中引入&lt;code>npm&lt;/code>库。&lt;br>
+例如： &lt;code>$i('lodash')&lt;/code>或者&lt;code>$i('moment')&lt;/code>,就可以使用lodash或者moment库了。&lt;/p>
+&lt;p>3、copy(...)&lt;/p>
+&lt;p>&lt;code>copy&lt;/code>任何资源，如&lt;code>copy($0)&lt;/code>或&lt;code>copy($_)&lt;/code>&lt;/p>
+&lt;p>4、学会使用console.table来显示数组或者对象&lt;/p>
+&lt;p>5、&lt;/p></description></item></channel></rss>

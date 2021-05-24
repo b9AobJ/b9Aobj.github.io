@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>live555 on Claridade</title><link>https://example.com/pt/tags/live555/</link><description>Recent content in live555 on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Fri, 20 Oct 2017 10:44:12 +0800</lastBuildDate><atom:link href="https://example.com/pt/tags/live555/index.xml" rel="self" type="application/rss+xml"/><item><title>利用live555在Mac端搭建rtsp推流</title><link>https://example.com/pt/post/pt/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</link><pubDate>Fri, 20 Oct 2017 10:44:12 +0800</pubDate><guid>https://example.com/pt/post/pt/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</guid><description>
+&lt;p>利用live555在自己的Mac电脑上搭建一个rtsp推流；&lt;/p>
+&lt;p>最近需要探查SDK是否支持RTP协议，需要一个rtsp流地址播放，但是网络上给的测试地址只有一个大白熊的流可以用，但是这个流非常卡，SDK播放非常有问题，说明了SDK对于rtsp支持是有问题的，但是不清楚是否是因为这个流也有问题呢。所以就自己就想办法自己推流试试是否可以播放。后续再进行做相关的SDK优化。&lt;/p>
+&lt;p>老规矩，google.com，找到live555.com。自己下载源码编译，http://www.live555.com/liveMedia/#config-unix在此处找到Mac编译。&lt;/p>
+&lt;ol>
+&lt;li>下载tar.gz包，解压并cd live&lt;/li>
+&lt;li>终端至live文件夹，运行&lt;code>./genMakefiles &amp;lt;os-platform&amp;gt;&lt;/code>，注意：这里的os-platform是mac平台，至于其他平台可以查看live文件夹下的config.&lt;os-platform>文件，Mac对应macosx。所以是&lt;code>./genMakefiles macosx&lt;/code>&lt;/li>
+&lt;li>然后运行&lt;code>make&lt;/code>。如果你想打包live555库，可以运行&lt;code>make install&lt;/code>。解决端口占用，最好运行这个命令&lt;code>make CPPFLAGS=-DALLOW_RTSP_SERVER_PORT_REUSE=1 install&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;p>编译完成之后就会生成mediaServer文件夹，会有一个live555MediaServer可执行文件。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd mediaServer
+&lt;span class="ln">2&lt;/span>./live555MediaServer
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
+&lt;p>可以看到支持格式有：h264、h265、.aac、.ac3、.amr、.dv、.m4e、.mkv、.mp3、.mpg、.ogg、.ts、.vod、.wav、.webm&lt;/p>
+&lt;p>推流步骤：&lt;br>
+将NARUTO.mkv文件复制到和上面live555MediaServer可执行文件的同一个目录，
+可用vlc在打开网络中输入地址 rtsp://your_ip:port/file.mkv 观看视频了。
+还可以生成 m3u8文件在手机上访问，http://your_ip:8000/file.mkv。&lt;/p>
+&lt;p>手机端观看：同一个网络环境下，输入上面vlc地址既可以播放&lt;br>
+rtsp://192.168.1.106:8554/NARUTO.mkv&lt;/p></description></item></channel></rss>

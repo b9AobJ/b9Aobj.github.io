@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Swift on Clarity</title><link>https://example.com/en/tags/swift/</link><description>Recent content in Swift on Clarity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Fri, 07 May 2021 19:35:24 +0800</lastBuildDate><atom:link href="https://example.com/en/tags/swift/index.xml" rel="self" type="application/rss+xml"/><item><title>部分专业英文术语</title><link>https://example.com/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</link><pubDate>Fri, 07 May 2021 19:35:24 +0800</pubDate><guid>https://example.com/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</guid><description>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>术语&lt;/th>
+&lt;th>翻译&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>property wrapper&lt;/td>
+&lt;td>属性包装器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>projected value&lt;/td>
+&lt;td>被呈现值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>wrapped value&lt;/td>
+&lt;td>被包装值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>argument&lt;/td>
+&lt;td>实参&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>parameter&lt;/td>
+&lt;td>形参&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>variadic parameters&lt;/td>
+&lt;td>可变参数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>associated type&lt;/td>
+&lt;td>关联类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>range&lt;/td>
+&lt;td>区间&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type property&lt;/td>
+&lt;td>类型属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>unary operator&lt;/td>
+&lt;td>一元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>binary operator&lt;/td>
+&lt;td>二元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ternary operator&lt;/td>
+&lt;td>三元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>labeled statement&lt;/td>
+&lt;td>具名词句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>conform protocol&lt;/td>
+&lt;td>遵循协议&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>availability-condition&lt;/td>
+&lt;td>可用性条件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>fallthrough&lt;/td>
+&lt;td>贯穿&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>branch statement&lt;/td>
+&lt;td>分支语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>control transfer statement&lt;/td>
+&lt;td>控制传递语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type annotation&lt;/td>
+&lt;td>类型注解&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type identifier&lt;/td>
+&lt;td>类型标识符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>metatype type&lt;/td>
+&lt;td>元类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>protocol composition type&lt;/td>
+&lt;td>符合协议类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>associated value&lt;/td>
+&lt;td>关联值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>raw value&lt;/td>
+&lt;td>原始值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>computed property&lt;/td>
+&lt;td>计算属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>stored property&lt;/td>
+&lt;td>存储属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>operator&lt;/td>
+&lt;td>运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>array&lt;/td>
+&lt;td>数组&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>dictionary&lt;/td>
+&lt;td>字典&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>list&lt;/td>
+&lt;td>列表&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>statement&lt;/td>
+&lt;td>语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>expression&lt;/td>
+&lt;td>表达式&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional&lt;/td>
+&lt;td>可选&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>implicitly unwrapped optional&lt;/td>
+&lt;td>隐式解包可选值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional binding&lt;/td>
+&lt;td>可选绑定&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional chaining&lt;/td>
+&lt;td>可选链&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>collection&lt;/td>
+&lt;td>集合&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>convention&lt;/td>
+&lt;td>约定&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>iterate&lt;/td>
+&lt;td>迭代&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>nest&lt;/td>
+&lt;td>嵌套&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>inheritance&lt;/td>
+&lt;td>继承&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>override&lt;/td>
+&lt;td>重写&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>base class&lt;/td>
+&lt;td>基类&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>designated initializer&lt;/td>
+&lt;td>指定构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>convenience initializer&lt;/td>
+&lt;td>便利构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>automatic reference counting&lt;/td>
+&lt;td>自动引用计数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type inference&lt;/td>
+&lt;td>类型推断&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type casting&lt;/td>
+&lt;td>类型转换&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>unwrapped&lt;/td>
+&lt;td>解包&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>wrapped&lt;/td>
+&lt;td>包装&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>note&lt;/td>
+&lt;td>注意&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>closure&lt;/td>
+&lt;td>闭包&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>tuple&lt;/td>
+&lt;td>元组&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>first-class&lt;/td>
+&lt;td>一等&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>deinitializer&lt;/td>
+&lt;td>析构器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>initializer&lt;/td>
+&lt;td>构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>initialization&lt;/td>
+&lt;td>构造过程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>deinitialization&lt;/td>
+&lt;td>析构过程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>subscript&lt;/td>
+&lt;td>下标&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>property&lt;/td>
+&lt;td>属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>attribute&lt;/td>
+&lt;td>特性或者属性，根据上下文&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>method&lt;/td>
+&lt;td>方法&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>enumeration&lt;/td>
+&lt;td>枚举&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>strcture&lt;/td>
+&lt;td>结构体&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>protocol&lt;/td>
+&lt;td>协议&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>extension&lt;/td>
+&lt;td>扩展&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>generic&lt;/td>
+&lt;td>泛型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>literal value&lt;/td>
+&lt;td>字面量&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>alias&lt;/td>
+&lt;td>别名&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>assertion&lt;/td>
+&lt;td>断言&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>conditional compilation&lt;/td>
+&lt;td>条件编译&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>opaque type&lt;/td>
+&lt;td>不透明类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>function&lt;/td>
+&lt;td>函数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>runtime&lt;/td>
+&lt;td>运行时&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Swift 2 Playground注释使用markdown</title><link>https://example.com/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
+&lt;p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。&lt;/p>
+&lt;p>标准代码注释可以是单行注释、多行注释：&lt;br>
+&lt;code>//A Single line comment&lt;/code>&lt;br>
+&lt;code>/*&lt;/code>&lt;br>
+&lt;code>A block comment&lt;/code>&lt;br>
+&lt;code>over two lines&lt;/code>&lt;br>
+&lt;code>*/&lt;/code>&lt;/p>
+&lt;p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个&lt;code>:&lt;/code>即可：&lt;br>
+&lt;code>//: _Rich text_ single line *comment* thanks to __markdown__&lt;/code>&lt;br>
+&lt;img src="https://example.com/img/2015/06/playground/playground1.png" alt="">&lt;br>
+　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择&lt;code>Editor&lt;/code>--&lt;code>Show Rendered Markup&lt;/code>，然后就可以看到效果了。&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground2.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item></channel></rss>

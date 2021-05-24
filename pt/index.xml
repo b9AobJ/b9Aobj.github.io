@@ -1,0 +1,1477 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Claridade</title><link>https://example.com/pt/</link><description>Recent content on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 12 May 2021 20:37:14 +0800</lastBuildDate><atom:link href="https://example.com/pt/index.xml" rel="self" type="application/rss+xml"/><item><title>Ffmpeg文档</title><link>https://example.com/pt/post/pt/2020/ffmpeg%E6%96%87%E6%A1%A3/</link><pubDate>Wed, 12 May 2021 20:37:14 +0800</pubDate><guid>https://example.com/pt/post/pt/2020/ffmpeg%E6%96%87%E6%A1%A3/</guid><description>
+&lt;p>&lt;strong>Insert Lead paragraph here.&lt;/strong>&lt;/p></description></item><item><title>Cas接入</title><link>https://example.com/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://example.com/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
+&lt;h3 id="sso介绍">SSO介绍&lt;/h3>
+&lt;h4 id="背景">背景&lt;/h4>
+&lt;p>在企业发展初期，企业使用的系统很少，通常一个或者两个，每个系统都有自己的登录模块，运营人员每天用自己的账号登录，很方便。
+但随着企业的发展，用到的系统随之增多，运营人员在操作不同的系统时，需要多次登录，而且每个系统的账号都不一样，这对于运营人员来说，很不方便。于是，就想到是不是可以在一个系统登录，其他系统就不用登录了呢？这就是单点登录要解决的问题。&lt;/p>
+&lt;h4 id="定义">定义&lt;/h4>
+&lt;p>&lt;code>单点登录&lt;/code>英文全称Single Sign On，简称就是SSO。它的解释是：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统.&lt;/p>
+&lt;p>&lt;img src="https://example.com/images/2020/cas01.png" alt="01">
+如图所示，图中有4个系统，分别是Application1、Application2、Application3、和SSO。Application1、Application2、Application3没有登录模块,只负责业务模块，而SSO只有登录模块，没有其他的业务模块，当Application1、Application2、Application3需要登录时，将跳到SSO系统，SSO系统完成登录，其他的应用系统也就随之登录了。这完全符合我们对单点登录（SSO）的定义。&lt;/p>
+&lt;p>同域下的单点登录是运用了Cookie同域共享的特性,&lt;code>但这不是真正的单点登录&lt;/code>。
+因为如果是不同域呢？不同域之间Cookie是不共享的，怎么办？
+这里我们就要说一说CAS了，CAS流程才是单点登录&lt;code>正宗的解决方案&lt;/code>。&lt;/p>
+&lt;h4 id="cas介绍">CAS介绍&lt;/h4>
+&lt;p>&lt;code>CAS&lt;/code> （ Central Authentication Service ） 是 Yale 大学发起的一个企业级的、开源的项目，旨在为 Web 应用系统提供一种可靠的单点登录解决方法（属于 Web SSO ）。&lt;/p>
+&lt;p>从结构上看，CAS系统包含两个部分：CAS Server 和CAS Client
+&lt;code>CAS Server&lt;/code> 负责对用户的认证工作；需要独立部署,有官方的详细教程.
+&lt;code>CAS Client&lt;/code> 负责处理对客户端受保护资源的访问请求; 与受保护的客户端应用部署在一起，以Filter方式保护 Web 应用的受保护资源，过滤从客户端过来的每一个 Web请求.&lt;/p>
+&lt;p>CAS Client 没有官方的Node版本,需要自己实现.
+&lt;code>所以今天我就来谈谈Node与 CAS Client集成的实现&lt;/code>.&lt;/p>
+&lt;h4 id="cas理论">CAS理论&lt;/h4>
+&lt;p>CAS 协议定义了一组术语，一组票据，一组接口。&lt;/p>
+&lt;h5 id="术语">术语：&lt;/h5>
+&lt;ul>
+&lt;li>&lt;code>Service&lt;/code>: 需要使用单点登录的各个服务。&lt;/li>
+&lt;li>&lt;code>CAS Server&lt;/code>: 中心服务器，也是SSO中负责单点登录的服务器。&lt;/li>
+&lt;li>&lt;code>CAS Client&lt;/code>: 各个service的后台。&lt;/li>
+&lt;/ul>
+&lt;h5 id="接口">接口：&lt;/h5>
+&lt;ul>
+&lt;li>/login：登录接口，用于登录到中心服务器。&lt;/li>
+&lt;li>/logout：登出接口，用于从中心服务器登出。&lt;/li>
+&lt;li>/validate：用于验证用户是否登录中心服务器。&lt;/li>
+&lt;li>/serviceValidate：用于让各个 service 验证是否登录中心服务器。&lt;/li>
+&lt;/ul>
+&lt;h5 id="票据">票据：&lt;/h5>
+&lt;ul>
+&lt;li>
+&lt;p>TGT：Ticket Grangting Ticket
+TGT是CAS为用户签发的登录票据，拥有了TGT，用户就可以正名用户在CAS成功登录过。TGT封装了Cookie值对应的用户信息。当HTTP请求到来时，CAS以此Cookie值（TGC)为key查询缓存中有无TGT，如果有的话，则相信用户已登录过。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TGC： Ticket Granting Cookie
+CAS Server生成TGT放入自己的Session中，而TGC就是这个Session的唯一标识（SessionId），以Cookie形式放到浏览器端，是CAS Server用来明确用户身份的凭证。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>ST： Service Ticket
+ST是CAS用户签发的访问某一service的票据。用户访问service时，service发现用户没有ST，则要求用户去CAS获取S。用户想CAS发出获取ST的请求，CAS发现用户有TGT，则签发一个ST，返回给用户。用户拿着ST去访问service，service拿ST去CAS验证，验证通过后，允许用户访问资源。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="cas流程">CAS流程&lt;/h3>
+&lt;h4 id="官方流程图">官方流程图&lt;/h4>
+&lt;p>&lt;img src="https://example.com/images/2020/cas02.png" alt="02">
+官方文档:https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol.html&lt;/p>
+&lt;h4 id="流程图">流程图&lt;/h4>
+&lt;p>&lt;img src="https://example.com/images/2020/cas03.png" alt="03">&lt;/p>
+&lt;h4 id="流程图解析">流程图解析&lt;/h4>
+&lt;p>1、 用户访问产品a，域名是www.a.cn.
+2. 由于用户没有携带在 a 服务器上登录的 a cookie，所以 a 服务器返回 http 重定向，重定向的 url 是 SSO 服务器的地址，同时 url 的 query 中通过参数指明登录成功后，回跳到 a 页面。重定向的url 形如 sso.dxy.cn/login?service=https%3A%2F%2Fwww.a.cn。
+3. 由于用户没有携带在 SSO 服务器上登录的 TGC（看上面，票据之一），所以 SSO 服务器判断用户未登录，给用户显示统一登录界面。用户在 SSO 的页面上进行登录操作。
+4. 登录成功后，SSO 服务器构建用户在 SSO 登录的 TGT（又一个票据），同时返回一个 http 重定向。这里注意：重定向地址为之前写在 query 里的 a 页面。重定向地址的 query 中包含 sso 服务器派发的 ST。重定向的 http response 中包含写 cookie 的 header。这个 cookie 代表用户在 SSO 中的登录状态，它的值就是 TGC。
+5. 浏览器重定向到产品 a。此时重定向的 url 中携带着 SSO 服务器生成的 ST。
+6. 根据 ST，a 服务器向 SSO 服务器发送请求，SSO 服务器验证票据的有效性。验证成功后，a 服务器知道用户已经在 sso 登录了，于是 a 服务器构建用户登录 session，记为 a session。并将 cookie 写入浏览器。注意，此处的 cookie 和 session 保存的是用户在 a 服务器的登录状态，和 CAS 无关。
+7. 之后用户访问产品 b，域名是 &lt;a href="http://www.b.cn">www.b.cn&lt;/a>。
+8. 由于用户没有携带在 b 服务器上登录的 b cookie，所以 b 服务器返回 http 重定向，重定向的 url 是 SSO 服务器的地址，去询问用户在 SSO 中的登录状态。
+9. 浏览器重定向到 SSO。注意，第 4 步中已经向浏览器写入了携带 TGC 的cookie，所以此时 SSO 服务器可以拿到，根据 TGC 去查找 TGT，如果找到，就判断用户已经在 sso 登录过了。
+10. SSO 服务器返回一个重定向，重定向携带 ST。注意，这里的 ST 和第4步中的 ST 是不一样的，事实上，每次生成的 ST 都是不一样的。
+11. 浏览器带 ST 重定向到 b 服务器，和第 5 步一样。
+12. b 服务器根据票据向 SSO 服务器发送请求，票据验证通过后，b 服务器知道用户已经在 sso 登录了，于是生成 b session，向浏览器写入 b cookie。&lt;/p>
+&lt;h3 id="实践演示">实践演示&lt;/h3>
+&lt;p>发车了......&lt;/p>
+&lt;h4 id="cas-域名配置">CAS 域名配置&lt;/h4>
+&lt;ul>
+&lt;li>cas server 域名 &lt;a href="https://cas.ucloudadmin.com">https://cas.ucloudadmin.com&lt;/a>&lt;/li>
+&lt;li>cas client 域名 &lt;a href="http://www.clienta.com">www.clienta.com&lt;/a> www.clientb.com&lt;/li>
+&lt;/ul>
+&lt;h4 id="host-配置">host 配置&lt;/h4>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>#CAS
+&lt;span class="ln">2&lt;/span>127.0.0.1 clienta.com
+&lt;span class="ln">3&lt;/span>127.0.0.1 clientb.com
+&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="nginx-配置">nginx 配置&lt;/h4>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>server {
+&lt;span class="ln"> 2&lt;/span>listen 80;
+&lt;span class="ln"> 3&lt;/span>server_name clienta.com;
+&lt;span class="ln"> 4&lt;/span>
+&lt;span class="ln"> 5&lt;/span>location / {
+&lt;span class="ln"> 6&lt;/span>proxy_set_header Host $host;
+&lt;span class="ln"> 7&lt;/span>proxy_set_header X-Real-IP $remote_addr;
+&lt;span class="ln"> 8&lt;/span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+&lt;span class="ln"> 9&lt;/span>proxy_pass http://127.0.0.1:1024;
+&lt;span class="ln">10&lt;/span>}
+&lt;span class="ln">11&lt;/span>}
+&lt;span class="ln">12&lt;/span>
+&lt;span class="ln">13&lt;/span>server {
+&lt;span class="ln">14&lt;/span>listen 80;
+&lt;span class="ln">15&lt;/span>server_name clientb.com;
+&lt;span class="ln">16&lt;/span>
+&lt;span class="ln">17&lt;/span>location / {
+&lt;span class="ln">18&lt;/span>proxy_set_header Host $host;
+&lt;span class="ln">19&lt;/span>proxy_set_header X-Real-IP $remote_addr;
+&lt;span class="ln">20&lt;/span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+&lt;span class="ln">21&lt;/span>proxy_pass http://127.0.0.1:1025;
+&lt;span class="ln">22&lt;/span>}
+&lt;span class="ln">23&lt;/span>}
+&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="使用">使用&lt;/h4>
+&lt;h5 id="启动-cas-client-服务">启动 cas client 服务&lt;/h5>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd clienta
+&lt;span class="ln">2&lt;/span>npm start // or node app.js
+&lt;span class="ln">3&lt;/span>cd clientb
+&lt;span class="ln">4&lt;/span>npm start // or node app.js
+&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="clienta-代码">clienta 代码&lt;/h5>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>// app.js
+&lt;span class="ln"> 2&lt;/span>const express = require(&amp;#39;express&amp;#39;)
+&lt;span class="ln"> 3&lt;/span>const app = express()
+&lt;span class="ln"> 4&lt;/span>const session = require(&amp;#39;express-session&amp;#39;);
+&lt;span class="ln"> 5&lt;/span>const cas = require(&amp;#39;connect-cas&amp;#39;);
+&lt;span class="ln"> 6&lt;/span>const URL = require(&amp;#39;url&amp;#39;);
+&lt;span class="ln"> 7&lt;/span>const querystring = require(&amp;#34;querystring&amp;#34;);
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span>const casServer = &amp;#39;cas.ucloudadmin.com&amp;#39;
+&lt;span class="ln"> 10&lt;/span>const casClient = &amp;#39;clienta.com&amp;#39;
+&lt;span class="ln"> 11&lt;/span>
+&lt;span class="ln"> 12&lt;/span>// var _defaults = {
+&lt;span class="ln"> 13&lt;/span>// protocol: &amp;#39;https&amp;#39;,
+&lt;span class="ln"> 14&lt;/span>// host: undefined,
+&lt;span class="ln"> 15&lt;/span>// hostname: undefined, // ex. google
+&lt;span class="ln"> 16&lt;/span>// port: 443,
+&lt;span class="ln"> 17&lt;/span>// gateway: false, // set to true only if you wish to do authentication instead of authorization
+&lt;span class="ln"> 18&lt;/span>// paths: {
+&lt;span class="ln"> 19&lt;/span>// validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
+&lt;span class="ln"> 20&lt;/span>// serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
+&lt;span class="ln"> 21&lt;/span>// proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
+&lt;span class="ln"> 22&lt;/span>// proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
+&lt;span class="ln"> 23&lt;/span>// login: &amp;#39;/cas/login&amp;#39;,
+&lt;span class="ln"> 24&lt;/span>// logout: &amp;#39;/cas/logout&amp;#39;
+&lt;span class="ln"> 25&lt;/span>// }
+&lt;span class="ln"> 26&lt;/span>// }
+&lt;span class="ln"> 27&lt;/span>
+&lt;span class="ln"> 28&lt;/span>/*
+&lt;span class="ln"> 29&lt;/span>var myOptions = {
+&lt;span class="ln"> 30&lt;/span> protocol: &amp;#39;https&amp;#39;,
+&lt;span class="ln"> 31&lt;/span> host: &amp;#39;cas.ucloudadmin.com&amp;#39;,
+&lt;span class="ln"> 32&lt;/span> hostname: &amp;#39;ucloud&amp;#39;, // ex. google
+&lt;span class="ln"> 33&lt;/span> port: 443,
+&lt;span class="ln"> 34&lt;/span> gateway: false, // set to true only if you wish to do authentication instead of authorization
+&lt;span class="ln"> 35&lt;/span> paths: {
+&lt;span class="ln"> 36&lt;/span> validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
+&lt;span class="ln"> 37&lt;/span> serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
+&lt;span class="ln"> 38&lt;/span> proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
+&lt;span class="ln"> 39&lt;/span> proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
+&lt;span class="ln"> 40&lt;/span> login: &amp;#39;/cas/login&amp;#39;,
+&lt;span class="ln"> 41&lt;/span> logout: &amp;#39;/cas/logout&amp;#39;
+&lt;span class="ln"> 42&lt;/span> }
+&lt;span class="ln"> 43&lt;/span>}
+&lt;span class="ln"> 44&lt;/span>cas.configure(myOptions);
+&lt;span class="ln"> 45&lt;/span>*/
+&lt;span class="ln"> 46&lt;/span>
+&lt;span class="ln"> 47&lt;/span>// Your CAS server&amp;#39;s hostname
+&lt;span class="ln"> 48&lt;/span>cas.configure({
+&lt;span class="ln"> 49&lt;/span> protocol: &amp;#39;https&amp;#39;,
+&lt;span class="ln"> 50&lt;/span> host: casServer,
+&lt;span class="ln"> 51&lt;/span>});
+&lt;span class="ln"> 52&lt;/span>console.log(cas.configure());
+&lt;span class="ln"> 53&lt;/span>
+&lt;span class="ln"> 54&lt;/span>app.use(express.json());
+&lt;span class="ln"> 55&lt;/span>app.use(express.urlencoded({ extended: true }))
+&lt;span class="ln"> 56&lt;/span>
+&lt;span class="ln"> 57&lt;/span>app.use(
+&lt;span class="ln"> 58&lt;/span> session({
+&lt;span class="ln"> 59&lt;/span> secret: &amp;#39;clienta&amp;#39;,
+&lt;span class="ln"> 60&lt;/span> name: &amp;#39;SESSIONID&amp;#39;,
+&lt;span class="ln"> 61&lt;/span> resave: true,
+&lt;span class="ln"> 62&lt;/span> saveUninitialized: true,
+&lt;span class="ln"> 63&lt;/span> cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }, //过期时间 24 小时
+&lt;span class="ln"> 64&lt;/span> }),
+&lt;span class="ln"> 65&lt;/span>);
+&lt;span class="ln"> 66&lt;/span>
+&lt;span class="ln"> 67&lt;/span>// 用户验证
+&lt;span class="ln"> 68&lt;/span>app.use(function (req, res, next) {
+&lt;span class="ln"> 69&lt;/span> console.log(&amp;#39;req.url&amp;#39;, req.url);
+&lt;span class="ln"> 70&lt;/span> let path = req.url.split(&amp;#39;?&amp;#39;)[0]
+&lt;span class="ln"> 71&lt;/span> // 跳过登录请求
+&lt;span class="ln"> 72&lt;/span> if (path === &amp;#39;/login&amp;#39;) {
+&lt;span class="ln"> 73&lt;/span> next()
+&lt;span class="ln"> 74&lt;/span> } else {
+&lt;span class="ln"> 75&lt;/span> if (req.session.cas &amp;amp;&amp;amp; req.session.cas.user) {
+&lt;span class="ln"> 76&lt;/span> next()
+&lt;span class="ln"> 77&lt;/span> } else {
+&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://example.com/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
+&lt;span class="ln"> 79&lt;/span> // 自动跳转登录
+&lt;span class="ln"> 80&lt;/span> // return res.redirect(`/login?service=http://${casClient}${req.url}`);
+&lt;span class="ln"> 81&lt;/span> }
+&lt;span class="ln"> 82&lt;/span> }
+&lt;span class="ln"> 83&lt;/span>});
+&lt;span class="ln"> 84&lt;/span>
+&lt;span class="ln"> 85&lt;/span>app.get(&amp;#39;/&amp;#39;, function (req, res) {
+&lt;span class="ln"> 86&lt;/span> console.log(&amp;#39;get /&amp;#39;, req.url)
+&lt;span class="ln"> 87&lt;/span> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clienta&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user + &amp;#39;. &amp;lt;a href=&amp;#34;/logout&amp;#34;&amp;gt;Log Out&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;#39;);
+&lt;span class="ln"> 88&lt;/span>});
+&lt;span class="ln"> 89&lt;/span>
+&lt;span class="ln"> 90&lt;/span>app.get(&amp;#39;/login&amp;#39;, cas.serviceValidate(), cas.authenticate(), function (req, res) {
+&lt;span class="ln"> 91&lt;/span> console.log(&amp;#39;/login&amp;#39;, req.url)
+&lt;span class="ln"> 92&lt;/span> let arg = URL.parse(req.url).query;
+&lt;span class="ln"> 93&lt;/span> let params = querystring.parse(arg);
+&lt;span class="ln"> 94&lt;/span> // console.log(&amp;#34;params-service &amp;#34; + params.service);
+&lt;span class="ln"> 95&lt;/span> // 重定向到初始请求地址
+&lt;span class="ln"> 96&lt;/span> return res.redirect(params.service || &amp;#39;/&amp;#39;);
+&lt;span class="ln"> 97&lt;/span>});
+&lt;span class="ln"> 98&lt;/span>
+&lt;span class="ln"> 99&lt;/span>app.get(&amp;#39;/logout&amp;#39;, function (req, res) {
+&lt;span class="ln">100&lt;/span> if (!req.session) {
+&lt;span class="ln">101&lt;/span> return res.redirect(&amp;#39;/&amp;#39;);
+&lt;span class="ln">102&lt;/span> }
+&lt;span class="ln">103&lt;/span> // Forget our own login session
+&lt;span class="ln">104&lt;/span> if (req.session.destroy) {
+&lt;span class="ln">105&lt;/span> req.session.destroy();
+&lt;span class="ln">106&lt;/span> } else {
+&lt;span class="ln">107&lt;/span> // Cookie-based sessions have no destroy()
+&lt;span class="ln">108&lt;/span> req.session = null;
+&lt;span class="ln">109&lt;/span> }
+&lt;span class="ln">110&lt;/span> // Send the user to the official campus-wide logout URL
+&lt;span class="ln">111&lt;/span> var options = cas.configure();
+&lt;span class="ln">112&lt;/span> options.pathname = options.paths.logout;
+&lt;span class="ln">113&lt;/span> return res.redirect(URL.format(options));
+&lt;span class="ln">114&lt;/span>});
+&lt;span class="ln">115&lt;/span>
+&lt;span class="ln">116&lt;/span>
+&lt;span class="ln">117&lt;/span>// 业务接口路由
+&lt;span class="ln">118&lt;/span>app.get(&amp;#39;/api&amp;#39;, function (req, res) {
+&lt;span class="ln">119&lt;/span> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clientA API Page&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user);
+&lt;span class="ln">120&lt;/span>});
+&lt;span class="ln">121&lt;/span>app.get(&amp;#39;/api/userInfo&amp;#39;, function (req, res) {
+&lt;span class="ln">122&lt;/span> res.json({ retCode: &amp;#39;1&amp;#39;, data: req.session.cas });
+&lt;span class="ln">123&lt;/span>});
+&lt;span class="ln">124&lt;/span>
+&lt;span class="ln">125&lt;/span>// ......
+&lt;span class="ln">126&lt;/span>
+&lt;span class="ln">127&lt;/span>app.listen(1024, () =&amp;gt; {
+&lt;span class="ln">128&lt;/span> console.log(&amp;#39;示例程序正在监听 1024 端口！&amp;#39;)
+&lt;span class="ln">129&lt;/span>});
+&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="登录-cas-client-前台">登录 cas client 前台&lt;/h5>
+&lt;ul>
+&lt;li>
+&lt;p>浏览器打开 clientA clientB&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>跳转 cas server 验证 / 登录&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Chrome的console调试</title><link>https://example.com/pt/post/pt/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</link><pubDate>Mon, 10 May 2021 18:07:16 +0800</pubDate><guid>https://example.com/pt/post/pt/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</guid><description>
+&lt;p>1、$_&lt;/p>
+&lt;p>&lt;code>$_&lt;/code>上次结果的引用&lt;/p>
+&lt;p>2、$i&lt;/p>
+&lt;p>需要Chrome插件:(Console Importer)[https://chrome.google.com/webstore/detail/console-importer/hgajpakhafplebkdljleajgbpdmplhie/related]，可以快速的在console中引入&lt;code>npm&lt;/code>库。&lt;br>
+例如： &lt;code>$i('lodash')&lt;/code>或者&lt;code>$i('moment')&lt;/code>,就可以使用lodash或者moment库了。&lt;/p>
+&lt;p>3、copy(...)&lt;/p>
+&lt;p>&lt;code>copy&lt;/code>任何资源，如&lt;code>copy($0)&lt;/code>或&lt;code>copy($_)&lt;/code>&lt;/p>
+&lt;p>4、学会使用console.table来显示数组或者对象&lt;/p>
+&lt;p>5、&lt;/p></description></item><item><title>改变自己的生活系列之习惯篇</title><link>https://example.com/pt/post/pt/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</link><pubDate>Sat, 08 May 2021 13:38:57 +0800</pubDate><guid>https://example.com/pt/post/pt/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</guid><description>
+&lt;h4 id="1保持早睡只少能修复30的颜值">1、保持早睡，只少能修复30%的颜值&lt;/h4>
+&lt;h4 id="2看片不挑国家">2、看片，不挑国家&lt;/h4>
+&lt;p>奥斯卡、纪录片、TED、科普片&lt;/p>
+&lt;h4 id="3不刷朋友圈抖音">3、不刷朋友圈、抖音&lt;/h4>
+&lt;h4 id="4吃饭时不看任何电子屏幕">4、吃饭时，不看任何电子屏幕&lt;/h4>
+&lt;h4 id="5嘴巴闭合时舌尖要亲抵在上颚">5、嘴巴闭合时，舌尖要亲抵在上颚&lt;/h4>
+&lt;h4 id="6说话柔软内心坚硬做事果断">6、说话柔软，内心坚硬，做事果断&lt;/h4>
+&lt;h4 id="7多向大佬学习">7、多向大佬学习&lt;/h4>
+&lt;p>结识良师益友，是成长进步的最快方式。&lt;/p>
+&lt;h4 id="8提高睡眠质量才能高效休息提高做事效率">8、提高睡眠质量，才能高效休息，提高做事效率！&lt;/h4>
+&lt;ul>
+&lt;li>睡前不进食不喝水&lt;/li>
+&lt;li>睡觉三件套：泡脚、冥想、听书&lt;/li>
+&lt;li>裸睡&lt;/li>
+&lt;/ul>
+&lt;h4 id="9永远保持对新知识新技能的汲取">9、永远保持对新知识、新技能的汲取&lt;/h4>
+&lt;p>不论是生活还是工作上的技能，每天花30分钟专注去学习，会让你避免原地踏步的同时，有机会抓住更多机遇和意外惊喜。&lt;/p>
+&lt;h4 id="10定期运动">10、定期运动&lt;/h4>
+&lt;h4 id="11灵活运动番茄工作法">11、灵活运动‘番茄工作法’&lt;/h4>
+&lt;p>工作学习25min，用5min来休息。&lt;/p>
+&lt;h4 id="12拜访亲友带点水果酒水过去">12、拜访亲友，带点水果、酒水过去&lt;/h4>
+&lt;h4 id="13早起时不要老想着起床的痛苦要想想一些让人幸福的事刺激一下你的大脑皮层提高大脑的兴奋度">13、早起时，不要老想着起床的痛苦，要想想一些让人幸福的事，刺激一下你的大脑皮层，提高大脑的兴奋度&lt;/h4>
+&lt;h4 id="14出门前无论多急都花5秒照下镜子">14、出门前，无论多急，都花5秒照下镜子&lt;/h4>
+&lt;h4 id="15日常分类记账并坚持理财比如伙食交通服饰生活用品等等让自己知道赚的钱大头都花哪了避免浪费">15、日常分类记账，并坚持理财。比如伙食、交通、服饰、生活用品等等，让自己知道赚的钱大头都花哪了，避免浪费。&lt;/h4>
+&lt;p>接着学会理财，这是提高经济力的最核心关键。操作得当，会使你的收入实现指数级增长。&lt;/p></description></item><item><title>部分专业英文术语</title><link>https://example.com/pt/post/pt/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</link><pubDate>Fri, 07 May 2021 19:35:24 +0800</pubDate><guid>https://example.com/pt/post/pt/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</guid><description>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>术语&lt;/th>
+&lt;th>翻译&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>property wrapper&lt;/td>
+&lt;td>属性包装器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>projected value&lt;/td>
+&lt;td>被呈现值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>wrapped value&lt;/td>
+&lt;td>被包装值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>argument&lt;/td>
+&lt;td>实参&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>parameter&lt;/td>
+&lt;td>形参&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>variadic parameters&lt;/td>
+&lt;td>可变参数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>associated type&lt;/td>
+&lt;td>关联类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>range&lt;/td>
+&lt;td>区间&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type property&lt;/td>
+&lt;td>类型属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>unary operator&lt;/td>
+&lt;td>一元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>binary operator&lt;/td>
+&lt;td>二元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ternary operator&lt;/td>
+&lt;td>三元运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>labeled statement&lt;/td>
+&lt;td>具名词句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>conform protocol&lt;/td>
+&lt;td>遵循协议&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>availability-condition&lt;/td>
+&lt;td>可用性条件&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>fallthrough&lt;/td>
+&lt;td>贯穿&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>branch statement&lt;/td>
+&lt;td>分支语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>control transfer statement&lt;/td>
+&lt;td>控制传递语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type annotation&lt;/td>
+&lt;td>类型注解&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type identifier&lt;/td>
+&lt;td>类型标识符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>metatype type&lt;/td>
+&lt;td>元类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>protocol composition type&lt;/td>
+&lt;td>符合协议类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>associated value&lt;/td>
+&lt;td>关联值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>raw value&lt;/td>
+&lt;td>原始值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>computed property&lt;/td>
+&lt;td>计算属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>stored property&lt;/td>
+&lt;td>存储属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>operator&lt;/td>
+&lt;td>运算符&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>array&lt;/td>
+&lt;td>数组&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>dictionary&lt;/td>
+&lt;td>字典&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>list&lt;/td>
+&lt;td>列表&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>statement&lt;/td>
+&lt;td>语句&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>expression&lt;/td>
+&lt;td>表达式&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional&lt;/td>
+&lt;td>可选&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>implicitly unwrapped optional&lt;/td>
+&lt;td>隐式解包可选值&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional binding&lt;/td>
+&lt;td>可选绑定&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>optional chaining&lt;/td>
+&lt;td>可选链&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>collection&lt;/td>
+&lt;td>集合&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>convention&lt;/td>
+&lt;td>约定&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>iterate&lt;/td>
+&lt;td>迭代&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>nest&lt;/td>
+&lt;td>嵌套&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>inheritance&lt;/td>
+&lt;td>继承&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>override&lt;/td>
+&lt;td>重写&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>base class&lt;/td>
+&lt;td>基类&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>designated initializer&lt;/td>
+&lt;td>指定构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>convenience initializer&lt;/td>
+&lt;td>便利构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>automatic reference counting&lt;/td>
+&lt;td>自动引用计数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type inference&lt;/td>
+&lt;td>类型推断&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>type casting&lt;/td>
+&lt;td>类型转换&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>unwrapped&lt;/td>
+&lt;td>解包&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>wrapped&lt;/td>
+&lt;td>包装&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>note&lt;/td>
+&lt;td>注意&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>closure&lt;/td>
+&lt;td>闭包&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>tuple&lt;/td>
+&lt;td>元组&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>first-class&lt;/td>
+&lt;td>一等&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>deinitializer&lt;/td>
+&lt;td>析构器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>initializer&lt;/td>
+&lt;td>构造器&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>initialization&lt;/td>
+&lt;td>构造过程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>deinitialization&lt;/td>
+&lt;td>析构过程&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>subscript&lt;/td>
+&lt;td>下标&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>property&lt;/td>
+&lt;td>属性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>attribute&lt;/td>
+&lt;td>特性或者属性，根据上下文&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>method&lt;/td>
+&lt;td>方法&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>enumeration&lt;/td>
+&lt;td>枚举&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>strcture&lt;/td>
+&lt;td>结构体&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>protocol&lt;/td>
+&lt;td>协议&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>extension&lt;/td>
+&lt;td>扩展&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>generic&lt;/td>
+&lt;td>泛型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>literal value&lt;/td>
+&lt;td>字面量&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>alias&lt;/td>
+&lt;td>别名&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>assertion&lt;/td>
+&lt;td>断言&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>conditional compilation&lt;/td>
+&lt;td>条件编译&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>opaque type&lt;/td>
+&lt;td>不透明类型&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>function&lt;/td>
+&lt;td>函数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>runtime&lt;/td>
+&lt;td>运行时&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>中文匹配</title><link>https://example.com/pt/post/pt/2021/zhongwenzhengze/</link><pubDate>Fri, 30 Apr 2021 14:55:12 +0800</pubDate><guid>https://example.com/pt/post/pt/2021/zhongwenzhengze/</guid><description>
+&lt;p>\w匹配的仅仅是中文，数字，字母，对于国人来讲，仅匹配中文时常会用到，见下&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配双字节字符(包括汉字在内)：[^\x00-\xff]
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
+更多常用正则表达式匹配规则：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>英文字母:[a-zA-Z]
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span>数字:[0-9]
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>匹配中文，英文字母和数字及_:&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\u4e00-\u9fa5_a-zA-Z0-9]+$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时判断输入长度：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>[\u4e00-\u9fa5_a-zA-Z0-9_]{4,10}
+&lt;span class="ln">2&lt;/span>^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>1、一个正则表达式，只含有汉字、数字、字母、下划线不能以下划线开头和结尾：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中：&lt;/p>
+&lt;p>^ 与字符串开始的地方匹配&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>(?!_)　　不能以_开头
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span>(?!.*?_$)　　不能以_结尾
+&lt;span class="ln">4&lt;/span>
+&lt;span class="ln">5&lt;/span>[a-zA-Z0-9_\u4e00-\u9fa5]+　　至少一个汉字、数字、字母、下划线
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>$　　与字符串结束的地方匹配&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>放在程序里前面加@，否则需要\\进行转义 @&amp;#34;^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$&amp;#34;
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span>（或者：@&amp;#34;^(?!_)\w*(?&amp;lt;!_)$&amp;#34; 或者 @&amp;#34; ^[\u4E00-\u9FA50-9a-zA-Z_]+$ &amp;#34; )
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>2、只含有汉字、数字、字母、下划线，下划线位置不限：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>3、由数字、26个英文字母或者下划线组成的字符串&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^\w+$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>4、2~4个汉字&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>@&amp;#34;^[\u4E00-\u9FA5]{2,4}$&amp;#34;;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>5、&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>用：(Abc)+ 来分析： XYZAbcAbcAbcXYZAbcAb&lt;/p>
+&lt;p>作者：每一天为明天168&lt;br>
+链接：https://www.jianshu.com/p/8695c2ba8ace&lt;br>
+来源：简书&lt;br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&lt;/p></description></item><item><title>Guia de Sintaxe Markdown</title><link>https://example.com/pt/post/markdown-syntax/</link><pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate><guid>https://example.com/pt/post/markdown-syntax/</guid><description>
+&lt;p>&lt;strong>Este artigo oferece um exemplo básico de uma tradução em Português. O restante conteúdo não foi traduzido.&lt;/strong>&lt;/p>
+&lt;p>Artigo original: https://example.com/pt/post/markdown-syntax/&lt;/p>
+&lt;p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p>
+&lt;h2 id="headings">Headings&lt;/h2>
+&lt;p>The following HTML &lt;code>&amp;lt;h1&amp;gt;&lt;/code>—&lt;code>&amp;lt;h6&amp;gt;&lt;/code> elements represent six levels of section headings. &lt;code>&amp;lt;h1&amp;gt;&lt;/code> is the highest section level while &lt;code>&amp;lt;h6&amp;gt;&lt;/code> is the lowest.&lt;/p>
+&lt;h1 id="h1">H1&lt;/h1>
+&lt;h2 id="h2">H2&lt;/h2>
+&lt;h3 id="h3">H3&lt;/h3>
+&lt;h4 id="h4">H4&lt;/h4>
+&lt;h5 id="h5">H5&lt;/h5>
+&lt;h6 id="h6">H6&lt;/h6>
+&lt;h2 id="paragraph">Paragraph&lt;/h2>
+&lt;p>Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p>
+&lt;p>Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.&lt;/p>
+&lt;h2 id="blockquotes">Blockquotes&lt;/h2>
+&lt;p>The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code>footer&lt;/code> or &lt;code>cite&lt;/code> element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p>
+&lt;h4 id="blockquote-without-attribution">Blockquote without attribution&lt;/h4>
+&lt;blockquote>
+&lt;p>Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+&lt;strong>Note&lt;/strong> that you can use &lt;em>Markdown syntax&lt;/em> within a blockquote.&lt;/p>
+&lt;/blockquote>
+&lt;h4 id="blockquote-with-attribution">Blockquote with attribution&lt;/h4>
+&lt;blockquote>
+&lt;p>Don't communicate by sharing memory, share memory by communicating.&lt;br>
+— &lt;cite>Rob Pike&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/cite>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="tables">Tables&lt;/h2>
+&lt;p>Tables aren't part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Name&lt;/th>
+&lt;th>Age&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Bob&lt;/td>
+&lt;td>27&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Alice&lt;/td>
+&lt;td>23&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h4 id="inline-markdown-within-tables">Inline Markdown within tables&lt;/h4>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Italics&lt;/th>
+&lt;th>Bold&lt;/th>
+&lt;th>Code&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;em>italics&lt;/em>&lt;/td>
+&lt;td>&lt;strong>bold&lt;/strong>&lt;/td>
+&lt;td>&lt;code>code&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="code-blocks">Code Blocks&lt;/h2>
+&lt;h4 id="code-block-with-backticks">Code block with backticks&lt;/h4>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="ln"> 1&lt;/span>&lt;span class="cp">&amp;lt;!doctype html&amp;gt;&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;utf-8&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Example HTML5 Document&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Test&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 9&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln">10&lt;/span>&lt;span class="c">&amp;lt;!-- this line is extraneous 2Error from server (Forbidden): deployments.apps is forbidden: User &amp;#34;chiptest&amp;#34; cannot create resource &amp;#34;deployments&amp;#34; in API group &amp;#34;apps&amp;#34; in the namespace &amp;#34;default&amp;#34; --&amp;gt;&lt;/span>
+&lt;span class="ln">11&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="code-block-indented-with-four-spaces">Code block indented with four spaces&lt;/h4>
+&lt;pre>&lt;code>&amp;lt;!doctype html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
+&amp;lt;title&amp;gt;Example HTML5 Document&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;p&amp;gt;Test&amp;lt;/p&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h4 id="code-block-with-hugos-internal-highlight-shortcode">Code block with Hugo's internal highlight shortcode&lt;/h4>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="ln"> 1&lt;/span>&lt;span class="cp">&amp;lt;!doctype html&amp;gt;&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span> &lt;span class="na">lang&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;en&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">meta&lt;/span> &lt;span class="na">charset&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;utf-8&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Example HTML5 Document&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Test&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln"> 9&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="ln">10&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;h2 id="list-types">List Types&lt;/h2>
+&lt;h4 id="ordered-list">Ordered List&lt;/h4>
+&lt;ol>
+&lt;li>First item&lt;/li>
+&lt;li>Second item&lt;/li>
+&lt;li>Third item&lt;/li>
+&lt;/ol>
+&lt;h4 id="unordered-list">Unordered List&lt;/h4>
+&lt;ul>
+&lt;li>List item&lt;/li>
+&lt;li>Another item&lt;/li>
+&lt;li>And another item&lt;/li>
+&lt;/ul>
+&lt;h4 id="nested-list">Nested list&lt;/h4>
+&lt;ul>
+&lt;li>Fruit
+&lt;ul>
+&lt;li>Apple&lt;/li>
+&lt;li>Orange&lt;/li>
+&lt;li>Banana&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Dairy
+&lt;ul>
+&lt;li>Milk&lt;/li>
+&lt;li>Cheese&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="other-elements--abbr-sub-sup-kbd-mark">Other Elements — abbr, sub, sup, kbd, mark&lt;/h2>
+&lt;p>&lt;abbr title="Graphics Interchange Format">GIF&lt;/abbr> is a bitmap image format.&lt;/p>
+&lt;p>H&lt;sub>2&lt;/sub>O&lt;/p>
+&lt;p>X&lt;sup>n&lt;/sup> + Y&lt;sup>n&lt;/sup> = Z&lt;sup>n&lt;/sup>&lt;/p>
+&lt;p>Press &lt;kbd>&lt;kbd>CTRL&lt;/kbd>+&lt;kbd>ALT&lt;/kbd>+&lt;kbd>Delete&lt;/kbd>&lt;/kbd> to end the session.&lt;/p>
+&lt;p>Most &lt;mark>salamanders&lt;/mark> are nocturnal, and hunt for insects, worms, and other small creatures.&lt;/p>
+&lt;section class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1" role="doc-endnote">
+&lt;p>The above quote is excerpted from Rob Pike's &lt;a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">talk&lt;/a> during Gopherfest, November 18, 2015.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/section></description></item><item><title>利用live555在Mac端搭建rtsp推流</title><link>https://example.com/pt/post/pt/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</link><pubDate>Fri, 20 Oct 2017 10:44:12 +0800</pubDate><guid>https://example.com/pt/post/pt/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</guid><description>
+&lt;p>利用live555在自己的Mac电脑上搭建一个rtsp推流；&lt;/p>
+&lt;p>最近需要探查SDK是否支持RTP协议，需要一个rtsp流地址播放，但是网络上给的测试地址只有一个大白熊的流可以用，但是这个流非常卡，SDK播放非常有问题，说明了SDK对于rtsp支持是有问题的，但是不清楚是否是因为这个流也有问题呢。所以就自己就想办法自己推流试试是否可以播放。后续再进行做相关的SDK优化。&lt;/p>
+&lt;p>老规矩，google.com，找到live555.com。自己下载源码编译，http://www.live555.com/liveMedia/#config-unix在此处找到Mac编译。&lt;/p>
+&lt;ol>
+&lt;li>下载tar.gz包，解压并cd live&lt;/li>
+&lt;li>终端至live文件夹，运行&lt;code>./genMakefiles &amp;lt;os-platform&amp;gt;&lt;/code>，注意：这里的os-platform是mac平台，至于其他平台可以查看live文件夹下的config.&lt;os-platform>文件，Mac对应macosx。所以是&lt;code>./genMakefiles macosx&lt;/code>&lt;/li>
+&lt;li>然后运行&lt;code>make&lt;/code>。如果你想打包live555库，可以运行&lt;code>make install&lt;/code>。解决端口占用，最好运行这个命令&lt;code>make CPPFLAGS=-DALLOW_RTSP_SERVER_PORT_REUSE=1 install&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;p>编译完成之后就会生成mediaServer文件夹，会有一个live555MediaServer可执行文件。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd mediaServer
+&lt;span class="ln">2&lt;/span>./live555MediaServer
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
+&lt;p>可以看到支持格式有：h264、h265、.aac、.ac3、.amr、.dv、.m4e、.mkv、.mp3、.mpg、.ogg、.ts、.vod、.wav、.webm&lt;/p>
+&lt;p>推流步骤：&lt;br>
+将NARUTO.mkv文件复制到和上面live555MediaServer可执行文件的同一个目录，
+可用vlc在打开网络中输入地址 rtsp://your_ip:port/file.mkv 观看视频了。
+还可以生成 m3u8文件在手机上访问，http://your_ip:8000/file.mkv。&lt;/p>
+&lt;p>手机端观看：同一个网络环境下，输入上面vlc地址既可以播放&lt;br>
+rtsp://192.168.1.106:8554/NARUTO.mkv&lt;/p></description></item><item><title>早安2017</title><link>https://example.com/pt/post/pt/2017/2017-01-01-zao-an-2017/</link><pubDate>Sun, 01 Jan 2017 09:09:05 +0800</pubDate><guid>https://example.com/pt/post/pt/2017/2017-01-01-zao-an-2017/</guid><description>
+&lt;p>晃眼之间已到2017，这一年很忙，很忙，真的好忙。&lt;/p>
+&lt;p>回望2016，在这一年经历了公司倒闭后的找工作经历，真的挺难的，一堆人出来社会碰机会，面试官见你爽就还好，不爽就明显知道已没机会！
+主要过完年从老家一回来整个人就不好了，一直病了一个多月才开始找工作，而且家住郊区，去市区非常远，每天来回耗时非常长，外加搬家搬了我一个礼拜左右，所以一直到4月中旬才找到工作，很不错，公司很nice，现在继续任职，继续努力💪！！！&lt;br>
+2016是一个直播的年代，什么都搞直播，从之前对ijkplayer的兴趣对其稍有了解，没对直播这块做过研究，一开始拿到直播／点播SDK的时候脑子一阵头大。只能自己一步一步进行了解与尝试，公司的产品刚起步，还有比较多问题与难关的，自己也是在模仿着别家竟品的优点来进行加工与改进，到如今基本对这方面稍有研究，以前主要还是采用世面上所使用的RTMP直播，到后面我们将自研出私有协议连麦，近期我们的连麦新产品也即将上线的了，自己测试还是挺不错的，可以跟国内的声网的方案做下对比；当然，声网的产品已经相当完善，暂时还不能够与之抗衡，但我们的方向跟他们是一样的，可以说，我们做这个方案都是同时起步，但是，由于我个人能力不足，人家已经在几个月前已经做出来并且商业化了，而我们的到现在才初具雏形，这是相当伤的，原理都是一样，并且他们已经有两套方案，我的能力不足由此可见啊。&lt;br>
+在点播方面，主要是基于ijkplayer进行的二次开发，在ijkplayer层面主要采用c开发，对于早已传送回给大一的李金洋老师的C基础的我，难度还是可预见的，早期由于音视频同事离职，需要我对其进行维护（产品已经开发好，留下维护工作），对于一个小问题还是被我搞了相当长时间啊，所以可以知道自己对于ijk方面的研究还是不够的。&lt;br>
+2017，一个充满挑战的时间，我可以遇见到我这一年的工作安排了，排期还是相当的满的，可能主要要开始研究网络更低层更深奥的难点与协议相互了，直播这块将继续扩展与维护，可能会慢慢从大众直播转向视频会议形式吧。主要还是要看公司部门的发展方向。点播已经开始更新大版本，不期将会跟上GitHub上ijk的脚本，有时间的时候我也将会自己写出个app来练练手，毕竟太久没写app了，有点生手，大苹果是不会留下固定的程序员的，一直在更新换代，不断挖掘新鲜血液；苹果对于https的强制，预示着今年将会在协议上进行探讨，我们也会对于底层模块做下研究，目测是低层加速器这类SDK，听起来挺厉害的，5行代码接入，实现质感飞跃，嗯，一听就知道很难的，代码越少，我们就要做的越多。&lt;br>
+2017将会是幸福的一年，因为我的宝宝要出世了，辛苦宝宝他妈了，起个名字很关键；孩子的出生也将会给我带来很多需要考虑的问题：房子，车子，户口，学位，奶粉，营养，环境。。。各种吧，深圳的房子大家都知道，一线城市嘛，活得辛苦，我每天130多公里来回的车程，坐到自己腰都痛，一个字，累！！！车一开始真的没那么大需求，只有到了深圳才深深感觉到没车步步难行啊，2／3公里看起来很近，可以走进来很久啊，打个车基本都是起步价以上了，所以每个月交通费还是相当高的，这样子还不如自己搞辆车来代代步，确实会生活成本提高，但是没车真的很不方便啊，在这里时间就是金钱／生命，不可随意浪费。户口这问题更麻烦了，附近都是紧张的要死要活，还是看其他吧，不想了，还是继续撸码去吧，2017要继续💪&lt;/p></description></item><item><title>Xcode8 beta1新特性</title><link>https://example.com/pt/post/pt/2016/2016-06-21-xcode8-beta1xin-te-xing/</link><pubDate>Tue, 21 Jun 2016 10:01:36 +0800</pubDate><guid>https://example.com/pt/post/pt/2016/2016-06-21-xcode8-beta1xin-te-xing/</guid><description>
+&lt;p>WWDC 2016已经结束，伴随着iOS10的发布，新的Xcode8beta1也出来了，虽然是beta，以前也被beta版本各种蹂躏，但还是需要亲自下载来体验一波的。&lt;/p>
+&lt;p>###Swift 3&lt;br>
+Swift 3 是第一个主要的release版本。这个release版本统一核心API命名规则,,旨在增强代码的一致性和清晰。流行的系统API，如Core Graphics和 Grand Central Dispatch 与Swfit有着更丰富的表现力和协调力。
+###Interface Builder
+Interface Builder 设计画布已经彻底再造工程，让你更快地工作并且提供更大的控制。在任何充满活力的苹果设备上看到一个完全实时的应用程序预览。你可以在不同的设备之间快速切换，看到不同设备中的界面显示效果。平移和缩放非常快，甚至你可以缩小故事板鸟瞰图时编辑你的界面。总体来说，Xcode8的interface builder胜过之前任何的版本，遥想当年使用sb，整台macBook卡死在那里的日子😂😂😂😂&lt;br>
+&lt;img src="https://example.com/img/2016/06/interfacebuilder.png" alt="">
+###运行时问题 Runtime Issues&lt;/p>
+&lt;p>这Xcode新特性,自动识别跟踪找到漏洞并且报告问题, 有些很难跟踪的bug，直到您的应用程序到了用户手中,也可能没有被发现。&lt;/p>
+&lt;p>######Thread Sanitizer spots:新的线程污点清理器，解决多线程情况下的资源竞争条件,数据的变化和其它相关线程的bug&lt;br>
+######View Debugger:使用更新的带有更大的保真度和视觉精度检查UI约束问题的视图调试器&lt;br>
+######Memory Debugger:可以用新的内存调试跟踪器跟踪发出的内存泄漏警报&lt;br>
+&lt;img src="https://example.com/img/2016/06/viewmemory.png" alt="">
+###签名变的简单而强大 Signing Made Easy and Powerful&lt;br>
+设备设置和代码签名有了极大的简化，新的自动化代码管理系统可以帮开发者自动签署他们需要的资源，从而让代码在你苹果设备的应用程序中正确地签名、调用和执行。开发者也可以选择手动配置文件，并且设置每个构建配置的签名程序，如果遇到任何问题，报告导航器会用需要改进的错误消息和日志提醒你。当你有个多个Mac的时候,Xcode会在每个Mac中自动生成对应的开发者证书。&lt;/p>
+&lt;p>在你的苹果设备上开发和运行您的应用程序和进入Xcode的偏好设置输入Apple ID一样容易。苹果开发者账号不是必需的。&lt;/p>
+&lt;p>Provisioning Profile 文件选取，已经从Buiid Settings移动到了General中,Buiid Settings中已经标识了 Deprecated。
+&lt;img src="https://example.com/img/2016/06/sign.png" alt="">&lt;/p></description></item><item><title>2016找工作实录</title><link>https://example.com/pt/post/pt/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</link><pubDate>Mon, 25 Apr 2016 13:15:23 +0800</pubDate><guid>https://example.com/pt/post/pt/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</guid><description>
+&lt;p>找工作时一件很辛苦的事，好好珍惜自己的公司，资本寒冬已到来&lt;/p></description></item><item><title>Git操作大全简洁版</title><link>https://example.com/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</link><pubDate>Wed, 11 Nov 2015 11:45:49 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</guid><description>
+&lt;p>&lt;b> &lt;em>HEAD&lt;/em> 表示当前分支&lt;/p>
+&lt;p>&lt;em>master&lt;/em>表示只想提交&lt;br>
+&lt;em>Origin&lt;/em> 表示远程库 &lt;/b>&lt;/p>
+&lt;h5 id="1git-init">1、&lt;code>git init&lt;/code>&lt;/h5>
+&lt;p>创建git仓库&lt;/p>
+&lt;h5 id="2git-add-xxxx">2、&lt;code>git add xxx.x&lt;/code>&lt;/h5>
+&lt;p>把文件添加到仓库&lt;/p>
+&lt;h5 id="3git-commit--m-">3、&lt;code>git commit -m “…”&lt;/code>&lt;/h5>
+&lt;p>把文件提交到仓库&lt;/p>
+&lt;h5 id="4git-status">4、&lt;code>git status&lt;/code>&lt;/h5>
+&lt;p>查看仓库当前的状态&lt;/p>
+&lt;h5 id="5git-diff">5、&lt;code>git diff&lt;/code>&lt;/h5>
+&lt;p>查看difference&lt;/p>
+&lt;h5 id="6git-log">6、&lt;code>git log&lt;/code>&lt;/h5>
+&lt;p>显示从最近到最远的提交日志‘&lt;br>
+&lt;code>git log —pretty=oneline&lt;/code>&lt;br>
+省略显示&lt;/p>
+&lt;h5 id="7git-reset---hard-head">7、&lt;code>git reset --hard HEAD^&lt;/code>&lt;/h5>
+&lt;p>会退到上一个版本&lt;/p>
+&lt;h5 id="8git-reflog">8、&lt;code>git reflog&lt;/code>&lt;/h5>
+&lt;p>查看你的命令&lt;/p>
+&lt;h5 id="9git的版本库里存了很多东西其中最重要的就是称为stage或者叫index的暂存区还有git为我们自动创建的第一个分支master以及指向master的一个指针叫head">9、Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。&lt;/h5>
+&lt;p>&lt;img src="https://example.com/img/2015/10/gitTree.jpeg" alt="">&lt;br>
+前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：&lt;br>
+第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区；&lt;br>
+第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。&lt;br>
+因为我们创建Git版本库时，Git自动为我们创建了唯一一个master分支，所以，现在，git commit就是往master分支上提交更改。&lt;/p>
+&lt;h5 id="10modified-被修改">10、modified 被修改；&lt;/h5>
+&lt;p>untracked：没添加过；&lt;/p>
+&lt;h5 id="11第一次修改---git-add---第二次修改---git-commit">11、第一次修改 -&amp;gt; &lt;code>git add&lt;/code> -&amp;gt; 第二次修改 -&amp;gt; &lt;code>git commit&lt;/code>&lt;/h5>
+&lt;p>你看，我们前面讲了，Git管理的是修改，当你用git add命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。 &lt;br>
+提交后，用&lt;code>git diff HEAD -- readme.txt&lt;/code>命令可以查看工作区和版本库里面最新版本的区别：&lt;br>
+最终：第一次修改 -&amp;gt; &lt;code>git add&lt;/code> -&amp;gt; 第二次修改 -&amp;gt; &lt;code>git add&lt;/code> -&amp;gt; &lt;code>git commit&lt;/code>&lt;/p>
+&lt;h5 id="12git-checkout----file">12、&lt;code>git checkout -- file&lt;/code>&lt;/h5>
+&lt;p>撤销文件在工作区的修改，有两种情况：&lt;br>
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；&lt;br>
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。&lt;br>
+总之，就是让这个文件回到最近一次git commit或git add时的状态。&lt;/p>
+&lt;h5 id="13git-add到暂存区还没commit要撤销">13、&lt;code>git add&lt;/code>到暂存区还没commit,要撤销：&lt;/h5>
+&lt;h5 id="14-git-reset命令既可以回退版本也可以把暂存区的修改回退到工作区暂存区干净了">14、 git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。暂存区干净了；&lt;/h5>
+&lt;p>丢弃工作区的修改：&lt;code>git checkout -- xxx.x&lt;/code>&lt;br>
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。&lt;br>
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。&lt;br>
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。&lt;/p>
+&lt;h5 id="15git-rm-file">15、&lt;code>git rm file&lt;/code>&lt;/h5>
+&lt;p>删除文件&lt;/p>
+&lt;h5 id="16git-push">16、&lt;code>git push&lt;/code>&lt;/h5>
+&lt;p>把本地库的内容推送到远程&lt;br>
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。&lt;/p>
+&lt;h6 id="小结">&lt;em>小结&lt;/em>&lt;/h6>
+&lt;p>要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；&lt;br>
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；&lt;br>
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；&lt;br>
+分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！&lt;/p>
+&lt;h5 id="17git-clone">17、&lt;code>git clone&lt;/code>&lt;/h5>
+&lt;p>克隆一个本地库&lt;/p>
+&lt;h5 id="18创建分支然后切换到分区">18、创建分支，然后切换到分区&lt;/h5>
+&lt;p>~$ git checkout -b dev
+~Switched to a new branch 'dev'&lt;/p>
+&lt;p>&lt;code>git checkout&lt;/code>命令加上&lt;code>-b&lt;/code>参数表示创建并切换，相当于以下两条命令：&lt;br>
+~$ git branch dev&lt;br>
+~$ git checkout dev&lt;br>
+~Swtiched to a new branch 'dev'&lt;/p>
+&lt;h5 id="19git-branch">19、&lt;code>git branch&lt;/code>&lt;/h5>
+&lt;p>查看当前分支，列出所有分支，当前分支前面带&lt;code>*&lt;/code>号&lt;/p>
+&lt;h5 id="20合并分支">20、{合并}分支&lt;/h5>
+&lt;p>切换回主线master&lt;br>
+~$ git checkout master&lt;br>
+~Switched to branch 'master'&lt;br>
+合并分支&lt;br>
+~$ git merge dev&lt;br>
+~Updating xxxxxxxx&lt;br>
+~Fast-forward&lt;br>
+~ .....&lt;br>
+~ 1 file changed, 1 insertion(+)&lt;br>
+合并完成后，可以删除dev分支&lt;br>
+~$ git branch -d dev&lt;/p>
+&lt;h6 id="小结-1">&lt;em>小结&lt;/em>&lt;/h6>
+&lt;p>Git鼓励大量使用分支：&lt;br>
+查看分支：&lt;code>git branch&lt;/code>&lt;br>
+创建分支：&lt;code>git branch &amp;lt;name&amp;gt;&lt;/code>&lt;br>
+切换分支：&lt;code>git checkout &amp;lt;name&amp;gt;&lt;/code>&lt;br>
+创建+切换分支：&lt;code>git checkout -b &amp;lt;name&amp;gt;&lt;/code>&lt;br>
+合并某分支到当前分支：&lt;code>git merge &amp;lt;name&amp;gt;&lt;/code>&lt;br>
+删除分支：&lt;code>git branch -d &amp;lt;name&amp;gt;&lt;/code>&lt;/p>
+&lt;h5 id="21解决冲突">21、&lt;strong>解决冲突&lt;/strong>&lt;/h5>
+&lt;p>&lt;code>git status&lt;/code>可以告诉我们冲突的文件&lt;br>
+Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;*标记出不同分支的内容&lt;br>
+先手动修改冲突，再提交合并。&lt;/p>
+&lt;p>用带参数的&lt;strong>git log&lt;/strong>看到分支的合并情况&lt;br>
+&lt;code>git log --graph --pretty=oneline --abbrev-commit&lt;/code>&lt;/p>
+&lt;h5 id="22git-merge---no-ff--m-merge-with-no-ff-dev">22、&lt;code>git merge --no-ff -m &amp;quot;merge with no-ff&amp;quot; dev&lt;/code>&lt;/h5>
+&lt;p>不使用&lt;strong>fast forward&lt;/strong>模式分支合并，合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。&lt;/p>
+&lt;h5 id="23分支策略">23、&lt;strong>分支策略&lt;/strong>&lt;/h5>
+&lt;p>在实际开发中，我们应该按照几个基本原则进行分支管理：&lt;br>
+首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；&lt;br>
+那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；&lt;br>
+你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。&lt;br>
+所以，团队合作的分支看起来就像这样：&lt;br>
+&lt;img src="https://example.com/img/2015/10/gitBranch.png" alt="">&lt;/p>
+&lt;h5 id="24bug分支">24、Bug分支&lt;/h5>
+&lt;p>软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。&lt;/p>
+&lt;p>修复bug时，需创建分支来修复它，但现在手上的工作还没做完不可提交的状态，可以用&lt;strong>stash&lt;/strong>功能，把工作现场“储藏”起来，等以后回复现场后继续工作；&lt;br>
+~$ git stash&lt;br>
+~Saved working directory and index state WIP on dev: 6224937 add merge&lt;br>
+~HEAD is now at 6224937 add merge&lt;/p>
+&lt;p>现在切换值需要修复的分支上创建临时分支：&lt;br>
+~$ git check master&lt;br>
+~$ git checkout -b issue-101&lt;br>
+修复提交&lt;br>
+~$ git add xxx.x&lt;br>
+~$ git commit -m &amp;quot;fix bug 101&amp;quot;&lt;br>
+修复完成后，切换到master分支，完成合并，删除bug分支：&lt;br>
+~$ git checkout master&lt;br>
+~$ git merge --no-ff -m &amp;quot;merged bug fix 101&amp;quot; issue-101&lt;br>
+~$ git branch -d issue-101&lt;/p>
+&lt;p>返回原工作区&lt;br>
+~$ git checkout dev&lt;br>
+~$ git status&lt;br>
+此时工作区是干净的，需要我们找回工作现场：&lt;br>
+~$ git stash list&lt;br>
+需要恢复一下，有两个办法：&lt;br>
+一是用&lt;strong>git stash apply&lt;/strong>恢复，但是恢复后，stash内容并不删除，你需要用&lt;strong>git stash drop&lt;/strong>来删除；&lt;br>
+另一种方式是用&lt;strong>git stash pop&lt;/strong>，恢复的同时把stash内容也删了;&lt;br>
+你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：&lt;br>
+~$ git stash apply stash@{0}&lt;/p>
+&lt;h5 id="25feature分支">25、Feature分支&lt;/h5>
+&lt;p>添加一个新功能时，你肯定不希望因为一些实验性质的代码，把主分支搞乱了，所以，每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后，删除该feature分支。&lt;br>
+开发一个新feature，最好新建一个分支；&lt;br>
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D &lt;name>强行删除。&lt;/p>
+&lt;h5 id="26多人协作">26、&lt;strong>多人协作&lt;/strong>&lt;/h5>
+&lt;p>要查看远程库的信息，用&lt;code>git remote&lt;/code>&lt;br>
+或者用&lt;code>git remote -v&lt;/code>显示更详细的信息&lt;br>
+哪些分支需要推送，哪些不需要呢？&lt;/p>
+&lt;pre>&lt;code>• master分支是主分支，因此要时刻与远程同步；
+• dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+• bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+• feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
+&lt;/code>&lt;/pre>
+&lt;p>抓取分支。&lt;/p>
+&lt;p>&lt;strong>多人协作&lt;/strong>的工作模式通常是这样：&lt;/p>
+&lt;pre>&lt;code>1. 首先，可以试图用git push origin branch-name推送自己的修改；
+2. 如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+3. 如果合并有冲突，则解决冲突，并在本地提交；
+4. 没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+&lt;/code>&lt;/pre>
+&lt;p>如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。&lt;/p>
+&lt;p>&lt;strong>小结&lt;/strong>&lt;br>
+• 查看远程库信息，使用git remote -v；&lt;/p>
+&lt;pre>&lt;code>• 本地新建的分支如果不推送到远程，对其他人就是不可见的；
+• 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+• 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+• 建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+• 从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+&lt;/code>&lt;/pre>
+&lt;h5 id="27创建标签">27、&lt;em>创建标签&lt;/em>&lt;/h5>
+&lt;p>&lt;code>git tag &amp;lt;name&amp;gt;&lt;/code>&lt;br>
+如果忘了打标签，可以查历史提交的commit id，&lt;br>
+&lt;code>git tag &amp;lt;name&amp;gt; commit_id&lt;/code>&lt;br>
+查看标签信息：&lt;br>
+&lt;code>git show &amp;lt;tagName&amp;gt;&lt;/code>&lt;br>
+创建带有说明的标签，用&lt;code>-a&lt;/code>指定标签名，&lt;code>-m&lt;/code>指定说明文字：&lt;br>
+&lt;code>git tag -a v0.1 -m &amp;quot;version 0.1 released&amp;quot; 3628164&lt;/code>&lt;br>
+删除标签：&lt;br>
+&lt;code>git tag -d v0.1&lt;/code>&lt;br>
+推送某个标签到远程，用命令&lt;code>git push origin &amp;lt;tagname&amp;gt;&lt;/code>:&lt;br>
+或者一次性推送全部尚未推送的标签：&lt;code>git push origin --tags&lt;/code>&lt;/p>
+&lt;p>删除远程标签：&lt;br>
+先从本地删除：&lt;code>git tag -d v0.9&lt;/code>&lt;br>
+再远程删除：&lt;code>git push origin :refs/tags/v0.9&lt;/code>&lt;/p>
+&lt;p>&lt;strong>小结&lt;/strong>&lt;br>
+• 命令git push origin &lt;tagname>可以推送一个本地标签；&lt;/p>
+&lt;pre>&lt;code>• 命令git push origin --tags可以推送全部未推送过的本地标签；
+• 命令git tag -d &amp;lt;tagname&amp;gt;可以删除一个本地标签；
+• 命令git push origin :refs/tags/&amp;lt;tagname&amp;gt;可以删除一个远程标签。
+&lt;/code>&lt;/pre></description></item><item><title>Xcode常用插件大法</title><link>https://example.com/pt/post/pt/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</link><pubDate>Fri, 30 Oct 2015 10:03:35 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</guid><description>
+&lt;p>正所谓--工欲善其事，必先利其器&lt;/p>
+&lt;p>目前版主使用的是Xcode7.1，基本上以下插件都安装使用过，实用性还是非常强的，这些插件可以用插件管理器&lt;strong>alcatraz&lt;/strong>来进行管理；当使用插件的时候部分没法使用的插件可以会导致整个插件库都无法使用，所以有些插件不可使用的话最好不要安装，如第一个codeSnippet插件，在版主安装之后导致全部插件无法使用，包括&lt;strong>alcatraz&lt;/strong>，具体可以检查&lt;strong>alatraz&lt;/strong>是否存在于menu-&amp;gt;Window-&amp;gt;Packge Manager这个包管理选项，如存在说明未失效，插件可用；如果消失，说明有插件无法使用导致整个插件库不可使用，需要一一排除。&lt;/p>
+&lt;p>###ACCodeSnippetRepositoryPlugin
+ACCodeSnippetRepositoryPlugin is a Xcode plugin for seemless synchronization of snippets with a git repository.&lt;/p>
+&lt;p>The snippets are synchronized as human-readable text (and not an obscure .codesnippet plist).&lt;/p>
+&lt;p>Build Status&lt;/p>
+&lt;p>If you want to know more about snippets in Xcode, I recommend reading &lt;a href="http://nshipster.com/xcode-snippets/">Xcode Snippets on NSHipster&lt;/a>.&lt;/p>
+&lt;p>Want to try the plugin with an existing public repository? Try &lt;a href="https://github.com/acoomans/xcode-snippets">acoomans&lt;/a> or &lt;a href="https://github.com/mattt/Xcode-Snippets.git">mattt's&lt;/a> snippets.&lt;/p>
+&lt;p>注：目前作者并未做对于Xcode6.2的支持&lt;/p>
+&lt;p>###AdjustFontSize
+A simple plugin for Xcode to adjust font size without going into Settings → Fonts &amp;amp; Colors and changing each source type.&lt;/p>
+&lt;p>Simply hit ⌘ + or ⌘ - and all fonts will be adjusted. Plugin respects different font sizes per each syntax type.&lt;/p>
+&lt;p>NOTE keep in mind that it modifies the current theme file.&lt;/p>
+&lt;p>###AllTargets
+AllTargets is a plugin for Xcode. The plugin intends to auto select all targets when you add files to the project.&lt;/p>
+&lt;p>###Auto Importer for Xcode(Xcode6.2不可使用)
+Quickly import your headers on the fly without having to manually go to the top of your file and type the import statement.&lt;/p>
+&lt;p>####Usage&lt;/p>
+&lt;p>⌘ + ctrl + H after selecting some text (or you can have no selection at all)
+If the selected text matches the name of a class/protocol or category method, it will import the header and you're done, otherwise it will show a list of filtered identifiers and headers...
+start typing the keyword of your import
+use ↑ or ↓ keys to navigate
+press ↵ or double click to add an import
+NOTE: on the list, classes are shown as [C], protocols as [P] and category methods as [ClassExtended()]&lt;/p>
+&lt;p>###BBUDebuggerTuckAway
+Xcode plugin for auto-hiding the debugger once you start typing in the source code editor.&lt;/p>
+&lt;p>###BBUUtilitiesTuckAway
+Xcode plugin for auto-hiding the utilities area once you start typing in the source code editor.&lt;/p>
+&lt;p>###BlockJump&lt;br>
+在方法之间跳转&lt;br>
+Default Key Combination:&lt;/p>
+&lt;p>CTRL + [ : jump up&lt;br>
+CTRL + ] : jump down&lt;/p>
+&lt;p>CocoaControlsPlugin&lt;br>
+OS X native application with Xcode plugin for browsing, searching, integrating, cloning controls in &lt;a href="http://cocoacontrols.com/">http://cocoacontrols.com/&lt;/a>.&lt;/p>
+&lt;p>All the commands are laid at the bottom of the menu View.&lt;/p>
+&lt;p>Use the menu Cocoa Controls to open CocoaControls.app immediately.&lt;br>
+Click on the left image view to open the image in a new window.&lt;br>
+Click on the pod button to integrate pod.&lt;br>
+Click on the computer button to clone the source.&lt;br>
+Double click on the cell view to open the control in browser.&lt;/p>
+&lt;p>DXXcodeConsoleUnicodePlugin&lt;br>
+转换 Xcode 控制台中一些不可阅读的字符。&lt;br>
+######使用方法：
+两种：&lt;/p>
+&lt;p>1.快捷键 option+c 会转换当前 剪贴板 中的内容并用一个对话框把转换后的内容显示出来。&lt;/p>
+&lt;p>2.在 Xcode 的 Edit 菜单中勾选 ConvertUnicodeInConsole(Beta)，然后 console 中再出现 \u4e0e 时，就会自动转换成 与 显示。&lt;/p>
+&lt;p>IntelliPaste-for-XCode&lt;br>
+在.m文件中选中方法函数后cmd+c，在头文件使用shift+cmd+v将只复制出方法名；&lt;/p>
+&lt;p>###CATweaker
+A helper tool for creating beautiful CAMediaTimingFunction curve.&lt;/p>
+&lt;h3 id="linkedlog-xcode-plugin">LinkedLog Xcode Plugin&lt;/h3>
+&lt;p>LinkedLog is a Xcode plugin that includes a Xcode PCH file template that adds the macros LLog and LLogF. The LLog macro will work like NSLog but additionally prints the file name and line number of the call.&lt;/p>
+&lt;p>LinkedLog then parses the logs and adds links to the corresponding file and line.
+可直接在console上直接定位log位置，并可以直接跳转到该行代码文件；&lt;/p>
+&lt;h3 id="omcolorsense">OMColorSense&lt;/h3>
+&lt;p>ColorSense is an Xcode plugin that makes working with UIColor (and NSColor) more visual.
+在输入颜色代码时显示具体颜色;&lt;/p>
+&lt;h3 id="vvdocumenter-xcode">VVDocumenter-Xcode&lt;/h3>
+&lt;p>大神的需要，///就可以给出注释格式&lt;/p>
+&lt;h3 id="xbookmark">XBookmark&lt;/h3>
+&lt;p>书签管理器，定位器除了断点外的好使用&lt;/p>
+&lt;h3 id="xcode-delete-line">Xcode Delete Line&lt;/h3>
+&lt;p>command+D 删除行，增加代码键盘手的操作性&lt;/p>
+&lt;h3 id="htycopyissue">HTYCopyIssue&lt;/h3>
+&lt;p>Makes Copy Xcode Issue Description Easy, Support Finding Answers in Google or StackOverflow Directly；&lt;br>
+如果有些错误和waring想复制去谷歌的时候会连位置和问题都复制，操作麻烦，这个插件就可以直接复制出问题来；&lt;/p>
+&lt;h3 id="fuzzyautocomplete">FuzzyAutocomplete&lt;/h3>
+&lt;p>补全代码功能，例:dictionaryWithContentsOfFile:方法直接输入dictWFile即可找到&lt;/p>
+&lt;h3 id="dxxcodeconsoleunicodeplugin">DXXcodeConsoleUnicodePlugin&lt;/h3>
+&lt;p>将终端输出的Unicode编码转换成中文，这个很实用
+统一删除插件方法&lt;/p>
+&lt;pre>&lt;code> rm -r ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/AutoImporter.xcplugin/
+&lt;/code>&lt;/pre>
+&lt;p>以上就是我用的比较常的插件，记住，插件有时候还会导致Xcode出现卡顿或者闪退的现象，所以插件这东西有好有坏，大家慎重考虑，不强求；一下是本人使用的插件图：&lt;br>
+&lt;img src="https://example.com/img/2015/10/XcodePlugin.png" alt="">&lt;/p></description></item><item><title>xib中的scrollview使用autolayout</title><link>https://example.com/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</link><pubDate>Tue, 27 Oct 2015 13:53:52 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</guid><description>
+&lt;p>更新之后要学会autolayout。 111&lt;/p>
+&lt;div data-caption="string">
+&lt;div class="dropdown">
+&lt;a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="https://example.com/page.html">
+Dropdown
+&lt;b class="caret">&lt;/b>
+&lt;/a>
+&lt;ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+...
+&lt;/ul>
+&lt;/div></description></item><item><title>将docset转换为epub或者mobi给kindle使用</title><link>https://example.com/pt/post/pt/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</link><pubDate>Tue, 27 Oct 2015 13:52:53 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</guid><description>
+&lt;p>手机看书逼格不够的，还是拿本kindle耍耍吧&lt;/p>
+&lt;p>偶然间在github大洋中遨游的时候发现了有人将iOS.docset文档转换成一个个mobi文件可以供kindle使用。自己兴趣一下子提升了起来，由于该脚本原作者已将源码删除，因此找了将近一天时间终于在另一位github贡献者那里找到一份&lt;a href="https://github.com/darvin/docset2ebook">源码&lt;/a>,二话不说先&lt;a href="https://github.com/langyapojun/docset2ebook">fork&lt;/a>过来先.&lt;br>
+　　
+##使用方法
+使用方法已经在里面有了，这里粗略讲解一下:&lt;/p>
+&lt;ol>
+&lt;li>先去下载&lt;strong>kindlegen&lt;/strong>;&lt;/li>
+&lt;li>将&lt;strong>kindlegen&lt;/strong>的脚本路径放入$PATH中，这里我将其加入/Users/用户名/.bash_profile(注意，这是一个隐藏文件，请显示隐藏文件)中,&lt;br>
+　　&lt;pre>&lt;code>export PATH=$PATH:/Users/用户名/Desktop/KindleGen_Mac_i386_v2_9&lt;/code> &lt;/pre>&lt;/li>
+&lt;li>下载docset2ebook的源码，解压出来后打开fetch_and_convert.sh,可以看到：
+&lt;pre>&lt;code>##!/bin/sh
+&lt;/li>
+&lt;/ol>
+&lt;p>FORMAT=epub
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&amp;quot;python docset2kindle.py&amp;quot;
+mkdir $OUTPUT_DIR&lt;/p>
+&lt;p>$COMMAND /Developer/Documentation/DocSets -o $OUTPUT_DIR/XCode -f $FORMAT
+$COMMAND /Library/Developer/Shared/Documentation/DocSets/com.apple.adc.documentation.AppleSnowLeopard.CoreReference.docset -o $OUTPUT_DIR/OSX -f $FORMAT&lt;/p>
+&lt;p>wget &lt;a href="http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar">http://devimages.apple.com/docsets/20110720/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar&lt;/a>
+xar -xf com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.xar
+$COMMAND com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.docset -o $OUTPUT_DIR/iOS -f $FORMAT&lt;/code>&lt;/pre>&lt;br>
+这里可以看到这是转换epub格式的，如果你想换成mobi，只需修改&lt;strong>FORMAT=mobi&lt;/strong>,然后是找到iOS.docset的位置，在Mac OS 10.11当中，iOS.docset位置已不是这个位置，在这里我只需要iOS的文档，所以Mac OS的文档转换我全部注释了：&lt;br>
+&lt;pre>&lt;code>##!/bin/sh
+FORMAT=mobi
+OUTPUT_DIR=~/Documents/ADCBooks
+COMMAND=&amp;quot;python docset2kindle.py&amp;quot;
+mkdir $OUTPUT_DIR&lt;/p>
+&lt;p>$COMMAND /Users/Sidney/Library/Developer/Shared/Documentation/DocSets/ -o $OUTPUT_DIR/XCode -f $FORMAT&lt;/code>&lt;/pre>
+4.打开终端，运行sh脚本,静待佳音。&lt;br>
+&lt;img src="https://example.com/img/2015/10/terminal.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/10/directory.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/10/kindle.png" alt="">&lt;/p></description></item><item><title>Xcode Instruments测试部分错误指正</title><link>https://example.com/pt/post/pt/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</link><pubDate>Mon, 13 Jul 2015 09:42:46 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</guid><description>
+&lt;p>###Automation Error： ScriptAgent signaled.
+当自动script数值不能在真机跑并出现以上错误的时候，&lt;/p>
+&lt;p>我们需要在真机&lt;code>设置&lt;/code>-&lt;code>开发者&lt;/code>-&lt;code>Enable UI Automation&lt;/code>打开即可。并且你还需要打开&lt;code>logging&lt;/code>-&lt;code>start recording&lt;/code>选项。&lt;/p>
+&lt;p>###Script threw an uncaught JavaScript error: target.frontMostApp().alert().buttons()[&amp;quot;取消&amp;quot;] could not be tapped&lt;/p></description></item><item><title>Swift 2 Playground注释使用markdown</title><link>https://example.com/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
+&lt;p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。&lt;/p>
+&lt;p>标准代码注释可以是单行注释、多行注释：&lt;br>
+&lt;code>//A Single line comment&lt;/code>&lt;br>
+&lt;code>/*&lt;/code>&lt;br>
+&lt;code>A block comment&lt;/code>&lt;br>
+&lt;code>over two lines&lt;/code>&lt;br>
+&lt;code>*/&lt;/code>&lt;/p>
+&lt;p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个&lt;code>:&lt;/code>即可：&lt;br>
+&lt;code>//: _Rich text_ single line *comment* thanks to __markdown__&lt;/code>&lt;br>
+&lt;img src="https://example.com/img/2015/06/playground/playground1.png" alt="">&lt;br>
+　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择&lt;code>Editor&lt;/code>--&lt;code>Show Rendered Markup&lt;/code>，然后就可以看到效果了。&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground2.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item><item><title>Xcode_7_beta模拟器iOS9无法连接网络</title><link>https://example.com/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</link><pubDate>Thu, 25 Jun 2015 10:38:33 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</guid><description>
+&lt;p>he resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/p>
+&lt;p>  在iOS9的iPhone模拟器中来调试的时候出现“&lt;code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/code>”
+  一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。&lt;a href="https://github.com/meteor/meteor/issues/4560">原文&lt;/a>&lt;br>
+  解决方法：在App中的&lt;code>info.plist&lt;/code>中添加&lt;code>NSAppTransportSecurity&lt;/code>(Dictionary)，在其中添加一个key,&lt;code>NSAllowsArbitraryLoads&lt;/code>(Boolean)并设置为&lt;code>YES&lt;/code>.&lt;br>
+希望可以帮助到大家。&lt;/p></description></item><item><title>octopress使用技巧</title><link>https://example.com/pt/post/pt/2015/2015-06-15-octopressshi-yong-ji-qiao/</link><pubDate>Mon, 15 Jun 2015 16:18:57 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-15-octopressshi-yong-ji-qiao/</guid><description>
+&lt;p>为自己的博客网站添加想要的功能和样式&lt;/p>
+&lt;p>&lt;a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html&lt;/a>
+##octopress基本操作&lt;/p>
+&lt;ul>
+&lt;li>新建博客文章，&lt;code>rake new_post['blog_name']&lt;/code>&lt;/li>
+&lt;li>产生HTML文件， &lt;code>rake generate&lt;/code>&lt;/li>
+&lt;li>预览博客效果， &lt;code>rake preview&lt;/code>&lt;/li>
+&lt;li>推送内容到github， &lt;code>rake deploy&lt;/code> 或者 &lt;code>rake gen_deploy&lt;/code>&lt;/li>
+&lt;li>保存到github项目中&lt;br>
+&lt;code>git add .&lt;/code>&lt;br>
+&lt;code>git commit -m &amp;quot;modified note&amp;quot;&lt;/code>&lt;br>
+&lt;code>git push [for first time](origin source)&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>##一些配置
+###更换主题
+git clone &lt;a href="https://github.com/jeremyrea/slimpress">https://github.com/jeremyrea/slimpress&lt;/a> .theme/slimpress&lt;br>
+rake install['slimpress']&lt;/p>
+&lt;p>###修改&lt;code>_config.yml&lt;/code>
+*日期格式： &lt;code>date-formate: %Y年-%m月-%d日&lt;/code>&lt;br>
+*分类前缀显示为中文：&lt;code>category_title_prefix: &amp;quot;分类&amp;quot;&lt;/code>
+*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://example.com/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
+&lt;p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。&lt;/p>
+&lt;p>先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的&lt;/p>
+&lt;p>###改动1
+   因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:&lt;/p></description></item><item><title>iOS面试题目</title><link>https://example.com/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</link><pubDate>Tue, 03 Mar 2015 22:35:24 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</guid><description>
+&lt;p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少&lt;/p>
+&lt;p>###1.#import和#include的区别，@class的作用是什么？&lt;br>
+#import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。 &lt;br>
+所以一般来说，在interface中引用一个类，就用@class，它会把这个类作为一个类型来使用，而在实现这个interface的文件中，如果需要引用这个类的实体变量或者方法之类的，还是需要import这个在@class中声明的类。
+#import比起#include的好处就是不会引起重复包含。
+###2.方法前加号和减号的区别&lt;br>
+加号：类方法&lt;br>
+减号：实例方法&lt;/p>
+&lt;p>###3.MVC是什么？有什么特性？ 
+MVC是一种设计模式，由模型、视图、控制器3部分组成。&lt;br>
+模型：保存应用程序数据的类，处理业务逻辑的类&lt;br>
+视图：窗口，控件和其他用户能看到的并且能交互的元素&lt;br>
+控制器：将模型和试图绑定在一起，确定如何处理用户输入的类&lt;/p>
+&lt;p>###4.obj-c有多重继承么?不是的话有什么替代方法?
+oc不支持多重继承，用protocol委托代理来替代&lt;/p>
+&lt;p>###5.NSNotification和KVO的区别和用法是什么？什么时候应该使用通知，什么时候应该使用KVO，它们的实现上有什么区别吗？如果用protocol和delegate（或者delegate的Array）来实现类似的功能可能吗？如果可能，会有什么潜在的问题？如果不能，为什么？&lt;/p>
+&lt;pre>&lt;code>KVO只能监测属性的变化，通过NSString类型的属性名来实现。但是实现了自动监测，当属性值变化时，会自动通知观察者，不用再添加代码了。 NSNotification比较灵活，可以监测的内容较多，但是需要被观察者手动发送通知，观察者才能响频。 protocol通过添加一个NSArray也能实现类似的功能，但是实现上需要自己处理delegate的添加与删除，自己在属性变化时手动通知，较繁琐，易出错。
+&lt;/code>&lt;/pre>
+&lt;p>###6.您是否做过异步的网络处理和通讯方面的工作？如果有，能具体介绍一些实现策略么？&lt;/p>
+&lt;pre>&lt;code>做过。 通过注册代码或者block的方式，实现回调。在网络处理方面，统一处理出错的情况，没出错的情况下，将数据分别发送给接收者。
+&lt;/code>&lt;/pre>
+&lt;p>###7.你实现过一个框架或者库以供别人使用么？如果有，请谈一谈构建框架或者库时候的经验；如果没有，请设想和设计框架的public的API，并指出大概需要如何做、需要注意一些什么方面，来使别人容易地使用你的框架。&lt;/p>
+&lt;pre>&lt;code>曾经移植过一个框架，把C++的一套类库移植到OC上面，主要工作就是做一个oc++的接口层。做的过程中，遇到的问题就是在原来框架中，很多头文件中用结构体或者类的地方，没有用指针，导致不能用声明的方式来使用类和结构体，必须在头文件中把其它头文件导入，这样导致整个接口需要提供的头文件太多了。 还封装过供他人调用的接口。建议就是调用方法尽可能简单，做好传入参数的安全检查及错误提醒。因为你无法确定你的调用者给你传什么样的数据进来。如果实现方法中耗时较长，需要用异步的方式进行结果返回，可以选用delegate或者block的方式。
+参见唐巧的[http://blog.devtang.com/blog/2015/01/31/write-sdk-tips/](博客)
+&lt;/code>&lt;/pre>
+&lt;p>###8.NSOperation vs Grand Central Dispatch
+GCD is a low-level C-based API that enables very simple use of a task-based concurrency model. NSOperation and NSOperationQueue are Objective-C classes that do a similar thing. NSOperation was introduced first, but as of 10.6 and iOS 4, NSOperationQueue and friends are internally implemented using GCD.&lt;/p>
+&lt;pre>&lt;code> In general, you should use the highest level of abstraction that suits your needs. This means that you should usually use NSOperationQueue instead of GCD, unless you need to do something that NSOperationQueue doesn't support.
+Note that NSOperationQueue isn't a &amp;quot;dumbed-down&amp;quot; version of GCD; in fact, there are many things that you can do very simply with NSOperationQueue that take a lot of work with pure GCD. (Examples: bandwidth-constrained queues that only run N operations at a time; establishing dependencies between operations. Both very simple with NSOperation, very difficult with GCD.) Apple's done the hard work of leveraging GCD to create a very nice object-friendly API with NSOperation. Take advantage of their work unless you have a reason not to.
+Caveat: On the other hand, if you really just need to send off a block, and don't need any of the additional functionality that NSOperationQueue provides, there's nothing wrong with using GCD. Just be sure it's the right tool for the job.
+&lt;/code>&lt;/pre>
+&lt;p>###9.static的作用&lt;br>
+作用范围为该函数体，不同于auto变量。
+1）该变量的内存只被分配一次，因此其值在下次调用时扔维持上次的值；
+2）在模块内的static全局变量尅被模块内所用函数访问，但不能被模块外其他函数访问；
+3）在模块内的static函数只可被这一模块内的其他函数调用，这个函数的使用范围被限制在它的模块内；
+4）在类中的static成员变量属于整个类所拥有，对类的所有对象只有一份拷贝；
+5）在类中的static成员函数属于整个类所拥有，这个函数不接收this指针，因而只能访问类的static成员变量。&lt;/p>
+&lt;p>###10.const的作用
+const意味着“只读”，例子：
+const int a;
+int const a;
+const int *a;
+int * const a;
+int const *a const;
+前两个作用一样，a是一个长整数型，第三个意味着a是一个指向常整数型的指针；第四个a是一个指向整数型的常指针；第五个a是一个指向常整数型的常指针；
+欲阻止一个变量被改变，可以使用 const 关键字。
+（1）在定义该 const 变量时，通常需要对它进行初始化，因为以后就没有机会再去改变它了；
+（2）对指针来说，可以指定指针本身为 const，也可以指定指针所指的数据为 const，或二者同时指
+定为 const；
+（3）在一个函数声明中，const 可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
+（4）对于类的成员函数，若指定其为 const 类型，则表明其是一个常函数，不能修改类的成员变量；
+（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。&lt;/p></description></item><item><title>用UIWebView来load图片很慢的方法</title><link>https://example.com/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</link><pubDate>Tue, 20 Jan 2015 00:48:29 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</guid><description>
+&lt;p>load的慢不是错，不去解决才是错&lt;/p>
+&lt;p>&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview&lt;/a>&lt;/a>&lt;br>&lt;/p></description></item><item><title>给自己的2015来份计划表</title><link>https://example.com/pt/post/pt/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</link><pubDate>Tue, 06 Jan 2015 09:11:21 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</guid><description>
+&lt;p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。&lt;/p>
+&lt;p>也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。&lt;/p>
+&lt;ol>
+&lt;li>学习一门新的不同风格的编程语言&lt;/li>
+&lt;/ol>
+&lt;p>这是很需要的一件事，因为如果我们只了解一种语言，它就会局限你解决问题的能力和你的职业发展。所以在新的一年，你应该花些时间学习一门新的语言，体验不同的编程风格，并学以致用。所以，要学会一门脚本语言PHP或者Python吧。&lt;/p>
+&lt;ol start="2">
+&lt;li>提高你的已有技能&lt;/li>
+&lt;/ol>
+&lt;p>跟随各大神的脚步，多去github，code4app,cocoacontrol,cocoaChina等开源社区逛逛，要深入了解那些优秀源代码，去读去理解，不要只知道拿来项目引用，强化自己的技术，加深对知识的理解。如果可以的话，可以到当地的大学听课学习。&lt;/p>
+&lt;ol start="3">
+&lt;li>活动你的手指，但不是在键盘上&lt;/li>
+&lt;/ol>
+&lt;p>从你的书架上拿起“刺客信条”或其它游戏，用手柄和方向盘操纵游戏，活动你的关节和手指，当然还可以减压。哟哟，还有就是运动了，不要忘记自己要多运动，时间是抽出来的，没事多出去骑骑车，打打球，不要老宅在家了。&lt;/p>
+&lt;ol start="4">
+&lt;li>按时交付每一个项目&lt;/li>
+&lt;/ol>
+&lt;p>当然，这一点你不能完全控制，但是你要确保你的文档按时交付，不拖累整个项目的进展。保证项目进度，不能干事的员工只会慢慢疏远公司体制和亲和力。&lt;/p>
+&lt;ol start="5">
+&lt;li>更多的时间远离计算机&lt;/li>
+&lt;/ol>
+&lt;p>让自己有更多的时间在做饭、骑车、旅行或者学习艺术，总之多做一些不需要总盯着电脑屏幕的事情，到户外闻一闻花香，感受一下自然气息。&lt;/p>
+&lt;ol start="6">
+&lt;li>关注更多信息&lt;/li>
+&lt;/ol>
+&lt;p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://example.com/pt/post/pt/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
+&lt;p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。&lt;/p>
+&lt;p>And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。&lt;p>&lt;/p>
+&lt;p>&lt;b1>What the hell!&lt;/b1>&lt;/p>
+&lt;p>====================================================================
+好吧，结素，开始正题！&lt;/p>
+内容来自各大大的blog，由&lt;a href="http://beyondvincent.com/blog/2013/07/27/107-hello-page-of-github/">&lt;code>破船之家&lt;/code>&lt;/a>，&lt;a href="http://droidyue.com/blog/2014/06/22/fix-octopress-slow-loading-speed-issue-in-china-mainland/">&lt;code>技术小黑屋&lt;/code>&lt;/a>&lt;/p>&lt;/p>
+&lt;h2>1、初级问题&lt;/h2>
+首先打开：&lt;code>_config.yml&lt;/code>&lt;/p>
+我一狠心将Github，Twitter,Google +1, Google Plus, Pinboard, Delicious, Disqus, Google analytics, Facebook一律封杀了......艾玛，好残忍⇀ ⇀ &lt;/p>
+全部前面加#注释了&lt;/p>
+&lt;h2>2、关键问题&lt;/h2>
+Octopress很多依赖于Google的库和资源，So,google拜拜~~~~(>_&lt;)~~~~ &lt;/p>
+&lt;p>对于使用Google Analytics来说，加在ga.js这个文件简直是要命的慢，这里我使用自己存放在七牛CDN上的js.&lt;a href="http://droidyue-tools.qiniudn.com/ga.js">&lt;a href="http://droidyue-tools.qiniudn.com/ga.js">http://droidyue-tools.qiniudn.com/ga.js&lt;/a>&lt;/a> 已验证，完全可以正常收集数据。
+参考如下，修改&lt;code>source/_includes/google_analytics.html&lt;/code>&lt;/p>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;span class='line-number'>8&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> __gaq.push([&amp;#39;_trackPageview&amp;#39;]);
+&lt;/span>&lt;span class='line'>
+&lt;/span>&lt;span class='line'> (function() {
+&lt;/span>&lt;span class='line'> var ga = document.createElement(&amp;#39;script&amp;#39;); ga.type = &amp;#39;text/javascript&amp;#39;; ga.async = true;
+&lt;/span>&lt;span class='line'> ga.src=&amp;#39;http://droidyue-tools.qiniudn.com/ga.js&amp;#39;;
+&lt;/span>&lt;span class='line'> var s = document.getElementsByTagName(&amp;#39;script&amp;#39;)[0]; s.parentNode.insertBefore(ga, s);
+&lt;/span>&lt;span class='line'> })();
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>解决fonts.googleapis.com蜗牛慢&lt;/h3>
+&lt;p>这里我们使用数字公司提供的Google Fonts大陆解决方案，使用&lt;code>fonts.useso.com&lt;/code>替换&lt;code>fonts.googleapis.com&lt;/code>。&lt;br/>
+修改文件&lt;code>/source/_includes/custom/head.html&lt;/code>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> &lt;span class="c">&amp;lt;!--Fonts from Google&amp;quot;s Web font directory at http://google.com/webfonts --&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'>&lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'>&lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>解决ajax.googleapis.com慢的问题&lt;/h3>
+&lt;p>修改&lt;code>source/_includes/head.html&lt;/code>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> &lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;/stylesheets/screen.css&amp;quot;&lt;/span> &lt;span class="na">media=&lt;/span>&lt;span class="s">&amp;quot;screen, projection&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;/atom.xml&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;alternate&amp;quot;&lt;/span> &lt;span class="na">title=&lt;/span>&lt;span class="s">&amp;quot;技术小黑屋&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;application/atom+xml&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;/javascripts/modernizr-2.0.js&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;//ajax.useso.com/ajax/libs/jquery/1.9.1/jquery.min.js&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script&amp;gt;&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">jQuery&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">unescape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;%3Cscript src=&amp;quot;./javascripts/lib/jquery.min.js&amp;quot;%3E%3C/script%3E&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="nt">&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;/javascripts/octopress.js&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/javascript&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>好了，到此的话就可以了，基本上访问慢得问题解决了，现在我们来添加评论功能，评论我们用&amp;lt; a href=&amp;quot;http://duoshuo.com/&amp;quot;&amp;gt;&lt;code>多说&lt;/code>&lt;/a>&lt;/p>&lt;/p>
+&lt;h2>添加评论&lt;/h2>
+&lt;h4>进入多说官网，注册账号&lt;/h4>
+&lt;h4>在_config.yml文件添加&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'># duoshuo comments
+&lt;/span>&lt;span class='line'>duoshuo_comments: true
+&lt;/span>&lt;span class='line'>duoshuo_short_name: yourname&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>在&lt;code>source/_layouts/post.html&lt;/code>中添加多说评论模块&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>｛% if site.duoshuo_short_name and site.duoshuo_comments == true and page.comments == true %｝
+&lt;/span>&lt;span class='line'> &amp;lt;section&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;h1&amp;gt;Comments&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;div id="comments" aria-live="polite"&amp;gt;｛% include post/duoshuo1.html %｝&amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;/section&amp;gt;
+&lt;/span>&lt;span class='line'>｛% endif %｝&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>创建&lt;code>source/_includes/post/duoshuo.html&lt;/code>，并填入如下内容&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">
+&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;span class='line-number'>8&lt;/span>
+&lt;span class='line-number'>9&lt;/span>
+&lt;span class='line-number'>10&lt;/span>
+&lt;span class='line-number'>11&lt;/span>
+&lt;span class='line-number'>12&lt;/span>
+&lt;span class='line-number'>13&lt;/span>
+&lt;span class='line-number'>14&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>
+&lt;span class='line'>&amp;lt;!-- Duoshuo Comment BEGIN --&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;div class="ds-thread"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;script type="text/javascript"&amp;gt;
+&lt;/span>&lt;span class='line'> var duoshuoQuery = {short_name:"beyondvincent"};
+&lt;/span>&lt;span class='line'> (function() {
+&lt;/span>&lt;span class='line'> var ds = document.createElement('script');
+&lt;/span>&lt;span class='line'> ds.type = 'text/javascript';ds.async = true;
+&lt;/span>&lt;span class='line'> ds.src = 'http://static.duoshuo.com/embed.js';
+&lt;/span>&lt;span class='line'> ds.charset = 'UTF-8';
+&lt;/span>&lt;span class='line'> (document.getElementsByTagName('head')[0]
+&lt;/span>&lt;span class='line'> || document.getElementsByTagName('body')[0]).appendChild(ds);
+&lt;/span>&lt;span class='line'> })();
+&lt;/span>&lt;span class='line'>&amp;lt;/script&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;!-- Duoshuo Comment END --&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>发布到站点&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">
+&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>
+&lt;span class='line'>$ rake generate
+&lt;/span>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -am "添加多说评论"
+&lt;/span>&lt;span class='line'>$ git push origin source
+&lt;/span>&lt;span class='line'>$ rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>百度统计&lt;/h3>
+从百度统计获取脚本，然后添加到文件source/_includes/after_footer.html文件</description></item><item><title>使用octopress搭建github博客</title><link>https://example.com/pt/post/pt/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</link><pubDate>Sun, 04 Jan 2015 11:05:25 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</guid><description>
+&lt;p>&lt;a href="http://octopress.org/">&lt;code>Octopress&lt;/code>&lt;/a>是利用&lt;a href="http://github.com/mojombo/jekyll">&lt;code>Jekyll&lt;/code>&lt;/a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
+&lt;p>号称是hacker专属的一个博客系统(&lt;code>A blogging framework for hackers.&lt;/code>)&lt;/p>&lt;/p>
+&lt;p>本文只讲自己在苹果电脑(OS X 10.10)利用Octopress搭建一个Github博客,内容参照&lt;code>&lt;a href ="http://beyondvincent.com/blog/2013/08/03/108-creating-a-github-blog-using-octopress/">破船之家&lt;/a>，&lt;a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">唐巧_boy&lt;/a>&lt;/code>&lt;/p>
+&lt;h3>目录&lt;/h3>
+&lt;ul>
+&lt;li>1、安装Ruby&lt;/li>
+&lt;li>2、安装Octopress&lt;/li>
+&lt;li>3、配置Octopress&lt;/li>
+&lt;li>4、将博客部署到GitHub上&lt;/li>
+&lt;li>5、开始写博客&lt;/li>
+&lt;li>6、更多操作&lt;/li>
+&lt;li>7、小结&lt;/li>
+&lt;/ul>
+&lt;h3>1、安装Ruby&lt;/h3>
+&lt;p>Octopress需要Ruby环境，RVM(Ruby Version Manager)负责安装和管理Ruby的环境。所以我们先在终端输入如下命令，来安装RVM：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>curl -L https://get.rvm.io | bash -s stable --ruby&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着是安装Ruby 1.9.3，在终端依次运行如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rvm install 1.9.3
+&lt;/span>&lt;span class='line'>rvm use 1.9.3
+&lt;/span>&lt;span class='line'>rvm rubygems latest&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>完成上面的操作之后，运行&lt;code>ruby --version&lt;/code>应该可以看到ruby 1.9.3环境已经安装好了。🐷：波煮在这里说句，这个ruby version着实让我心塞，搞了好久好久，以至于后来放弃搭建，到现在闲暇之余才努力研究将其解决，具体问题具体谷歌( ⊙ o ⊙ )啊！&lt;/p>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/setup/rvm/">Installing Ruby With RVM&lt;/a>&lt;/p>
+&lt;h3>2、安装Octopress&lt;/h3>
+&lt;p>在安装Octopress之前，请确保你的电脑上已经安装有git了，在终端输入&lt;code>git --version&lt;/code>.
+&lt;p>git安装之后，利用git命令将octopress从github上clone到本机，如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>git clone git://github.com/imathis/octopress.git octopress
+&lt;/span>&lt;span class='line'>cd octopress # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+&lt;/span>&lt;span class='line'>ruby --version # Should report Ruby 1.9.3&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着安装相关依赖项：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>gem install bundler
+&lt;/span>&lt;span class='line'>rbenv rehash # If you use rbenv, rehash to be able to run the bundle command
+&lt;/span>&lt;span class='line'>bundle install&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>最后安装默认的Octopress 主题。&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake install&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>参考： &lt;a href="http://octopress.org/docs/setup/">Octopress Setup&lt;/a>&lt;/p>
+&lt;h3>3、配置Octopress&lt;/h3>
+&lt;p>配置&lt;code>_config.yml&lt;/code>和&lt;code>Rakefile&lt;/code>文件。&lt;/p>
+其中Rakefile是跟博客部署相关，一般情况下并不需要修改这个文件，除非使用了rsync。&lt;/p>
+&lt;p>&lt;em>config.yml是博客重要的一个配置文件，在&lt;/em>config.yml文件中有三大配置项：&lt;code>Main Configs&lt;/code>、&lt;code>Jekyll &amp;amp; Plugins&lt;/code>和&lt;code>3rd Party Settings&lt;/code>。&lt;/p>
+&lt;p>一般，该文件中其中&lt;code>url&lt;/code>是必须要填写的，这里的url是在github上创建的一个仓库地址，具体请看第四步中创建的地址。另外再修改一下&lt;code>title&lt;/code>、&lt;code>subtitle&lt;/code>和&lt;code>author&lt;/code>，根据需求，在开启一些第三方组件服务。&lt;/p>
+&lt;p>&lt;b>&lt;code>再注：&lt;/code>波煮将在下篇文章中说明一些搭建之后在拥有全球超级局域网的天朝的一些令人心塞令人烦闷的墙内话&lt;/b>&lt;/p>&lt;/p>
+&lt;p>关于_config.yml文件中的更多内容，请看这里的内容：&lt;a href="http://octopress.org/docs/configuring/">Configuring Octopress&lt;/a>&lt;/p>
+&lt;h3>4、将博客部署到GitHub上&lt;/h3>
+&lt;p>Github的&lt;a href="http://pages.github.com/">&lt;code>Page service&lt;/code>&lt;/a>可以免费托管博客，并且还可以自定义域名。&lt;/p>
+&lt;p>首先需要在GitHub上&lt;a href="https://github.com/new">&lt;code>创建一个仓库&lt;/code>&lt;/a>，并将仓库名称按照这样的方式进行命名：&lt;code>username.github.com&lt;/code>或&lt;code>organization.github.com&lt;/code>。等后面配置完毕之后，我们就可以在浏览器中使用页面地址&lt;code>http://username.github.com&lt;/code>来访问我们的博客。一般来说，我们希望在将博客的源码放到source分支下，并把生成的内容提交到master分支。&lt;/p>
+&lt;p>创建好仓库之后，我们需要利用octopress的一个&lt;code>配置rake任务&lt;/code>来自动配置上面创建的仓库：可以让我们方便的部署GitHub page。在终端输入如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ rake setup_github_pages&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>上面的命令会做一些事情(详细介绍看下面给出的参考链接)。其中最主要的就是创建一个&lt;code>_deploy&lt;/code>目录，目录用来存放部署到master分支的内容。期间会要求你输入仓库的url，根据提示，进行输入即可。&lt;/p>
+&lt;p>完成上面的命令之后，我们就可以生成博客并真正的部署到仓库中了。执行如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake generate
+&lt;/span>&lt;span class='line'>rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>上面的命令首先生成博客文件，并将生成的博客文件拷贝到&lt;code>_deploy/&lt;/code>目录下，然后将这些内容添加到git中，并commit和push到仓库的master分支。&lt;/p>
+&lt;p>现在可以访问&lt;code>http://username.github.com&lt;/code>了。注意：有时候可能会有延时，要等几分钟才能打开。&lt;/p>
+&lt;p>至此，我们的博客已经完成基本的部署，不过博客的source需要单独提交，执行如下命令就可以将source提交到仓库的source分支下。&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -m 'Initial source commit'
+&lt;/span>&lt;span class='line'>$ git push origin source&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>如果在部署到仓库之前，需要先预览一下博客，可以在终端输入&lt;code>rake preview&lt;/code>命令，然后就能在浏览器中进行本地预览访问了：&lt;code>http://127.0.0.1:4000/&lt;/code>或&lt;code>http://localhost:4000/&lt;/code>，效果跟仓库中的一样。&lt;/p>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/deploying/">Deploying to Github Pages&lt;/a>&lt;/p>
+&lt;h3>5、开始写博客&lt;/h3>
+&lt;p>Octopress为我们提供了一些task来创建博文和页面。博文必须存储在&lt;code>source/_posts&lt;/code>目录下，并且需要按照Jekyll的命名规范对文章进行命名：&lt;code>YYYY-MM-DD-post-title.markdown&lt;/code>。文章的名字会被当做url的一部分，而其中的日期用于对博文的区分和排序。&lt;/p>
+&lt;p>通过Octopress提供的task可以正确的按照命名规范创建一个博文，并且在博文中会附带常用的一些yaml元数据。只需要在终端输入如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake new_post["title"]&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>其中title为博文的文件名，创建出来的文件默认是markdown格式。上面的命令会创建出这样一个文件：&lt;code>source/_posts/2013-08-03-title.markdown&lt;/code>。打开这个文件，可以看到里面有如下一些内容了(告诉Jekyll博客引擎如何处理博文和页面)：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>---
+&lt;/span>&lt;span class='line'>layout: post
+&lt;/span>&lt;span class='line'>title: "title"
+&lt;/span>&lt;span class='line'>date: 2013-08-03 16:36
+&lt;/span>&lt;span class='line'>comments: true
+&lt;/span>&lt;span class='line'>categories:
+&lt;/span>&lt;span class='line'>---&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着我们就可以在这个文件中写我们的博文啦。完成之后，我们可以预览和部署博文。下面是创建并部署博文的一个完整过程：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ rake new_post["New Post"]
+&lt;/span>&lt;span class='line'>$ rake generate
+&lt;/span>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -am "Some comment here."
+&lt;/span>&lt;span class='line'>$ git push origin source
+&lt;/span>&lt;span class='line'>$ rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/blogging/">Blogging Basics&lt;/a>&lt;/p>
+&lt;h3>6、后续&lt;/h3>
+&lt;p>在搭建博客后，你会发现打开很慢很慢，所以我们需要对其做一个优化，这些内容写在另外一篇文章中，&lt;a href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/">&lt;code>跳吧，年轻人&lt;/code>&lt;/a>。&lt;/p></description></item></channel></rss>

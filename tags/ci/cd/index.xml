@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CI/CD on X•O专业去码</title><link>https://example.com/tags/ci/cd/</link><description>Recent content in CI/CD on X•O专业去码</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><atom:link href="https://example.com/tags/ci/cd/index.xml" rel="self" type="application/rss+xml"/><item><title>我想在gitlab用CICD部署</title><link>https://example.com/post/zh-cn/2021/%E6%88%91%E6%83%B3%E5%9C%A8gitlabe%E7%94%A8cicd%E9%83%A8%E7%BD%B2/</link><pubDate>Thu, 13 May 2021 17:23:19 +0800</pubDate><guid>https://example.com/post/zh-cn/2021/%E6%88%91%E6%83%B3%E5%9C%A8gitlabe%E7%94%A8cicd%E9%83%A8%E7%BD%B2/</guid><description>
+&lt;h3 id="持续集成">持续集成&lt;/h3>
+&lt;p>持续整合（英语：Continuous integration，缩写CI），又译为持续集成，是一种软件工程流程，是将所有软件工程师对于软件的工作副本持续集成到共享主线（mainline）的一种举措。该名称最早由[1]葛来迪·布区（Grady Booch）在他的布区方法[2]中提出，在测试驱动开发（TDD）的作法中，通常还会搭配自动单元测试。持续集成的提出主要是为解决软件进行系统集成时面临的各项问题，极限编程称这些问题为集成地狱（integration hell）。&lt;/p>
+&lt;h3 id="持续交付">持续交付&lt;/h3>
+&lt;p>持续交付（英语：Continuous delivery，缩写为 CD），是一种软件工程手法，让软件产品的产出过程在一个短周期内完成，以保证软件可以稳定、持续的保持在随时可以释出的状况。它的目标在于让软件的建置、测试与释出变得更快以及更频繁。这种方式可以减少软件开发的成本与时间，减少风险。&lt;/p>
+&lt;h3 id="持续部署">持续部署&lt;/h3>
+&lt;p>持续部署（英语：Continuous deployment，缩写为CD），是一种软件工程方法，意指在软件开发流程中，以自动化方式，频繁而且持续性的，将软件部署到生产环境（production environment）中，使软件产品能够快速的发展[1][2][3]。&lt;/p>
+&lt;p>持续部署可以整合到持续整合与持续交付（Continuous delivery）的流程之中。&lt;/p>
+&lt;h3 id="cicd">CICD&lt;/h3>
+&lt;p>在软件工程中，CI/CD或CICD通常指的是持续集成和持续交付或持续部署的组合实践。CI/CD通过在应用程序的构建、测试和部署中实施自动化，在开发和运营团队之间架起了桥梁。&lt;/p>
+&lt;p>现代DevOps实践涉及软件应用程序在整个开发生命周期内的持续开发、持续测试、持续集成、持续部署和持续监控。CI/CD实践或CI/CD管道（CI/CD pipeline）构成了现代DevOps业务的主干。&lt;/p>
+&lt;h3 id="缘由">缘由&lt;/h3>
+&lt;p>公司运维系统每次发布系统都需要经过一轮打包——编译——发至跳板机（期间需要输入动态码）——然后登陆跳板机（需要输入动态码））——从跳板机将压缩包发至web主机——再登陆web主机再解压缩新包并重启。
+一轮下来，费时费力不说，命令行忘记，手打输入错误等情况，还是会经常出现的。可能大家会觉得这么简单的事还说难，但是，事情有时候不是说只做这一件，事情也不是天天都做，还有就是，同事的加入或离开，都需要重新弄这一套流程。跳板机需要配置申请，各方面需要重新指导，其实很费时间。&lt;/p>
+&lt;p>本次的接入，也是由控制台那块流程已经接入至cicd，所以也就是有前车了，不怕，有问题问大佬，这么说都写了一套了。&lt;/p>
+&lt;h3 id="过程">过程&lt;/h3>
+&lt;p>目前只做一个管道（pipeline）操作，里面主要实现的工作就是上面我们手动要做的那些事。我们把整个空间就是个docker空间
+所以第一件事就是，先安装依赖再进行编译。没啥问题！&lt;/p>
+&lt;p>.gitlab-ci.yml&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>image: node:13.11.0
+&lt;span class="ln"> 2&lt;/span>
+&lt;span class="ln"> 3&lt;/span>stages:
+&lt;span class="ln"> 4&lt;/span> - build
+&lt;span class="ln"> 5&lt;/span>
+&lt;span class="ln"> 6&lt;/span># 构建
+&lt;span class="ln"> 7&lt;/span>deploy:
+&lt;span class="ln"> 8&lt;/span> stage: build
+&lt;span class="ln"> 9&lt;/span> script:
+&lt;span class="ln">10&lt;/span> - echo &amp;#39;---------- build ------------&amp;#39;
+&lt;span class="ln">11&lt;/span> - npm install
+&lt;span class="ln">12&lt;/span> - npm run build
+&lt;span class="ln">13&lt;/span> tags:
+&lt;span class="ln">14&lt;/span> - 此处填入自己的tags
+&lt;span class="ln">15&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>编译完之后就是打包发至服务器了，此处直接去跳板机处生成自己的ssh private key并保存只仓库中的CI/CD的变量&lt;code>SSH_PRIVATE_KEY_133&lt;/code>当中，
+并将web主机加入known_hosts里面。
+&lt;img src="https://example.com/images/2021/WechatIMG4.png" alt="01">&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>before_script:
+&lt;span class="ln"> 2&lt;/span> #- apt-get -y install openssh-client
+&lt;span class="ln"> 3&lt;/span> - &amp;#39;which ssh-agent || ( apt-get update -y &amp;amp;&amp;amp; apt-get install openssh-client -y )&amp;#39;
+&lt;span class="ln"> 4&lt;/span> - eval $(ssh-agent -s)
+&lt;span class="ln"> 5&lt;/span> - echo &amp;#34;$SSH_PRIVATE_KEY_133&amp;#34; | tr -d &amp;#39;\r&amp;#39; | ssh-add - &amp;gt; /dev/null
+&lt;span class="ln"> 6&lt;/span> - mkdir -p ~/.ssh
+&lt;span class="ln"> 7&lt;/span> - chmod 700 ~/.ssh
+&lt;span class="ln"> 8&lt;/span> - echo &amp;#34;$SSH_KNOWN_HOSTS&amp;#34; &amp;gt; ~/.ssh/known_hosts
+&lt;span class="ln"> 9&lt;/span> - &amp;#39;[[ -f /.dockerenv ]] &amp;amp;&amp;amp; echo -e &amp;#34;Host *\n\tStrictHostKeyChecking no\n\n&amp;#34; &amp;gt; ~/.ssh/config&amp;#39;
+&lt;span class="ln">10&lt;/span> - chmod 644 ~/.ssh/known_hosts
+&lt;span class="ln">11&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>将key加入至此后，尝试发至web主机。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>
+&lt;span class="ln">2&lt;/span> - TZ=&amp;#39;Asia/Shanghai&amp;#39;; export TZ; export VERSION=`date +%Y%m%d%H%M%S`
+&lt;span class="ln">3&lt;/span> - export Y_VERSION=`date +%Y`
+&lt;span class="ln">4&lt;/span> - echo $VERSION
+&lt;span class="ln">5&lt;/span> - tar zcvf dist-$VERSION.tar.gz dist
+&lt;span class="ln">6&lt;/span> - scp dist-$VERSION.tar.gz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH-pre/tars/$Y_VERSION
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如图可见，是发送成功了
+&lt;img src="https://example.com/images/2021/WX20210521-152830@2x.png" alt="02">&lt;/p>
+&lt;p>那现在就简单了，ssh登陆。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>- ssh $DEPLOY_USER@$DEPLOY_HOST &amp;#34;cd &amp;#39;$DEPLOY_PATH&amp;#39;-pre &amp;amp;&amp;amp; tar -zxvf tars/&amp;#39;$Y_VERSION&amp;#39;/dist-&amp;#39;$VERSION&amp;#39;.tar.gz &amp;amp;&amp;amp; pm2 restart 14&amp;#34;
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="后续">后续&lt;/h3>
+&lt;p>目前这个已经可运行并且开始使用。效果大概是5分钟左右可以发布完所有流程，本来是希望通过引入cache机制去跳过npm install的步骤，但目前公司提供的机器无法提供cache缓存。而且加入cache配置后，管道运行时间竟然超过12分钟。。。
+&lt;img src="https://example.com/images/2021/1.png" alt="03">
+&lt;img src="https://example.com/images/2021/2.png" alt="04">&lt;/p>
+&lt;h3 id="下个版本">下个版本&lt;/h3>
+&lt;p>这个只是一个管道，没有全部分离出来。以后可以进行分解加强。
+1）加eslint校验
+2）css校验
+3）编译独立
+4）发布流程独立并且正式环境需手动发布&lt;/p>
+&lt;p>目前主要源码：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span># This file is a template, and might need editing before it works on your project.
+&lt;span class="ln"> 2&lt;/span># Official framework image. Look for the different tagged releases at:
+&lt;span class="ln"> 3&lt;/span># https://hub.docker.com/r/library/node/tags/
+&lt;span class="ln"> 4&lt;/span>image: node:13.11.0
+&lt;span class="ln"> 5&lt;/span>
+&lt;span class="ln"> 6&lt;/span>before_script:
+&lt;span class="ln"> 7&lt;/span> #- apt-get -y install openssh-client
+&lt;span class="ln"> 8&lt;/span> - &amp;#39;which ssh-agent || ( apt-get update -y &amp;amp;&amp;amp; apt-get install openssh-client -y )&amp;#39;
+&lt;span class="ln"> 9&lt;/span> - eval $(ssh-agent -s)
+&lt;span class="ln">10&lt;/span> - echo &amp;#34;$SSH_PRIVATE_KEY_133&amp;#34; | tr -d &amp;#39;\r&amp;#39; | ssh-add - &amp;gt; /dev/null
+&lt;span class="ln">11&lt;/span> - mkdir -p ~/.ssh
+&lt;span class="ln">12&lt;/span> - chmod 700 ~/.ssh
+&lt;span class="ln">13&lt;/span> - echo &amp;#34;$SSH_KNOWN_HOSTS&amp;#34; &amp;gt; ~/.ssh/known_hosts
+&lt;span class="ln">14&lt;/span> - &amp;#39;[[ -f /.dockerenv ]] &amp;amp;&amp;amp; echo -e &amp;#34;Host *\n\tStrictHostKeyChecking no\n\n&amp;#34; &amp;gt; ~/.ssh/config&amp;#39;
+&lt;span class="ln">15&lt;/span> - chmod 644 ~/.ssh/known_hosts
+&lt;span class="ln">16&lt;/span>
+&lt;span class="ln">17&lt;/span>stages:
+&lt;span class="ln">18&lt;/span> - build
+&lt;span class="ln">19&lt;/span>
+&lt;span class="ln">20&lt;/span># 构建
+&lt;span class="ln">21&lt;/span>pre-auto-deploy:
+&lt;span class="ln">22&lt;/span> stage: build
+&lt;span class="ln">23&lt;/span> only:
+&lt;span class="ln">24&lt;/span> refs:
+&lt;span class="ln">25&lt;/span> - pre-release
+&lt;span class="ln">26&lt;/span> - feature/test_CI
+&lt;span class="ln">27&lt;/span> script:
+&lt;span class="ln">28&lt;/span> - cd $CI_PROJECT_DIR &amp;amp;&amp;amp; pwd
+&lt;span class="ln">29&lt;/span> - &amp;gt;
+&lt;span class="ln">30&lt;/span> if [ ! -d &amp;#34;./node_modules&amp;#34; ] || [ ! &amp;#34;$(ls -A &amp;#39;./node_modules&amp;#39;)&amp;#34; ]; then
+&lt;span class="ln">31&lt;/span> echo &amp;#39;---------- install ------------&amp;#39;
+&lt;span class="ln">32&lt;/span> npm install
+&lt;span class="ln">33&lt;/span> if [ $? -ne 0 ]; then
+&lt;span class="ln">34&lt;/span> echo &amp;#34;npm_install error&amp;#34;
+&lt;span class="ln">35&lt;/span> exit 1
+&lt;span class="ln">36&lt;/span> fi
+&lt;span class="ln">37&lt;/span> fi
+&lt;span class="ln">38&lt;/span>
+&lt;span class="ln">39&lt;/span> - echo &amp;#39;---------- build ------------&amp;#39;
+&lt;span class="ln">40&lt;/span> - npm run build
+&lt;span class="ln">41&lt;/span> - TZ=&amp;#39;Asia/Shanghai&amp;#39;; export TZ; export VERSION=`date +%Y%m%d%H%M%S`
+&lt;span class="ln">42&lt;/span> - export Y_VERSION=`date +%Y`
+&lt;span class="ln">43&lt;/span> - echo $VERSION
+&lt;span class="ln">44&lt;/span> - tar zcvf dist-$VERSION.tar.gz dist
+&lt;span class="ln">45&lt;/span> - scp dist-$VERSION.tar.gz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH-pre/tars/$Y_VERSION
+&lt;span class="ln">46&lt;/span> - ssh $DEPLOY_USER@$DEPLOY_HOST &amp;#34;cd &amp;#39;$DEPLOY_PATH&amp;#39;-pre &amp;amp;&amp;amp; tar -zxvf tars/&amp;#39;$Y_VERSION&amp;#39;/dist-&amp;#39;$VERSION&amp;#39;.tar.gz &amp;amp;&amp;amp; pm2 restart 14&amp;#34;
+&lt;span class="ln">47&lt;/span> #cache:
+&lt;span class="ln">48&lt;/span> # key: ${CI_COMMIT_REF_SLUG}
+&lt;span class="ln">49&lt;/span> # paths:
+&lt;span class="ln">50&lt;/span> # - node_modules/
+&lt;span class="ln">51&lt;/span> tags:
+&lt;span class="ln">52&lt;/span> - 一个tags
+&lt;span class="ln">53&lt;/span>
+&lt;span class="ln">54&lt;/span>prod-auto-deploy:
+&lt;span class="ln">55&lt;/span> stage: build
+&lt;span class="ln">56&lt;/span> only:
+&lt;span class="ln">57&lt;/span> refs:
+&lt;span class="ln">58&lt;/span> - develop
+&lt;span class="ln">59&lt;/span> - feature/test_CI_D
+&lt;span class="ln">60&lt;/span> script:
+&lt;span class="ln">61&lt;/span> - cd $CI_PROJECT_DIR &amp;amp;&amp;amp; pwd
+&lt;span class="ln">62&lt;/span> - &amp;gt;
+&lt;span class="ln">63&lt;/span> if [ ! -d &amp;#34;./node_modules&amp;#34; ] || [ ! &amp;#34;$(ls -A &amp;#39;./node_modules&amp;#39;)&amp;#34; ]; then
+&lt;span class="ln">64&lt;/span> echo &amp;#39;---------- install ------------&amp;#39;
+&lt;span class="ln">65&lt;/span> npm install
+&lt;span class="ln">66&lt;/span> if [ $? -ne 0 ]; then
+&lt;span class="ln">67&lt;/span> echo &amp;#34;npm_install error&amp;#34;
+&lt;span class="ln">68&lt;/span> exit 1
+&lt;span class="ln">69&lt;/span> fi
+&lt;span class="ln">70&lt;/span> fi
+&lt;span class="ln">71&lt;/span>
+&lt;span class="ln">72&lt;/span> - echo &amp;#39;---------- build ------------&amp;#39;
+&lt;span class="ln">73&lt;/span> - npm run build
+&lt;span class="ln">74&lt;/span> - TZ=&amp;#39;Asia/Shanghai&amp;#39;; export TZ; export VERSION=`date +%Y%m%d%H%M%S`
+&lt;span class="ln">75&lt;/span> - export Y_VERSION=`date +%Y`
+&lt;span class="ln">76&lt;/span> - echo $VERSION
+&lt;span class="ln">77&lt;/span> - tar zcvf dist-$VERSION.tar.gz dist
+&lt;span class="ln">78&lt;/span> - scp dist-$VERSION.tar.gz $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/tars/$Y_VERSION
+&lt;span class="ln">79&lt;/span> - ssh $DEPLOY_USER@$DEPLOY_HOST &amp;#34;cd &amp;#39;$DEPLOY_PATH&amp;#39; &amp;amp;&amp;amp; tar -zxvf tars/&amp;#39;$Y_VERSION&amp;#39;/dist-&amp;#39;$VERSION&amp;#39;.tar.gz &amp;amp;&amp;amp; pm2 restart 8&amp;#34;
+&lt;span class="ln">80&lt;/span> #cache:
+&lt;span class="ln">81&lt;/span> # key:
+&lt;span class="ln">82&lt;/span> # files:
+&lt;span class="ln">83&lt;/span> # - package-lock.json
+&lt;span class="ln">84&lt;/span> # - package.json
+&lt;span class="ln">85&lt;/span> # prefix: $CI_PROJECT_NAME-$CI_JOB_NAME
+&lt;span class="ln">86&lt;/span> # paths:
+&lt;span class="ln">87&lt;/span> # - node_modules/
+&lt;span class="ln">88&lt;/span> tags:
+&lt;span class="ln">89&lt;/span> - 一个tags
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>CI的编写可以再gitlab页面上进行CI lint检查
+&lt;img src="https://example.com/images/2021/3.png" alt="04">&lt;/p>
+&lt;h2 id="ref">REF&lt;/h2>
+&lt;p>&lt;a href="https://docs.gitlab.com/ee/ci/">https://docs.gitlab.com/ee/ci/&lt;/a>&lt;br>
+&lt;a href="https://twblog.hongjianching.com/2020/05/09/GitLab-CI-CD-use-cache-and-artifacts/">https://twblog.hongjianching.com/2020/05/09/GitLab-CI-CD-use-cache-and-artifacts/&lt;/a>&lt;br>
+&lt;a href="https://www.jianshu.com/p/b835a4d5bb4e">https://www.jianshu.com/p/b835a4d5bb4e&lt;/a>&lt;br>
+&lt;a href="https://docs.gitlab.com/ee/ci/caching/">https://docs.gitlab.com/ee/ci/caching/&lt;/a>&lt;br>
+&lt;a href="https://docs.gitlab.com/ee/ci/variables/README.html">https://docs.gitlab.com/ee/ci/variables/README.html&lt;/a>&lt;/p></description></item></channel></rss>

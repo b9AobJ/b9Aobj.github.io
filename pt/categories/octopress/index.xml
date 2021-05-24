@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>octopress on Claridade</title><link>https://example.com/pt/categories/octopress/</link><description>Recent content in octopress on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Mon, 15 Jun 2015 16:18:57 +0800</lastBuildDate><atom:link href="https://example.com/pt/categories/octopress/index.xml" rel="self" type="application/rss+xml"/><item><title>octopress使用技巧</title><link>https://example.com/pt/post/pt/2015/2015-06-15-octopressshi-yong-ji-qiao/</link><pubDate>Mon, 15 Jun 2015 16:18:57 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-15-octopressshi-yong-ji-qiao/</guid><description>
+&lt;p>为自己的博客网站添加想要的功能和样式&lt;/p>
+&lt;p>&lt;a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html&lt;/a>
+##octopress基本操作&lt;/p>
+&lt;ul>
+&lt;li>新建博客文章，&lt;code>rake new_post['blog_name']&lt;/code>&lt;/li>
+&lt;li>产生HTML文件， &lt;code>rake generate&lt;/code>&lt;/li>
+&lt;li>预览博客效果， &lt;code>rake preview&lt;/code>&lt;/li>
+&lt;li>推送内容到github， &lt;code>rake deploy&lt;/code> 或者 &lt;code>rake gen_deploy&lt;/code>&lt;/li>
+&lt;li>保存到github项目中&lt;br>
+&lt;code>git add .&lt;/code>&lt;br>
+&lt;code>git commit -m &amp;quot;modified note&amp;quot;&lt;/code>&lt;br>
+&lt;code>git push [for first time](origin source)&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>##一些配置
+###更换主题
+git clone &lt;a href="https://github.com/jeremyrea/slimpress">https://github.com/jeremyrea/slimpress&lt;/a> .theme/slimpress&lt;br>
+rake install['slimpress']&lt;/p>
+&lt;p>###修改&lt;code>_config.yml&lt;/code>
+*日期格式： &lt;code>date-formate: %Y年-%m月-%d日&lt;/code>&lt;br>
+*分类前缀显示为中文：&lt;code>category_title_prefix: &amp;quot;分类&amp;quot;&lt;/code>
+*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://example.com/pt/post/pt/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
+&lt;p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。&lt;/p>
+&lt;p>And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。&lt;p>&lt;/p>
+&lt;p>&lt;b1>What the hell!&lt;/b1>&lt;/p>
+&lt;p>====================================================================
+好吧，结素，开始正题！&lt;/p>
+内容来自各大大的blog，由&lt;a href="http://beyondvincent.com/blog/2013/07/27/107-hello-page-of-github/">&lt;code>破船之家&lt;/code>&lt;/a>，&lt;a href="http://droidyue.com/blog/2014/06/22/fix-octopress-slow-loading-speed-issue-in-china-mainland/">&lt;code>技术小黑屋&lt;/code>&lt;/a>&lt;/p>&lt;/p>
+&lt;h2>1、初级问题&lt;/h2>
+首先打开：&lt;code>_config.yml&lt;/code>&lt;/p>
+我一狠心将Github，Twitter,Google +1, Google Plus, Pinboard, Delicious, Disqus, Google analytics, Facebook一律封杀了......艾玛，好残忍⇀ ⇀ &lt;/p>
+全部前面加#注释了&lt;/p>
+&lt;h2>2、关键问题&lt;/h2>
+Octopress很多依赖于Google的库和资源，So,google拜拜~~~~(>_&lt;)~~~~ &lt;/p>
+&lt;p>对于使用Google Analytics来说，加在ga.js这个文件简直是要命的慢，这里我使用自己存放在七牛CDN上的js.&lt;a href="http://droidyue-tools.qiniudn.com/ga.js">&lt;a href="http://droidyue-tools.qiniudn.com/ga.js">http://droidyue-tools.qiniudn.com/ga.js&lt;/a>&lt;/a> 已验证，完全可以正常收集数据。
+参考如下，修改&lt;code>source/_includes/google_analytics.html&lt;/code>&lt;/p>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;span class='line-number'>8&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> __gaq.push([&amp;#39;_trackPageview&amp;#39;]);
+&lt;/span>&lt;span class='line'>
+&lt;/span>&lt;span class='line'> (function() {
+&lt;/span>&lt;span class='line'> var ga = document.createElement(&amp;#39;script&amp;#39;); ga.type = &amp;#39;text/javascript&amp;#39;; ga.async = true;
+&lt;/span>&lt;span class='line'> ga.src=&amp;#39;http://droidyue-tools.qiniudn.com/ga.js&amp;#39;;
+&lt;/span>&lt;span class='line'> var s = document.getElementsByTagName(&amp;#39;script&amp;#39;)[0]; s.parentNode.insertBefore(ga, s);
+&lt;/span>&lt;span class='line'> })();
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>解决fonts.googleapis.com蜗牛慢&lt;/h3>
+&lt;p>这里我们使用数字公司提供的Google Fonts大陆解决方案，使用&lt;code>fonts.useso.com&lt;/code>替换&lt;code>fonts.googleapis.com&lt;/code>。&lt;br/>
+修改文件&lt;code>/source/_includes/custom/head.html&lt;/code>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> &lt;span class="c">&amp;lt;!--Fonts from Google&amp;quot;s Web font directory at http://google.com/webfonts --&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'>&lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'>&lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>解决ajax.googleapis.com慢的问题&lt;/h3>
+&lt;p>修改&lt;code>source/_includes/head.html&lt;/code>&lt;/p>
+&lt;figure class='code'>&lt;figcaption>&lt;span>&lt;/span>&lt;/figcaption>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class='html'>&lt;span class='line'> &lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;/stylesheets/screen.css&amp;quot;&lt;/span> &lt;span class="na">media=&lt;/span>&lt;span class="s">&amp;quot;screen, projection&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;stylesheet&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/css&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">&amp;quot;/atom.xml&amp;quot;&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">&amp;quot;alternate&amp;quot;&lt;/span> &lt;span class="na">title=&lt;/span>&lt;span class="s">&amp;quot;技术小黑屋&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;application/atom+xml&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;/javascripts/modernizr-2.0.js&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;//ajax.useso.com/ajax/libs/jquery/1.9.1/jquery.min.js&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script&amp;gt;&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">jQuery&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">write&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">unescape&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;%3Cscript src=&amp;quot;./javascripts/lib/jquery.min.js&amp;quot;%3E%3C/script%3E&amp;#39;&lt;/span>&lt;span class="p">))&lt;/span>&lt;span class="nt">&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;span class='line'> &lt;span class="nt">&amp;lt;script &lt;/span>&lt;span class="na">src=&lt;/span>&lt;span class="s">&amp;quot;/javascripts/octopress.js&amp;quot;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">&amp;quot;text/javascript&amp;quot;&lt;/span>&lt;span class="nt">&amp;gt;&amp;lt;/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;/p>
+&lt;p>好了，到此的话就可以了，基本上访问慢得问题解决了，现在我们来添加评论功能，评论我们用&amp;lt; a href=&amp;quot;http://duoshuo.com/&amp;quot;&amp;gt;&lt;code>多说&lt;/code>&lt;/a>&lt;/p>&lt;/p>
+&lt;h2>添加评论&lt;/h2>
+&lt;h4>进入多说官网，注册账号&lt;/h4>
+&lt;h4>在_config.yml文件添加&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'># duoshuo comments
+&lt;/span>&lt;span class='line'>duoshuo_comments: true
+&lt;/span>&lt;span class='line'>duoshuo_short_name: yourname&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>在&lt;code>source/_layouts/post.html&lt;/code>中添加多说评论模块&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>｛% if site.duoshuo_short_name and site.duoshuo_comments == true and page.comments == true %｝
+&lt;/span>&lt;span class='line'> &amp;lt;section&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;h1&amp;gt;Comments&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;div id="comments" aria-live="polite"&amp;gt;｛% include post/duoshuo1.html %｝&amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class='line'> &amp;lt;/section&amp;gt;
+&lt;/span>&lt;span class='line'>｛% endif %｝&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>创建&lt;code>source/_includes/post/duoshuo.html&lt;/code>，并填入如下内容&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">
+&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;span class='line-number'>8&lt;/span>
+&lt;span class='line-number'>9&lt;/span>
+&lt;span class='line-number'>10&lt;/span>
+&lt;span class='line-number'>11&lt;/span>
+&lt;span class='line-number'>12&lt;/span>
+&lt;span class='line-number'>13&lt;/span>
+&lt;span class='line-number'>14&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>
+&lt;span class='line'>&amp;lt;!-- Duoshuo Comment BEGIN --&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;div class="ds-thread"&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;script type="text/javascript"&amp;gt;
+&lt;/span>&lt;span class='line'> var duoshuoQuery = {short_name:"beyondvincent"};
+&lt;/span>&lt;span class='line'> (function() {
+&lt;/span>&lt;span class='line'> var ds = document.createElement('script');
+&lt;/span>&lt;span class='line'> ds.type = 'text/javascript';ds.async = true;
+&lt;/span>&lt;span class='line'> ds.src = 'http://static.duoshuo.com/embed.js';
+&lt;/span>&lt;span class='line'> ds.charset = 'UTF-8';
+&lt;/span>&lt;span class='line'> (document.getElementsByTagName('head')[0]
+&lt;/span>&lt;span class='line'> || document.getElementsByTagName('body')[0]).appendChild(ds);
+&lt;/span>&lt;span class='line'> })();
+&lt;/span>&lt;span class='line'>&amp;lt;/script&amp;gt;
+&lt;/span>&lt;span class='line'>&amp;lt;!-- Duoshuo Comment END --&amp;gt;&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h4>发布到站点&lt;/h4>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">
+&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>
+&lt;span class='line'>$ rake generate
+&lt;/span>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -am "添加多说评论"
+&lt;/span>&lt;span class='line'>$ git push origin source
+&lt;/span>&lt;span class='line'>$ rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;h3>百度统计&lt;/h3>
+从百度统计获取脚本，然后添加到文件source/_includes/after_footer.html文件</description></item><item><title>使用octopress搭建github博客</title><link>https://example.com/pt/post/pt/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</link><pubDate>Sun, 04 Jan 2015 11:05:25 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</guid><description>
+&lt;p>&lt;a href="http://octopress.org/">&lt;code>Octopress&lt;/code>&lt;/a>是利用&lt;a href="http://github.com/mojombo/jekyll">&lt;code>Jekyll&lt;/code>&lt;/a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
+&lt;p>号称是hacker专属的一个博客系统(&lt;code>A blogging framework for hackers.&lt;/code>)&lt;/p>&lt;/p>
+&lt;p>本文只讲自己在苹果电脑(OS X 10.10)利用Octopress搭建一个Github博客,内容参照&lt;code>&lt;a href ="http://beyondvincent.com/blog/2013/08/03/108-creating-a-github-blog-using-octopress/">破船之家&lt;/a>，&lt;a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">唐巧_boy&lt;/a>&lt;/code>&lt;/p>
+&lt;h3>目录&lt;/h3>
+&lt;ul>
+&lt;li>1、安装Ruby&lt;/li>
+&lt;li>2、安装Octopress&lt;/li>
+&lt;li>3、配置Octopress&lt;/li>
+&lt;li>4、将博客部署到GitHub上&lt;/li>
+&lt;li>5、开始写博客&lt;/li>
+&lt;li>6、更多操作&lt;/li>
+&lt;li>7、小结&lt;/li>
+&lt;/ul>
+&lt;h3>1、安装Ruby&lt;/h3>
+&lt;p>Octopress需要Ruby环境，RVM(Ruby Version Manager)负责安装和管理Ruby的环境。所以我们先在终端输入如下命令，来安装RVM：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>curl -L https://get.rvm.io | bash -s stable --ruby&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着是安装Ruby 1.9.3，在终端依次运行如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rvm install 1.9.3
+&lt;/span>&lt;span class='line'>rvm use 1.9.3
+&lt;/span>&lt;span class='line'>rvm rubygems latest&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>完成上面的操作之后，运行&lt;code>ruby --version&lt;/code>应该可以看到ruby 1.9.3环境已经安装好了。🐷：波煮在这里说句，这个ruby version着实让我心塞，搞了好久好久，以至于后来放弃搭建，到现在闲暇之余才努力研究将其解决，具体问题具体谷歌( ⊙ o ⊙ )啊！&lt;/p>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/setup/rvm/">Installing Ruby With RVM&lt;/a>&lt;/p>
+&lt;h3>2、安装Octopress&lt;/h3>
+&lt;p>在安装Octopress之前，请确保你的电脑上已经安装有git了，在终端输入&lt;code>git --version&lt;/code>.
+&lt;p>git安装之后，利用git命令将octopress从github上clone到本机，如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>git clone git://github.com/imathis/octopress.git octopress
+&lt;/span>&lt;span class='line'>cd octopress # If you use RVM, You'll be asked if you trust the .rvmrc file (say yes).
+&lt;/span>&lt;span class='line'>ruby --version # Should report Ruby 1.9.3&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着安装相关依赖项：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>gem install bundler
+&lt;/span>&lt;span class='line'>rbenv rehash # If you use rbenv, rehash to be able to run the bundle command
+&lt;/span>&lt;span class='line'>bundle install&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>最后安装默认的Octopress 主题。&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake install&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>参考： &lt;a href="http://octopress.org/docs/setup/">Octopress Setup&lt;/a>&lt;/p>
+&lt;h3>3、配置Octopress&lt;/h3>
+&lt;p>配置&lt;code>_config.yml&lt;/code>和&lt;code>Rakefile&lt;/code>文件。&lt;/p>
+其中Rakefile是跟博客部署相关，一般情况下并不需要修改这个文件，除非使用了rsync。&lt;/p>
+&lt;p>&lt;em>config.yml是博客重要的一个配置文件，在&lt;/em>config.yml文件中有三大配置项：&lt;code>Main Configs&lt;/code>、&lt;code>Jekyll &amp;amp; Plugins&lt;/code>和&lt;code>3rd Party Settings&lt;/code>。&lt;/p>
+&lt;p>一般，该文件中其中&lt;code>url&lt;/code>是必须要填写的，这里的url是在github上创建的一个仓库地址，具体请看第四步中创建的地址。另外再修改一下&lt;code>title&lt;/code>、&lt;code>subtitle&lt;/code>和&lt;code>author&lt;/code>，根据需求，在开启一些第三方组件服务。&lt;/p>
+&lt;p>&lt;b>&lt;code>再注：&lt;/code>波煮将在下篇文章中说明一些搭建之后在拥有全球超级局域网的天朝的一些令人心塞令人烦闷的墙内话&lt;/b>&lt;/p>&lt;/p>
+&lt;p>关于_config.yml文件中的更多内容，请看这里的内容：&lt;a href="http://octopress.org/docs/configuring/">Configuring Octopress&lt;/a>&lt;/p>
+&lt;h3>4、将博客部署到GitHub上&lt;/h3>
+&lt;p>Github的&lt;a href="http://pages.github.com/">&lt;code>Page service&lt;/code>&lt;/a>可以免费托管博客，并且还可以自定义域名。&lt;/p>
+&lt;p>首先需要在GitHub上&lt;a href="https://github.com/new">&lt;code>创建一个仓库&lt;/code>&lt;/a>，并将仓库名称按照这样的方式进行命名：&lt;code>username.github.com&lt;/code>或&lt;code>organization.github.com&lt;/code>。等后面配置完毕之后，我们就可以在浏览器中使用页面地址&lt;code>http://username.github.com&lt;/code>来访问我们的博客。一般来说，我们希望在将博客的源码放到source分支下，并把生成的内容提交到master分支。&lt;/p>
+&lt;p>创建好仓库之后，我们需要利用octopress的一个&lt;code>配置rake任务&lt;/code>来自动配置上面创建的仓库：可以让我们方便的部署GitHub page。在终端输入如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ rake setup_github_pages&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>上面的命令会做一些事情(详细介绍看下面给出的参考链接)。其中最主要的就是创建一个&lt;code>_deploy&lt;/code>目录，目录用来存放部署到master分支的内容。期间会要求你输入仓库的url，根据提示，进行输入即可。&lt;/p>
+&lt;p>完成上面的命令之后，我们就可以生成博客并真正的部署到仓库中了。执行如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake generate
+&lt;/span>&lt;span class='line'>rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>上面的命令首先生成博客文件，并将生成的博客文件拷贝到&lt;code>_deploy/&lt;/code>目录下，然后将这些内容添加到git中，并commit和push到仓库的master分支。&lt;/p>
+&lt;p>现在可以访问&lt;code>http://username.github.com&lt;/code>了。注意：有时候可能会有延时，要等几分钟才能打开。&lt;/p>
+&lt;p>至此，我们的博客已经完成基本的部署，不过博客的source需要单独提交，执行如下命令就可以将source提交到仓库的source分支下。&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -m 'Initial source commit'
+&lt;/span>&lt;span class='line'>$ git push origin source&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>如果在部署到仓库之前，需要先预览一下博客，可以在终端输入&lt;code>rake preview&lt;/code>命令，然后就能在浏览器中进行本地预览访问了：&lt;code>http://127.0.0.1:4000/&lt;/code>或&lt;code>http://localhost:4000/&lt;/code>，效果跟仓库中的一样。&lt;/p>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/deploying/">Deploying to Github Pages&lt;/a>&lt;/p>
+&lt;h3>5、开始写博客&lt;/h3>
+&lt;p>Octopress为我们提供了一些task来创建博文和页面。博文必须存储在&lt;code>source/_posts&lt;/code>目录下，并且需要按照Jekyll的命名规范对文章进行命名：&lt;code>YYYY-MM-DD-post-title.markdown&lt;/code>。文章的名字会被当做url的一部分，而其中的日期用于对博文的区分和排序。&lt;/p>
+&lt;p>通过Octopress提供的task可以正确的按照命名规范创建一个博文，并且在博文中会附带常用的一些yaml元数据。只需要在终端输入如下命令：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>rake new_post["title"]&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>其中title为博文的文件名，创建出来的文件默认是markdown格式。上面的命令会创建出这样一个文件：&lt;code>source/_posts/2013-08-03-title.markdown&lt;/code>。打开这个文件，可以看到里面有如下一些内容了(告诉Jekyll博客引擎如何处理博文和页面)：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;span class='line-number'>7&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>---
+&lt;/span>&lt;span class='line'>layout: post
+&lt;/span>&lt;span class='line'>title: "title"
+&lt;/span>&lt;span class='line'>date: 2013-08-03 16:36
+&lt;/span>&lt;span class='line'>comments: true
+&lt;/span>&lt;span class='line'>categories:
+&lt;/span>&lt;span class='line'>---&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>接着我们就可以在这个文件中写我们的博文啦。完成之后，我们可以预览和部署博文。下面是创建并部署博文的一个完整过程：&lt;/p>
+&lt;figure class='code'>&lt;div class="highlight">&lt;table>&lt;tr>&lt;td class="gutter">&lt;pre class="line-numbers">&lt;span class='line-number'>1&lt;/span>
+&lt;span class='line-number'>2&lt;/span>
+&lt;span class='line-number'>3&lt;/span>
+&lt;span class='line-number'>4&lt;/span>
+&lt;span class='line-number'>5&lt;/span>
+&lt;span class='line-number'>6&lt;/span>
+&lt;/pre>&lt;/td>&lt;td class='code'>&lt;pre>&lt;code class=''>&lt;span class='line'>$ rake new_post["New Post"]
+&lt;/span>&lt;span class='line'>$ rake generate
+&lt;/span>&lt;span class='line'>$ git add .
+&lt;/span>&lt;span class='line'>$ git commit -am "Some comment here."
+&lt;/span>&lt;span class='line'>$ git push origin source
+&lt;/span>&lt;span class='line'>$ rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
+&lt;p>参考：&lt;a href="http://octopress.org/docs/blogging/">Blogging Basics&lt;/a>&lt;/p>
+&lt;h3>6、后续&lt;/h3>
+&lt;p>在搭建博客后，你会发现打开很慢很慢，所以我们需要对其做一个优化，这些内容写在另外一篇文章中，&lt;a href="http://langyapojun.github.io/blog/2015/01/04/jie-jue-octopressfang-wen-man-he-%5B%3F%5D-xie-she-zhi-wen-ti/">&lt;code>跳吧，年轻人&lt;/code>&lt;/a>。&lt;/p></description></item></channel></rss>
