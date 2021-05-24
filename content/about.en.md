@@ -1,0 +1,19 @@
++++
+title = "Sobre"
+description = "Hugo, the world's fastest framework for building websites"
+date = "2019-02-28"
+aliases = ["sobre"]
+author = "Hugo Authors"
++++
+
+### 钟锡霖（Alin.Zhong）  
+#### iOS研发——研究音视频SDK方向  
+#### React前端——中后台研发
+
+步入研发工作8年有余
+
+爱电子产品，爱Dota,爱骑行喜欢做些让自己开心的事，比如看电影。 
+
+邮箱：zhongxilin@gmail.com 
+
+QQ：413232030
