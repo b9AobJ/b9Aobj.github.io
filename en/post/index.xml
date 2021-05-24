@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Clarity</title><link>https://example.com/en/post/</link><description>Recent content in Posts on Clarity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 12 May 2021 20:37:14 +0800</lastBuildDate><atom:link href="https://example.com/en/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Ffmpeg文档</title><link>https://example.com/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</link><pubDate>Wed, 12 May 2021 20:37:14 +0800</pubDate><guid>https://example.com/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</guid><description>
-&lt;p>&lt;strong>Insert Lead paragraph here.&lt;/strong>&lt;/p></description></item><item><title>Cas接入</title><link>https://example.com/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://example.com/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Clarity</title><link>https://b9aobj.github.io/en/post/</link><description>Recent content in Posts on Clarity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 12 May 2021 20:37:14 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/en/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Ffmpeg文档</title><link>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</link><pubDate>Wed, 12 May 2021 20:37:14 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</guid><description>
+&lt;p>&lt;strong>Insert Lead paragraph here.&lt;/strong>&lt;/p></description></item><item><title>Cas接入</title><link>https://b9aobj.github.io/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
 &lt;h3 id="sso介绍">SSO介绍&lt;/h3>
 &lt;h4 id="背景">背景&lt;/h4>
 &lt;p>在企业发展初期，企业使用的系统很少，通常一个或者两个，每个系统都有自己的登录模块，运营人员每天用自己的账号登录，很方便。
 但随着企业的发展，用到的系统随之增多，运营人员在操作不同的系统时，需要多次登录，而且每个系统的账号都不一样，这对于运营人员来说，很不方便。于是，就想到是不是可以在一个系统登录，其他系统就不用登录了呢？这就是单点登录要解决的问题。&lt;/p>
 &lt;h4 id="定义">定义&lt;/h4>
 &lt;p>&lt;code>单点登录&lt;/code>英文全称Single Sign On，简称就是SSO。它的解释是：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统.&lt;/p>
-&lt;p>&lt;img src="https://example.com/images/2020/cas01.png" alt="01">
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas01.png" alt="01">
 如图所示，图中有4个系统，分别是Application1、Application2、Application3、和SSO。Application1、Application2、Application3没有登录模块,只负责业务模块，而SSO只有登录模块，没有其他的业务模块，当Application1、Application2、Application3需要登录时，将跳到SSO系统，SSO系统完成登录，其他的应用系统也就随之登录了。这完全符合我们对单点登录（SSO）的定义。&lt;/p>
 &lt;p>同域下的单点登录是运用了Cookie同域共享的特性,&lt;code>但这不是真正的单点登录&lt;/code>。
 因为如果是不同域呢？不同域之间Cookie是不共享的，怎么办？
@@ -50,10 +50,10 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;/ul>
 &lt;h3 id="cas流程">CAS流程&lt;/h3>
 &lt;h4 id="官方流程图">官方流程图&lt;/h4>
-&lt;p>&lt;img src="https://example.com/images/2020/cas02.png" alt="02">
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas02.png" alt="02">
 官方文档:https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol.html&lt;/p>
 &lt;h4 id="流程图">流程图&lt;/h4>
-&lt;p>&lt;img src="https://example.com/images/2020/cas03.png" alt="03">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas03.png" alt="03">&lt;/p>
 &lt;h4 id="流程图解析">流程图解析&lt;/h4>
 &lt;p>1、 用户访问产品a，域名是www.a.cn.
 2. 由于用户没有携带在 a 服务器上登录的 a cookie，所以 a 服务器返回 http 重定向，重定向的 url 是 SSO 服务器的地址，同时 url 的 query 中通过参数指明登录成功后，回跳到 a 页面。重定向的url 形如 sso.dxy.cn/login?service=https%3A%2F%2Fwww.a.cn。
@@ -186,7 +186,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;span class="ln"> 75&lt;/span> if (req.session.cas &amp;amp;&amp;amp; req.session.cas.user) {
 &lt;span class="ln"> 76&lt;/span> next()
 &lt;span class="ln"> 77&lt;/span> } else {
-&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://example.com/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
+&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://b9aobj.github.io/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
 &lt;span class="ln"> 79&lt;/span> // 自动跳转登录
 &lt;span class="ln"> 80&lt;/span> // return res.redirect(`/login?service=http://${casClient}${req.url}`);
 &lt;span class="ln"> 81&lt;/span> }
@@ -246,7 +246,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;li>
 &lt;p>跳转 cas server 验证 / 登录&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>Chrome的console调试</title><link>https://example.com/en/post/en/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</link><pubDate>Mon, 10 May 2021 18:07:16 +0800</pubDate><guid>https://example.com/en/post/en/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</guid><description>
+&lt;/ul></description></item><item><title>Chrome的console调试</title><link>https://b9aobj.github.io/en/post/en/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</link><pubDate>Mon, 10 May 2021 18:07:16 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2021/chrome%E7%9A%84console%E8%B0%83%E8%AF%95/</guid><description>
 &lt;p>1、$_&lt;/p>
 &lt;p>&lt;code>$_&lt;/code>上次结果的引用&lt;/p>
 &lt;p>2、$i&lt;/p>
@@ -255,7 +255,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;p>3、copy(...)&lt;/p>
 &lt;p>&lt;code>copy&lt;/code>任何资源，如&lt;code>copy($0)&lt;/code>或&lt;code>copy($_)&lt;/code>&lt;/p>
 &lt;p>4、学会使用console.table来显示数组或者对象&lt;/p>
-&lt;p>5、&lt;/p></description></item><item><title>改变自己的生活系列之习惯篇</title><link>https://example.com/en/post/en/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</link><pubDate>Sat, 08 May 2021 13:38:57 +0800</pubDate><guid>https://example.com/en/post/en/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</guid><description>
+&lt;p>5、&lt;/p></description></item><item><title>改变自己的生活系列之习惯篇</title><link>https://b9aobj.github.io/en/post/en/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</link><pubDate>Sat, 08 May 2021 13:38:57 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2021/%E6%94%B9%E5%8F%98%E8%87%AA%E5%B7%B1%E7%9A%84%E7%94%9F%E6%B4%BB%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B9%A0%E6%83%AF%E7%AF%87/</guid><description>
 &lt;h4 id="1保持早睡只少能修复30的颜值">1、保持早睡，只少能修复30%的颜值&lt;/h4>
 &lt;h4 id="2看片不挑国家">2、看片，不挑国家&lt;/h4>
 &lt;p>奥斯卡、纪录片、TED、科普片&lt;/p>
@@ -280,7 +280,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;h4 id="13早起时不要老想着起床的痛苦要想想一些让人幸福的事刺激一下你的大脑皮层提高大脑的兴奋度">13、早起时，不要老想着起床的痛苦，要想想一些让人幸福的事，刺激一下你的大脑皮层，提高大脑的兴奋度&lt;/h4>
 &lt;h4 id="14出门前无论多急都花5秒照下镜子">14、出门前，无论多急，都花5秒照下镜子&lt;/h4>
 &lt;h4 id="15日常分类记账并坚持理财比如伙食交通服饰生活用品等等让自己知道赚的钱大头都花哪了避免浪费">15、日常分类记账，并坚持理财。比如伙食、交通、服饰、生活用品等等，让自己知道赚的钱大头都花哪了，避免浪费。&lt;/h4>
-&lt;p>接着学会理财，这是提高经济力的最核心关键。操作得当，会使你的收入实现指数级增长。&lt;/p></description></item><item><title>部分专业英文术语</title><link>https://example.com/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</link><pubDate>Fri, 07 May 2021 19:35:24 +0800</pubDate><guid>https://example.com/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</guid><description>
+&lt;p>接着学会理财，这是提高经济力的最核心关键。操作得当，会使你的收入实现指数级增长。&lt;/p></description></item><item><title>部分专业英文术语</title><link>https://b9aobj.github.io/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</link><pubDate>Fri, 07 May 2021 19:35:24 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2021/%E9%83%A8%E5%88%86%E4%B8%93%E4%B8%9A%E8%8B%B1%E6%96%87%E6%9C%AF%E8%AF%AD/</guid><description>
 &lt;table>
 &lt;thead>
 &lt;tr>
@@ -586,7 +586,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;td>运行时&lt;/td>
 &lt;/tr>
 &lt;/tbody>
-&lt;/table></description></item><item><title>中文匹配</title><link>https://example.com/en/post/en/2021/zhongwenzhengze/</link><pubDate>Fri, 30 Apr 2021 14:55:12 +0800</pubDate><guid>https://example.com/en/post/en/2021/zhongwenzhengze/</guid><description>
+&lt;/table></description></item><item><title>中文匹配</title><link>https://b9aobj.github.io/en/post/en/2021/zhongwenzhengze/</link><pubDate>Fri, 30 Apr 2021 14:55:12 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2021/zhongwenzhengze/</guid><description>
 &lt;p>\w匹配的仅仅是中文，数字，字母，对于国人来讲，仅匹配中文时常会用到，见下&lt;/p>
 &lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
@@ -626,7 +626,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;p>作者：每一天为明天168&lt;br>
 链接：https://www.jianshu.com/p/8695c2ba8ace&lt;br>
 来源：简书&lt;br>
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&lt;/p></description></item><item><title>利用live555在Mac端搭建rtsp推流</title><link>https://example.com/en/post/en/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</link><pubDate>Fri, 20 Oct 2017 10:44:12 +0800</pubDate><guid>https://example.com/en/post/en/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</guid><description>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&lt;/p></description></item><item><title>利用live555在Mac端搭建rtsp推流</title><link>https://b9aobj.github.io/en/post/en/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</link><pubDate>Fri, 20 Oct 2017 10:44:12 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2017/2017-10-20-li-yong-live555zai-macduan-da-jian-rtsptui-liu/</guid><description>
 &lt;p>利用live555在自己的Mac电脑上搭建一个rtsp推流；&lt;/p>
 &lt;p>最近需要探查SDK是否支持RTP协议，需要一个rtsp流地址播放，但是网络上给的测试地址只有一个大白熊的流可以用，但是这个流非常卡，SDK播放非常有问题，说明了SDK对于rtsp支持是有问题的，但是不清楚是否是因为这个流也有问题呢。所以就自己就想办法自己推流试试是否可以播放。后续再进行做相关的SDK优化。&lt;/p>
 &lt;p>老规矩，google.com，找到live555.com。自己下载源码编译，http://www.live555.com/liveMedia/#config-unix在此处找到Mac编译。&lt;/p>
@@ -645,32 +645,32 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 可用vlc在打开网络中输入地址 rtsp://your_ip:port/file.mkv 观看视频了。
 还可以生成 m3u8文件在手机上访问，http://your_ip:8000/file.mkv。&lt;/p>
 &lt;p>手机端观看：同一个网络环境下，输入上面vlc地址既可以播放&lt;br>
-rtsp://192.168.1.106:8554/NARUTO.mkv&lt;/p></description></item><item><title>早安2017</title><link>https://example.com/en/post/en/2017/2017-01-01-zao-an-2017/</link><pubDate>Sun, 01 Jan 2017 09:09:05 +0800</pubDate><guid>https://example.com/en/post/en/2017/2017-01-01-zao-an-2017/</guid><description>
+rtsp://192.168.1.106:8554/NARUTO.mkv&lt;/p></description></item><item><title>早安2017</title><link>https://b9aobj.github.io/en/post/en/2017/2017-01-01-zao-an-2017/</link><pubDate>Sun, 01 Jan 2017 09:09:05 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2017/2017-01-01-zao-an-2017/</guid><description>
 &lt;p>晃眼之间已到2017，这一年很忙，很忙，真的好忙。&lt;/p>
 &lt;p>回望2016，在这一年经历了公司倒闭后的找工作经历，真的挺难的，一堆人出来社会碰机会，面试官见你爽就还好，不爽就明显知道已没机会！
 主要过完年从老家一回来整个人就不好了，一直病了一个多月才开始找工作，而且家住郊区，去市区非常远，每天来回耗时非常长，外加搬家搬了我一个礼拜左右，所以一直到4月中旬才找到工作，很不错，公司很nice，现在继续任职，继续努力💪！！！&lt;br>
 2016是一个直播的年代，什么都搞直播，从之前对ijkplayer的兴趣对其稍有了解，没对直播这块做过研究，一开始拿到直播／点播SDK的时候脑子一阵头大。只能自己一步一步进行了解与尝试，公司的产品刚起步，还有比较多问题与难关的，自己也是在模仿着别家竟品的优点来进行加工与改进，到如今基本对这方面稍有研究，以前主要还是采用世面上所使用的RTMP直播，到后面我们将自研出私有协议连麦，近期我们的连麦新产品也即将上线的了，自己测试还是挺不错的，可以跟国内的声网的方案做下对比；当然，声网的产品已经相当完善，暂时还不能够与之抗衡，但我们的方向跟他们是一样的，可以说，我们做这个方案都是同时起步，但是，由于我个人能力不足，人家已经在几个月前已经做出来并且商业化了，而我们的到现在才初具雏形，这是相当伤的，原理都是一样，并且他们已经有两套方案，我的能力不足由此可见啊。&lt;br>
 在点播方面，主要是基于ijkplayer进行的二次开发，在ijkplayer层面主要采用c开发，对于早已传送回给大一的李金洋老师的C基础的我，难度还是可预见的，早期由于音视频同事离职，需要我对其进行维护（产品已经开发好，留下维护工作），对于一个小问题还是被我搞了相当长时间啊，所以可以知道自己对于ijk方面的研究还是不够的。&lt;br>
 2017，一个充满挑战的时间，我可以遇见到我这一年的工作安排了，排期还是相当的满的，可能主要要开始研究网络更低层更深奥的难点与协议相互了，直播这块将继续扩展与维护，可能会慢慢从大众直播转向视频会议形式吧。主要还是要看公司部门的发展方向。点播已经开始更新大版本，不期将会跟上GitHub上ijk的脚本，有时间的时候我也将会自己写出个app来练练手，毕竟太久没写app了，有点生手，大苹果是不会留下固定的程序员的，一直在更新换代，不断挖掘新鲜血液；苹果对于https的强制，预示着今年将会在协议上进行探讨，我们也会对于底层模块做下研究，目测是低层加速器这类SDK，听起来挺厉害的，5行代码接入，实现质感飞跃，嗯，一听就知道很难的，代码越少，我们就要做的越多。&lt;br>
-2017将会是幸福的一年，因为我的宝宝要出世了，辛苦宝宝他妈了，起个名字很关键；孩子的出生也将会给我带来很多需要考虑的问题：房子，车子，户口，学位，奶粉，营养，环境。。。各种吧，深圳的房子大家都知道，一线城市嘛，活得辛苦，我每天130多公里来回的车程，坐到自己腰都痛，一个字，累！！！车一开始真的没那么大需求，只有到了深圳才深深感觉到没车步步难行啊，2／3公里看起来很近，可以走进来很久啊，打个车基本都是起步价以上了，所以每个月交通费还是相当高的，这样子还不如自己搞辆车来代代步，确实会生活成本提高，但是没车真的很不方便啊，在这里时间就是金钱／生命，不可随意浪费。户口这问题更麻烦了，附近都是紧张的要死要活，还是看其他吧，不想了，还是继续撸码去吧，2017要继续💪&lt;/p></description></item><item><title>Xcode8 beta1新特性</title><link>https://example.com/en/post/en/2016/2016-06-21-xcode8-beta1xin-te-xing/</link><pubDate>Tue, 21 Jun 2016 10:01:36 +0800</pubDate><guid>https://example.com/en/post/en/2016/2016-06-21-xcode8-beta1xin-te-xing/</guid><description>
+2017将会是幸福的一年，因为我的宝宝要出世了，辛苦宝宝他妈了，起个名字很关键；孩子的出生也将会给我带来很多需要考虑的问题：房子，车子，户口，学位，奶粉，营养，环境。。。各种吧，深圳的房子大家都知道，一线城市嘛，活得辛苦，我每天130多公里来回的车程，坐到自己腰都痛，一个字，累！！！车一开始真的没那么大需求，只有到了深圳才深深感觉到没车步步难行啊，2／3公里看起来很近，可以走进来很久啊，打个车基本都是起步价以上了，所以每个月交通费还是相当高的，这样子还不如自己搞辆车来代代步，确实会生活成本提高，但是没车真的很不方便啊，在这里时间就是金钱／生命，不可随意浪费。户口这问题更麻烦了，附近都是紧张的要死要活，还是看其他吧，不想了，还是继续撸码去吧，2017要继续💪&lt;/p></description></item><item><title>Xcode8 beta1新特性</title><link>https://b9aobj.github.io/en/post/en/2016/2016-06-21-xcode8-beta1xin-te-xing/</link><pubDate>Tue, 21 Jun 2016 10:01:36 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2016/2016-06-21-xcode8-beta1xin-te-xing/</guid><description>
 &lt;p>WWDC 2016已经结束，伴随着iOS10的发布，新的Xcode8beta1也出来了，虽然是beta，以前也被beta版本各种蹂躏，但还是需要亲自下载来体验一波的。&lt;/p>
 &lt;p>###Swift 3&lt;br>
 Swift 3 是第一个主要的release版本。这个release版本统一核心API命名规则,,旨在增强代码的一致性和清晰。流行的系统API，如Core Graphics和 Grand Central Dispatch 与Swfit有着更丰富的表现力和协调力。
 ###Interface Builder
 Interface Builder 设计画布已经彻底再造工程，让你更快地工作并且提供更大的控制。在任何充满活力的苹果设备上看到一个完全实时的应用程序预览。你可以在不同的设备之间快速切换，看到不同设备中的界面显示效果。平移和缩放非常快，甚至你可以缩小故事板鸟瞰图时编辑你的界面。总体来说，Xcode8的interface builder胜过之前任何的版本，遥想当年使用sb，整台macBook卡死在那里的日子😂😂😂😂&lt;br>
-&lt;img src="https://example.com/img/2016/06/interfacebuilder.png" alt="">
+&lt;img src="https://b9aobj.github.io/img/2016/06/interfacebuilder.png" alt="">
 ###运行时问题 Runtime Issues&lt;/p>
 &lt;p>这Xcode新特性,自动识别跟踪找到漏洞并且报告问题, 有些很难跟踪的bug，直到您的应用程序到了用户手中,也可能没有被发现。&lt;/p>
 &lt;p>######Thread Sanitizer spots:新的线程污点清理器，解决多线程情况下的资源竞争条件,数据的变化和其它相关线程的bug&lt;br>
 ######View Debugger:使用更新的带有更大的保真度和视觉精度检查UI约束问题的视图调试器&lt;br>
 ######Memory Debugger:可以用新的内存调试跟踪器跟踪发出的内存泄漏警报&lt;br>
-&lt;img src="https://example.com/img/2016/06/viewmemory.png" alt="">
+&lt;img src="https://b9aobj.github.io/img/2016/06/viewmemory.png" alt="">
 ###签名变的简单而强大 Signing Made Easy and Powerful&lt;br>
 设备设置和代码签名有了极大的简化，新的自动化代码管理系统可以帮开发者自动签署他们需要的资源，从而让代码在你苹果设备的应用程序中正确地签名、调用和执行。开发者也可以选择手动配置文件，并且设置每个构建配置的签名程序，如果遇到任何问题，报告导航器会用需要改进的错误消息和日志提醒你。当你有个多个Mac的时候,Xcode会在每个Mac中自动生成对应的开发者证书。&lt;/p>
 &lt;p>在你的苹果设备上开发和运行您的应用程序和进入Xcode的偏好设置输入Apple ID一样容易。苹果开发者账号不是必需的。&lt;/p>
 &lt;p>Provisioning Profile 文件选取，已经从Buiid Settings移动到了General中,Buiid Settings中已经标识了 Deprecated。
-&lt;img src="https://example.com/img/2016/06/sign.png" alt="">&lt;/p></description></item><item><title>2016找工作实录</title><link>https://example.com/en/post/en/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</link><pubDate>Mon, 25 Apr 2016 13:15:23 +0800</pubDate><guid>https://example.com/en/post/en/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</guid><description>
-&lt;p>找工作时一件很辛苦的事，好好珍惜自己的公司，资本寒冬已到来&lt;/p></description></item><item><title>Git操作大全简洁版</title><link>https://example.com/en/post/en/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</link><pubDate>Wed, 11 Nov 2015 11:45:49 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</guid><description>
+&lt;img src="https://b9aobj.github.io/img/2016/06/sign.png" alt="">&lt;/p></description></item><item><title>2016找工作实录</title><link>https://b9aobj.github.io/en/post/en/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</link><pubDate>Mon, 25 Apr 2016 13:15:23 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2016/2016-04-25-2016zhao-gong-zuo-shi-lu/</guid><description>
+&lt;p>找工作时一件很辛苦的事，好好珍惜自己的公司，资本寒冬已到来&lt;/p></description></item><item><title>Git操作大全简洁版</title><link>https://b9aobj.github.io/en/post/en/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</link><pubDate>Wed, 11 Nov 2015 11:45:49 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</guid><description>
 &lt;p>&lt;b> &lt;em>HEAD&lt;/em> 表示当前分支&lt;/p>
 &lt;p>&lt;em>master&lt;/em>表示只想提交&lt;br>
 &lt;em>Origin&lt;/em> 表示远程库 &lt;/b>&lt;/p>
@@ -693,7 +693,7 @@ Interface Builder 设计画布已经彻底再造工程，让你更快地工作�
 &lt;h5 id="8git-reflog">8、&lt;code>git reflog&lt;/code>&lt;/h5>
 &lt;p>查看你的命令&lt;/p>
 &lt;h5 id="9git的版本库里存了很多东西其中最重要的就是称为stage或者叫index的暂存区还有git为我们自动创建的第一个分支master以及指向master的一个指针叫head">9、Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。&lt;/h5>
-&lt;p>&lt;img src="https://example.com/img/2015/10/gitTree.jpeg" alt="">&lt;br>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/10/gitTree.jpeg" alt="">&lt;br>
 前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：&lt;br>
 第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区；&lt;br>
 第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。&lt;br>
@@ -770,7 +770,7 @@ Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*
 那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；&lt;br>
 你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。&lt;br>
 所以，团队合作的分支看起来就像这样：&lt;br>
-&lt;img src="https://example.com/img/2015/10/gitBranch.png" alt="">&lt;/p>
+&lt;img src="https://b9aobj.github.io/img/2015/10/gitBranch.png" alt="">&lt;/p>
 &lt;h5 id="24bug分支">24、Bug分支&lt;/h5>
 &lt;p>软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。&lt;/p>
 &lt;p>修复bug时，需创建分支来修复它，但现在手上的工作还没做完不可提交的状态，可以用&lt;strong>stash&lt;/strong>功能，把工作现场“储藏”起来，等以后回复现场后继续工作；&lt;br>
@@ -846,7 +846,7 @@ Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*
 &lt;pre>&lt;code>• 命令git push origin --tags可以推送全部未推送过的本地标签；
 • 命令git tag -d &amp;lt;tagname&amp;gt;可以删除一个本地标签；
 • 命令git push origin :refs/tags/&amp;lt;tagname&amp;gt;可以删除一个远程标签。
-&lt;/code>&lt;/pre></description></item><item><title>Xcode常用插件大法</title><link>https://example.com/en/post/en/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</link><pubDate>Fri, 30 Oct 2015 10:03:35 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</guid><description>
+&lt;/code>&lt;/pre></description></item><item><title>Xcode常用插件大法</title><link>https://b9aobj.github.io/en/post/en/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</link><pubDate>Fri, 30 Oct 2015 10:03:35 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-10-30-xcodechang-yong-cha-jian-da-fa/</guid><description>
 &lt;p>正所谓--工欲善其事，必先利其器&lt;/p>
 &lt;p>目前版主使用的是Xcode7.1，基本上以下插件都安装使用过，实用性还是非常强的，这些插件可以用插件管理器&lt;strong>alcatraz&lt;/strong>来进行管理；当使用插件的时候部分没法使用的插件可以会导致整个插件库都无法使用，所以有些插件不可使用的话最好不要安装，如第一个codeSnippet插件，在版主安装之后导致全部插件无法使用，包括&lt;strong>alcatraz&lt;/strong>，具体可以检查&lt;strong>alatraz&lt;/strong>是否存在于menu-&amp;gt;Window-&amp;gt;Packge Manager这个包管理选项，如存在说明未失效，插件可用；如果消失，说明有插件无法使用导致整个插件库不可使用，需要一一排除。&lt;/p>
 &lt;p>###ACCodeSnippetRepositoryPlugin
@@ -922,18 +922,18 @@ A helper tool for creating beautiful CAMediaTimingFunction curve.&lt;/p>
 &lt;pre>&lt;code> rm -r ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/AutoImporter.xcplugin/
 &lt;/code>&lt;/pre>
 &lt;p>以上就是我用的比较常的插件，记住，插件有时候还会导致Xcode出现卡顿或者闪退的现象，所以插件这东西有好有坏，大家慎重考虑，不强求；一下是本人使用的插件图：&lt;br>
-&lt;img src="https://example.com/img/2015/10/XcodePlugin.png" alt="">&lt;/p></description></item><item><title>xib中的scrollview使用autolayout</title><link>https://example.com/en/post/en/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</link><pubDate>Tue, 27 Oct 2015 13:53:52 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</guid><description>
+&lt;img src="https://b9aobj.github.io/img/2015/10/XcodePlugin.png" alt="">&lt;/p></description></item><item><title>xib中的scrollview使用autolayout</title><link>https://b9aobj.github.io/en/post/en/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</link><pubDate>Tue, 27 Oct 2015 13:53:52 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</guid><description>
 &lt;p>更新之后要学会autolayout。 111&lt;/p>
 &lt;div data-caption="string">
 &lt;div class="dropdown">
-&lt;a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="https://example.com/page.html">
+&lt;a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="https://b9aobj.github.io/page.html">
 Dropdown
 &lt;b class="caret">&lt;/b>
 &lt;/a>
 &lt;ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 ...
 &lt;/ul>
-&lt;/div></description></item><item><title>将docset转换为epub或者mobi给kindle使用</title><link>https://example.com/en/post/en/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</link><pubDate>Tue, 27 Oct 2015 13:52:53 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</guid><description>
+&lt;/div></description></item><item><title>将docset转换为epub或者mobi给kindle使用</title><link>https://b9aobj.github.io/en/post/en/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</link><pubDate>Tue, 27 Oct 2015 13:52:53 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-10-27-jiang-docsetzhuan-huan-wei-epubhuo-zhe-mobigei-kindleshi-yong/</guid><description>
 &lt;p>手机看书逼格不够的，还是拿本kindle耍耍吧&lt;/p>
 &lt;p>偶然间在github大洋中遨游的时候发现了有人将iOS.docset文档转换成一个个mobi文件可以供kindle使用。自己兴趣一下子提升了起来，由于该脚本原作者已将源码删除，因此找了将近一天时间终于在另一位github贡献者那里找到一份&lt;a href="https://github.com/darvin/docset2ebook">源码&lt;/a>,二话不说先&lt;a href="https://github.com/langyapojun/docset2ebook">fork&lt;/a>过来先.&lt;br>
 　　
@@ -964,13 +964,13 @@ COMMAND=&amp;quot;python docset2kindle.py&amp;quot;
 mkdir $OUTPUT_DIR&lt;/p>
 &lt;p>$COMMAND /Users/Sidney/Library/Developer/Shared/Documentation/DocSets/ -o $OUTPUT_DIR/XCode -f $FORMAT&lt;/code>&lt;/pre>
 4.打开终端，运行sh脚本,静待佳音。&lt;br>
-&lt;img src="https://example.com/img/2015/10/terminal.png" alt="">&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/10/directory.png" alt="">&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/10/kindle.png" alt="">&lt;/p></description></item><item><title>Xcode Instruments测试部分错误指正</title><link>https://example.com/en/post/en/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</link><pubDate>Mon, 13 Jul 2015 09:42:46 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</guid><description>
+&lt;img src="https://b9aobj.github.io/img/2015/10/terminal.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/10/directory.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/10/kindle.png" alt="">&lt;/p></description></item><item><title>Xcode Instruments测试部分错误指正</title><link>https://b9aobj.github.io/en/post/en/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</link><pubDate>Mon, 13 Jul 2015 09:42:46 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-07-13-xcode-instrumentsce-shi-bu-fen-cuo-wu-zhi-zheng/</guid><description>
 &lt;p>###Automation Error： ScriptAgent signaled.
 当自动script数值不能在真机跑并出现以上错误的时候，&lt;/p>
 &lt;p>我们需要在真机&lt;code>设置&lt;/code>-&lt;code>开发者&lt;/code>-&lt;code>Enable UI Automation&lt;/code>打开即可。并且你还需要打开&lt;code>logging&lt;/code>-&lt;code>start recording&lt;/code>选项。&lt;/p>
-&lt;p>###Script threw an uncaught JavaScript error: target.frontMostApp().alert().buttons()[&amp;quot;取消&amp;quot;] could not be tapped&lt;/p></description></item><item><title>Swift 2 Playground注释使用markdown</title><link>https://example.com/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
+&lt;p>###Script threw an uncaught JavaScript error: target.frontMostApp().alert().buttons()[&amp;quot;取消&amp;quot;] could not be tapped&lt;/p></description></item><item><title>Swift 2 Playground注释使用markdown</title><link>https://b9aobj.github.io/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
 &lt;p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。&lt;/p>
 &lt;p>标准代码注释可以是单行注释、多行注释：&lt;br>
 &lt;code>//A Single line comment&lt;/code>&lt;br>
@@ -980,15 +980,15 @@ mkdir $OUTPUT_DIR&lt;/p>
 &lt;code>*/&lt;/code>&lt;/p>
 &lt;p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个&lt;code>:&lt;/code>即可：&lt;br>
 &lt;code>//: _Rich text_ single line *comment* thanks to __markdown__&lt;/code>&lt;br>
-&lt;img src="https://example.com/img/2015/06/playground/playground1.png" alt="">&lt;br>
+&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground1.png" alt="">&lt;br>
 　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择&lt;code>Editor&lt;/code>--&lt;code>Show Rendered Markup&lt;/code>，然后就可以看到效果了。&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground2.png" alt="">&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item><item><title>Xcode_7_beta模拟器iOS9无法连接网络</title><link>https://example.com/en/post/en/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</link><pubDate>Thu, 25 Jun 2015 10:38:33 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</guid><description>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground2.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item><item><title>Xcode_7_beta模拟器iOS9无法连接网络</title><link>https://b9aobj.github.io/en/post/en/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</link><pubDate>Thu, 25 Jun 2015 10:38:33 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</guid><description>
 &lt;p>he resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/p>
 &lt;p>  在iOS9的iPhone模拟器中来调试的时候出现“&lt;code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/code>”
   一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。&lt;a href="https://github.com/meteor/meteor/issues/4560">原文&lt;/a>&lt;br>
   解决方法：在App中的&lt;code>info.plist&lt;/code>中添加&lt;code>NSAppTransportSecurity&lt;/code>(Dictionary)，在其中添加一个key,&lt;code>NSAllowsArbitraryLoads&lt;/code>(Boolean)并设置为&lt;code>YES&lt;/code>.&lt;br>
-希望可以帮助到大家。&lt;/p></description></item><item><title>octopress使用技巧</title><link>https://example.com/en/post/en/2015/2015-06-15-octopressshi-yong-ji-qiao/</link><pubDate>Mon, 15 Jun 2015 16:18:57 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-06-15-octopressshi-yong-ji-qiao/</guid><description>
+希望可以帮助到大家。&lt;/p></description></item><item><title>octopress使用技巧</title><link>https://b9aobj.github.io/en/post/en/2015/2015-06-15-octopressshi-yong-ji-qiao/</link><pubDate>Mon, 15 Jun 2015 16:18:57 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-06-15-octopressshi-yong-ji-qiao/</guid><description>
 &lt;p>为自己的博客网站添加想要的功能和样式&lt;/p>
 &lt;p>&lt;a href="http://youess.github.io/blog/octopress-blog-records.html">http://youess.github.io/blog/octopress-blog-records.html&lt;/a>
 ##octopress基本操作&lt;/p>
@@ -1009,11 +1009,11 @@ rake install['slimpress']&lt;/p>
 &lt;p>###修改&lt;code>_config.yml&lt;/code>
 *日期格式： &lt;code>date-formate: %Y年-%m月-%d日&lt;/code>&lt;br>
 *分类前缀显示为中文：&lt;code>category_title_prefix: &amp;quot;分类&amp;quot;&lt;/code>
-*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://example.com/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
+*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
 &lt;p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。&lt;/p>
 &lt;p>先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的&lt;/p>
 &lt;p>###改动1
-   因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:&lt;/p></description></item><item><title>iOS面试题目</title><link>https://example.com/en/post/en/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</link><pubDate>Tue, 03 Mar 2015 22:35:24 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</guid><description>
+   因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:&lt;/p></description></item><item><title>iOS面试题目</title><link>https://b9aobj.github.io/en/post/en/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</link><pubDate>Tue, 03 Mar 2015 22:35:24 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</guid><description>
 &lt;p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少&lt;/p>
 &lt;p>###1.#import和#include的区别，@class的作用是什么？&lt;br>
 #import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。 &lt;br>
@@ -1066,9 +1066,9 @@ int const *a const;
 定为 const；
 （3）在一个函数声明中，const 可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
 （4）对于类的成员函数，若指定其为 const 类型，则表明其是一个常函数，不能修改类的成员变量；
-（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。&lt;/p></description></item><item><title>用UIWebView来load图片很慢的方法</title><link>https://example.com/en/post/en/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</link><pubDate>Tue, 20 Jan 2015 00:48:29 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</guid><description>
+（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。&lt;/p></description></item><item><title>用UIWebView来load图片很慢的方法</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</link><pubDate>Tue, 20 Jan 2015 00:48:29 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</guid><description>
 &lt;p>load的慢不是错，不去解决才是错&lt;/p>
-&lt;p>&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview&lt;/a>&lt;/a>&lt;br>&lt;/p></description></item><item><title>给自己的2015来份计划表</title><link>https://example.com/en/post/en/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</link><pubDate>Tue, 06 Jan 2015 09:11:21 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</guid><description>
+&lt;p>&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview&lt;/a>&lt;/a>&lt;br>&lt;/p></description></item><item><title>给自己的2015来份计划表</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</link><pubDate>Tue, 06 Jan 2015 09:11:21 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-06-gei-zi-ji-de-2015lai-fen-ji-hua-biao/</guid><description>
 &lt;p>制定新年计划是我们程序猿必须get的技能之一，我们总是会在年底的时候对新的一年有一个很好的计划，但后来就把它们都抛到脑后了，直到最后全部忘记。&lt;/p>
 &lt;p>也许，我们的计划总是过于宏伟，很多事情都是做不到的，甚至显得遥不可及。但是，每年都有所不同，所以计划还是要做的。到了年尾就可以进行对比看自己是否努力去实现了。&lt;/p>
 &lt;ol>
@@ -1094,7 +1094,7 @@ int const *a const;
 &lt;ol start="6">
 &lt;li>关注更多信息&lt;/li>
 &lt;/ol>
-&lt;p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://example.com/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
+&lt;p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
 &lt;p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。&lt;/p>
 &lt;p>And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。&lt;p>&lt;/p>
 &lt;p>&lt;b1>What the hell!&lt;/b1>&lt;/p>
@@ -1220,7 +1220,7 @@ Octopress很多依赖于Google的库和资源，So,google拜拜~~~~(>_&lt;)~~~~ 
 &lt;/span>&lt;span class='line'>$ git push origin source
 &lt;/span>&lt;span class='line'>$ rake deploy&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>&lt;/div>&lt;/figure>
 &lt;h3>百度统计&lt;/h3>
-从百度统计获取脚本，然后添加到文件source/_includes/after_footer.html文件</description></item><item><title>使用octopress搭建github博客</title><link>https://example.com/en/post/en/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</link><pubDate>Sun, 04 Jan 2015 11:05:25 +0800</pubDate><guid>https://example.com/en/post/en/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</guid><description>
+从百度统计获取脚本，然后添加到文件source/_includes/after_footer.html文件</description></item><item><title>使用octopress搭建github博客</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</link><pubDate>Sun, 04 Jan 2015 11:05:25 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-04-shi-yong-octopressda-jian-githubbo-ke/</guid><description>
 &lt;p>&lt;a href="http://octopress.org/">&lt;code>Octopress&lt;/code>&lt;/a>是利用&lt;a href="http://github.com/mojombo/jekyll">&lt;code>Jekyll&lt;/code>&lt;/a>博客引擎开发的一个博客系统，生成的静态页面能够很好的在github page上展现。
 &lt;p>号称是hacker专属的一个博客系统(&lt;code>A blogging framework for hackers.&lt;/code>)&lt;/p>&lt;/p>
 &lt;p>本文只讲自己在苹果电脑(OS X 10.10)利用Octopress搭建一个Github博客,内容参照&lt;code>&lt;a href ="http://beyondvincent.com/blog/2013/08/03/108-creating-a-github-blog-using-octopress/">破船之家&lt;/a>，&lt;a href="http://blog.devtang.com/blog/2012/02/10/setup-blog-based-on-github/">唐巧_boy&lt;/a>&lt;/code>&lt;/p>

@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IOS on Claridade</title><link>https://example.com/pt/categories/ios/</link><description>Recent content in IOS on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 27 Oct 2015 13:53:52 +0800</lastBuildDate><atom:link href="https://example.com/pt/categories/ios/index.xml" rel="self" type="application/rss+xml"/><item><title>xib中的scrollview使用autolayout</title><link>https://example.com/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</link><pubDate>Tue, 27 Oct 2015 13:53:52 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IOS on Claridade</title><link>https://b9aobj.github.io/pt/categories/ios/</link><description>Recent content in IOS on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 27 Oct 2015 13:53:52 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/pt/categories/ios/index.xml" rel="self" type="application/rss+xml"/><item><title>xib中的scrollview使用autolayout</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</link><pubDate>Tue, 27 Oct 2015 13:53:52 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-10-27-xibzhong-de-scrollviewshi-yong-autolayout/</guid><description>
 &lt;p>更新之后要学会autolayout。 111&lt;/p>
 &lt;div data-caption="string">
 &lt;div class="dropdown">
-&lt;a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="https://example.com/page.html">
+&lt;a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="https://b9aobj.github.io/page.html">
 Dropdown
 &lt;b class="caret">&lt;/b>
 &lt;/a>
 &lt;ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 ...
 &lt;/ul>
-&lt;/div></description></item><item><title>Xcode_7_beta模拟器iOS9无法连接网络</title><link>https://example.com/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</link><pubDate>Thu, 25 Jun 2015 10:38:33 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</guid><description>
+&lt;/div></description></item><item><title>Xcode_7_beta模拟器iOS9无法连接网络</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</link><pubDate>Thu, 25 Jun 2015 10:38:33 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-06-25-guan-yu-xcode-7-betazhong-iphonemo-ni-qi-ios9wu-fa-lian-jie-wang-luo-de-wen-ti-jie-jue-fang-fa/</guid><description>
 &lt;p>he resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/p>
 &lt;p>  在iOS9的iPhone模拟器中来调试的时候出现“&lt;code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/code>”
   一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。&lt;a href="https://github.com/meteor/meteor/issues/4560">原文&lt;/a>&lt;br>
   解决方法：在App中的&lt;code>info.plist&lt;/code>中添加&lt;code>NSAppTransportSecurity&lt;/code>(Dictionary)，在其中添加一个key,&lt;code>NSAllowsArbitraryLoads&lt;/code>(Boolean)并设置为&lt;code>YES&lt;/code>.&lt;br>
-希望可以帮助到大家。&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://example.com/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
+希望可以帮助到大家。&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
 &lt;p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。&lt;/p>
 &lt;p>先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的&lt;/p>
 &lt;p>###改动1
-   因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:&lt;/p></description></item><item><title>iOS面试题目</title><link>https://example.com/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</link><pubDate>Tue, 03 Mar 2015 22:35:24 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</guid><description>
+   因为由横向改为竖向，即可以在MWPhotoBrowser.m文件中进行修改即可（至于这个开源代码怎么使用，就请自行查看作者的描述吧），主要是Frame Calculations这个代码块当中，具体的话是修改:&lt;/p></description></item><item><title>iOS面试题目</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</link><pubDate>Tue, 03 Mar 2015 22:35:24 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-02-04-da-jian-ge-zi-ji-de-octopress/</guid><description>
 &lt;p>面试的一些经典问题，基础内容，看自己学了多少忘记了多少&lt;/p>
 &lt;p>###1.#import和#include的区别，@class的作用是什么？&lt;br>
 #import与#include在引用一个类的时候会包含这个类的所有信息包括变量方法等，但是这样做会对编译效率造成影响。比如由100个类都#import了ClassA，那么在编译的时候这100个类都会对ClassA处理，又比如A被B引用，B被C引用，C被D引用...此时如果A被修改，那么后面的B，C，D。。。都需要重新进行编译。还有一个用法会引起编译错误的就是在ClassA中#import ClassB在ClassB中#import ClassA那么在编译的时候也会出现未知错误。 &lt;br>
@@ -71,6 +71,6 @@ int const *a const;
 定为 const；
 （3）在一个函数声明中，const 可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
 （4）对于类的成员函数，若指定其为 const 类型，则表明其是一个常函数，不能修改类的成员变量；
-（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。&lt;/p></description></item><item><title>用UIWebView来load图片很慢的方法</title><link>https://example.com/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</link><pubDate>Tue, 20 Jan 2015 00:48:29 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</guid><description>
+（5）对于类的成员函数，有时候必须指定其返回值为 const 类型，以使得其返回值不为“左值”。&lt;/p></description></item><item><title>用UIWebView来load图片很慢的方法</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</link><pubDate>Tue, 20 Jan 2015 00:48:29 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-01-20-yong-uiwebviewlai-loadtu-pian-hen-man-de-fang-fa/</guid><description>
 &lt;p>load的慢不是错，不去解决才是错&lt;/p>
 &lt;p>&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">&lt;a href="http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview">http://stackoverflow.com/questions/13564908/why-uiwebview-work-so-slowly-when-loadhtmlstring-with-uiwebview&lt;/a>&lt;/a>&lt;br>&lt;/p></description></item></channel></rss>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Playground on Claridade</title><link>https://example.com/pt/tags/playground/</link><description>Recent content in Playground on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 30 Jun 2015 11:40:29 +0800</lastBuildDate><atom:link href="https://example.com/pt/tags/playground/index.xml" rel="self" type="application/rss+xml"/><item><title>Swift 2 Playground注释使用markdown</title><link>https://example.com/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Playground on Claridade</title><link>https://b9aobj.github.io/pt/tags/playground/</link><description>Recent content in Playground on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 30 Jun 2015 11:40:29 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/pt/tags/playground/index.xml" rel="self" type="application/rss+xml"/><item><title>Swift 2 Playground注释使用markdown</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</link><pubDate>Tue, 30 Jun 2015 11:40:29 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-06-30-swift-2-playgroundzhu-shi-shi-yong-markdown/</guid><description>
 &lt;p>　　在Xcode 7和Swift 2 playground当中引用了markdown语法来写注释。&lt;/p>
 &lt;p>标准代码注释可以是单行注释、多行注释：&lt;br>
 &lt;code>//A Single line comment&lt;/code>&lt;br>
@@ -8,7 +8,7 @@
 &lt;code>*/&lt;/code>&lt;/p>
 &lt;p>　　而现在Xcode 7我们可以丰富我们的注释文本了，只需在后面添加一个&lt;code>:&lt;/code>即可：&lt;br>
 &lt;code>//: _Rich text_ single line *comment* thanks to __markdown__&lt;/code>&lt;br>
-&lt;img src="https://example.com/img/2015/06/playground/playground1.png" alt="">&lt;br>
+&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground1.png" alt="">&lt;br>
 　　可能你加上去之后没有系那是出效果，如果要看文本效果的话，可以在菜单中选择&lt;code>Editor&lt;/code>--&lt;code>Show Rendered Markup&lt;/code>，然后就可以看到效果了。&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground2.png" alt="">&lt;/p>
-&lt;p>&lt;img src="https://example.com/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item></channel></rss>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground2.png" alt="">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/06/playground/playground3.png" alt="">&lt;/p></description></item></channel></rss>

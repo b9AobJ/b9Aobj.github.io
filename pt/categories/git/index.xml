@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Claridade</title><link>https://example.com/pt/categories/git/</link><description>Recent content in git on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 11 Nov 2015 11:45:49 +0800</lastBuildDate><atom:link href="https://example.com/pt/categories/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git操作大全简洁版</title><link>https://example.com/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</link><pubDate>Wed, 11 Nov 2015 11:45:49 +0800</pubDate><guid>https://example.com/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Claridade</title><link>https://b9aobj.github.io/pt/categories/git/</link><description>Recent content in git on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 11 Nov 2015 11:45:49 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/pt/categories/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git操作大全简洁版</title><link>https://b9aobj.github.io/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</link><pubDate>Wed, 11 Nov 2015 11:45:49 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2015/2015-11-11-gitcao-zuo-da-quan-jian-ji-ban/</guid><description>
 &lt;p>&lt;b> &lt;em>HEAD&lt;/em> 表示当前分支&lt;/p>
 &lt;p>&lt;em>master&lt;/em>表示只想提交&lt;br>
 &lt;em>Origin&lt;/em> 表示远程库 &lt;/b>&lt;/p>
@@ -21,7 +21,7 @@
 &lt;h5 id="8git-reflog">8、&lt;code>git reflog&lt;/code>&lt;/h5>
 &lt;p>查看你的命令&lt;/p>
 &lt;h5 id="9git的版本库里存了很多东西其中最重要的就是称为stage或者叫index的暂存区还有git为我们自动创建的第一个分支master以及指向master的一个指针叫head">9、Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。&lt;/h5>
-&lt;p>&lt;img src="https://example.com/img/2015/10/gitTree.jpeg" alt="">&lt;br>
+&lt;p>&lt;img src="https://b9aobj.github.io/img/2015/10/gitTree.jpeg" alt="">&lt;br>
 前面讲了我们把文件往Git版本库里添加的时候，是分两步执行的：&lt;br>
 第一步是用git add把文件添加进去，实际上就是把文件修改添加到暂存区；&lt;br>
 第二步是用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支。&lt;br>
@@ -98,7 +98,7 @@ Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*
 那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；&lt;br>
 你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。&lt;br>
 所以，团队合作的分支看起来就像这样：&lt;br>
-&lt;img src="https://example.com/img/2015/10/gitBranch.png" alt="">&lt;/p>
+&lt;img src="https://b9aobj.github.io/img/2015/10/gitBranch.png" alt="">&lt;/p>
 &lt;h5 id="24bug分支">24、Bug分支&lt;/h5>
 &lt;p>软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。&lt;/p>
 &lt;p>修复bug时，需创建分支来修复它，但现在手上的工作还没做完不可提交的状态，可以用&lt;strong>stash&lt;/strong>功能，把工作现场“储藏”起来，等以后回复现场后继续工作；&lt;br>

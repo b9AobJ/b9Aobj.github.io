@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CAS on Claridade</title><link>https://example.com/pt/categories/cas/</link><description>Recent content in CAS on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 11 May 2021 16:34:30 +0800</lastBuildDate><atom:link href="https://example.com/pt/categories/cas/index.xml" rel="self" type="application/rss+xml"/><item><title>Cas接入</title><link>https://example.com/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://example.com/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CAS on Claridade</title><link>https://b9aobj.github.io/pt/categories/cas/</link><description>Recent content in CAS on Claridade</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 11 May 2021 16:34:30 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/pt/categories/cas/index.xml" rel="self" type="application/rss+xml"/><item><title>Cas接入</title><link>https://b9aobj.github.io/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://b9aobj.github.io/pt/post/pt/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
 &lt;h3 id="sso介绍">SSO介绍&lt;/h3>
 &lt;h4 id="背景">背景&lt;/h4>
 &lt;p>在企业发展初期，企业使用的系统很少，通常一个或者两个，每个系统都有自己的登录模块，运营人员每天用自己的账号登录，很方便。
 但随着企业的发展，用到的系统随之增多，运营人员在操作不同的系统时，需要多次登录，而且每个系统的账号都不一样，这对于运营人员来说，很不方便。于是，就想到是不是可以在一个系统登录，其他系统就不用登录了呢？这就是单点登录要解决的问题。&lt;/p>
 &lt;h4 id="定义">定义&lt;/h4>
 &lt;p>&lt;code>单点登录&lt;/code>英文全称Single Sign On，简称就是SSO。它的解释是：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统.&lt;/p>
-&lt;p>&lt;img src="https://example.com/images/2020/cas01.png" alt="01">
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas01.png" alt="01">
 如图所示，图中有4个系统，分别是Application1、Application2、Application3、和SSO。Application1、Application2、Application3没有登录模块,只负责业务模块，而SSO只有登录模块，没有其他的业务模块，当Application1、Application2、Application3需要登录时，将跳到SSO系统，SSO系统完成登录，其他的应用系统也就随之登录了。这完全符合我们对单点登录（SSO）的定义。&lt;/p>
 &lt;p>同域下的单点登录是运用了Cookie同域共享的特性,&lt;code>但这不是真正的单点登录&lt;/code>。
 因为如果是不同域呢？不同域之间Cookie是不共享的，怎么办？
@@ -49,10 +49,10 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;/ul>
 &lt;h3 id="cas流程">CAS流程&lt;/h3>
 &lt;h4 id="官方流程图">官方流程图&lt;/h4>
-&lt;p>&lt;img src="https://example.com/images/2020/cas02.png" alt="02">
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas02.png" alt="02">
 官方文档:https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol.html&lt;/p>
 &lt;h4 id="流程图">流程图&lt;/h4>
-&lt;p>&lt;img src="https://example.com/images/2020/cas03.png" alt="03">&lt;/p>
+&lt;p>&lt;img src="https://b9aobj.github.io/images/2020/cas03.png" alt="03">&lt;/p>
 &lt;h4 id="流程图解析">流程图解析&lt;/h4>
 &lt;p>1、 用户访问产品a，域名是www.a.cn.
 2. 由于用户没有携带在 a 服务器上登录的 a cookie，所以 a 服务器返回 http 重定向，重定向的 url 是 SSO 服务器的地址，同时 url 的 query 中通过参数指明登录成功后，回跳到 a 页面。重定向的url 形如 sso.dxy.cn/login?service=https%3A%2F%2Fwww.a.cn。
@@ -185,7 +185,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;span class="ln"> 75&lt;/span> if (req.session.cas &amp;amp;&amp;amp; req.session.cas.user) {
 &lt;span class="ln"> 76&lt;/span> next()
 &lt;span class="ln"> 77&lt;/span> } else {
-&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://example.com/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
+&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://b9aobj.github.io/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
 &lt;span class="ln"> 79&lt;/span> // 自动跳转登录
 &lt;span class="ln"> 80&lt;/span> // return res.redirect(`/login?service=http://${casClient}${req.url}`);
 &lt;span class="ln"> 81&lt;/span> }
