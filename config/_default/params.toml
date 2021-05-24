@@ -85,7 +85,7 @@ iconsDir = "icons/" # without a leading forward slash
 [author]
 name = "Alin.Zhong"
 # photo = "images/jane-doe.png" #include this if you would like to show the author photo on the sidebar
-photo = "http://b9aobj.github.io/blog/aboutme/index.hyperesources/66851330303979%402x.jpg"
+photo = "logos/4596723.png"
 
 [plausible_analytics]
 enable = false # to enable plausible analytics set to true.
