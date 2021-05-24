@@ -1,0 +1,17 @@
+
+
+[zh-CN]
+  title = "X•O专业去码"
+  LanguageName = "中文"
+  weight = 1
+
+[pt]
+  title = "Claridade" # just for the sake of showing this is possible
+  LanguageName = "Português"
+  weight = 2
+
+[en]
+  title = "Clarity"
+  LanguageName = "English"
+  weight = 3
+  
