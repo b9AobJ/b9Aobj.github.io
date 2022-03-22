@@ -1,5 +1,5 @@
 ---
-title: "我想在gitlab用CICD部署" # Title of the blog post.
+title: "我想在gitlab用CI/CD部署" # Title of the blog post.
 date: 2021-05-13T17:23:19+08:00 # Date of post creation.
 description: "Article description." # Description used for search engine.
 featured: true # Sets if post is a featured post, making it appear on the sidebar. A featured post won't be listed on the sidebar if it's the current page
@@ -30,7 +30,7 @@ tags:
 持续部署（英语：Continuous deployment，缩写为CD），是一种软件工程方法，意指在软件开发流程中，以自动化方式，频繁而且持续性的，将软件部署到生产环境（production environment）中，使软件产品能够快速的发展[1][2][3]。
 
 持续部署可以整合到持续整合与持续交付（Continuous delivery）的流程之中。
-### CICD
+### CI/CD
 在软件工程中，CI/CD或CICD通常指的是持续集成和持续交付或持续部署的组合实践。CI/CD通过在应用程序的构建、测试和部署中实施自动化，在开发和运营团队之间架起了桥梁。
 
 现代DevOps实践涉及软件应用程序在整个开发生命周期内的持续开发、持续测试、持续集成、持续部署和持续监控。CI/CD实践或CI/CD管道（CI/CD pipeline）构成了现代DevOps业务的主干。

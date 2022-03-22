@@ -1,5 +1,5 @@
 ---
-title: "Ffmpeg文档" # Title of the blog post.
+title: "FFmpeg文档" # Title of the blog post.
 date: 2021-05-12T20:37:14+08:00 # Date of post creation.
 description: "Article description." # Description used for search engine.
 featured: true # Sets if post is a featured post, making it appear on the sidebar. A featured post won't be listed on the sidebar if it's the current page
