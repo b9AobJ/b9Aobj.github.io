@@ -19,7 +19,7 @@ rake install['slimpress']&lt;/p>
 &lt;p>###修改&lt;code>_config.yml&lt;/code>
 *日期格式： &lt;code>date-formate: %Y年-%m月-%d日&lt;/code>&lt;br>
 *分类前缀显示为中文：&lt;code>category_title_prefix: &amp;quot;分类&amp;quot;&lt;/code>
-*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://b9aobj.github.io/post/zh-cn/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://b9aobj.github.io/post/zh-cn/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
+*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://b9aobj.github.io/post/zh-cn/2015/2015-01-04-jie-jue-octopressfang-wen-man-he--xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://b9aobj.github.io/post/zh-cn/2015/2015-01-04-jie-jue-octopressfang-wen-man-he--xie-she-zhi-wen-ti/</guid><description>
 &lt;p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。&lt;/p>
 &lt;p>And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。&lt;p>&lt;/p>
 &lt;p>&lt;b1>What the hell!&lt;/b1>&lt;/p>

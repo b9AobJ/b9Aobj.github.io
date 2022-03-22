@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>中文 on X•O专业去码</title><link>https://b9aobj.github.io/tags/%E4%B8%AD%E6%96%87/</link><description>Recent content in 中文 on X•O专业去码</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Fri, 30 Apr 2021 14:55:12 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/tags/%E4%B8%AD%E6%96%87/index.xml" rel="self" type="application/rss+xml"/><item><title>中文匹配</title><link>https://b9aobj.github.io/post/zh-cn/2021/zhongwenzhengze/</link><pubDate>Fri, 30 Apr 2021 14:55:12 +0800</pubDate><guid>https://b9aobj.github.io/post/zh-cn/2021/zhongwenzhengze/</guid><description>
 &lt;p>\w匹配的仅仅是中文，数字，字母，对于国人来讲，仅匹配中文时常会用到，见下&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配双字节字符(包括汉字在内)：[^\x00-\xff]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">匹配双字节字符(包括汉字在内)：[^\x00-\xff]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
 更多常用正则表达式匹配规则：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>英文字母:[a-zA-Z]
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>数字:[0-9]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>匹配中文，英文字母和数字及_:&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\u4e00-\u9fa5_a-zA-Z0-9]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时判断输入长度：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>[\u4e00-\u9fa5_a-zA-Z0-9_]{4,10}
-&lt;span class="ln">2&lt;/span>^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>1、一个正则表达式，只含有汉字、数字、字母、下划线不能以下划线开头和结尾：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">英文字母:[a-zA-Z]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">数字:[0-9]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>匹配中文，英文字母和数字及_:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[\u4e00-\u9fa5_a-zA-Z0-9]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时判断输入长度：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">[\u4e00-\u9fa5_a-zA-Z0-9_]{4,10}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>1、一个正则表达式，只含有汉字、数字、字母、下划线不能以下划线开头和结尾：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中：&lt;/p>
 &lt;p>^ 与字符串开始的地方匹配&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>(?!_)　　不能以_开头
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>(?!.*?_$)　　不能以_结尾
-&lt;span class="ln">4&lt;/span>
-&lt;span class="ln">5&lt;/span>[a-zA-Z0-9_\u4e00-\u9fa5]+　　至少一个汉字、数字、字母、下划线
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>$　　与字符串结束的地方匹配&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>放在程序里前面加@，否则需要\\进行转义 @&amp;#34;^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$&amp;#34;
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>（或者：@&amp;#34;^(?!_)\w*(?&amp;lt;!_)$&amp;#34; 或者 @&amp;#34; ^[\u4E00-\u9FA50-9a-zA-Z_]+$ &amp;#34; )
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>2、只含有汉字、数字、字母、下划线，下划线位置不限：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[a-zA-Z0-9_\u4e00-\u9fa5]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>3、由数字、26个英文字母或者下划线组成的字符串&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^\w+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>4、2~4个汉字&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>@&amp;#34;^[\u4E00-\u9FA5]{2,4}$&amp;#34;;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>5、&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>用：(Abc)+ 来分析： XYZAbcAbcAbcXYZAbcAb&lt;/p></description></item></channel></rss>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">(?!_)　　不能以_开头
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">(?!.*?_$)　　不能以_结尾
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">4&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">5&lt;/span>&lt;span class="cl">[a-zA-Z0-9_\u4e00-\u9fa5]+　　至少一个汉字、数字、字母、下划线
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>$　　与字符串结束的地方匹配&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">放在程序里前面加@，否则需要\\进行转义 @&amp;#34;^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">（或者：@&amp;#34;^(?!_)\w*(?&amp;lt;!_)$&amp;#34; 或者 @&amp;#34; ^[\u4E00-\u9FA50-9a-zA-Z_]+$ &amp;#34; )
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>2、只含有汉字、数字、字母、下划线，下划线位置不限：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>3、由数字、26个英文字母或者下划线组成的字符串&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^\w+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>4、2~4个汉字&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">@&amp;#34;^[\u4E00-\u9FA5]{2,4}$&amp;#34;;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>5、&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>用：(Abc)+ 来分析： XYZAbcAbcAbcXYZAbcAb&lt;/p></description></item></channel></rss>

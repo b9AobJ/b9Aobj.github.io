@@ -14,7 +14,7 @@ Dropdown
 &lt;p>  在iOS9的iPhone模拟器中来调试的时候出现“&lt;code>The resource could not be loaded because the App Transport Security policy requires the use of a secure connection.&lt;/code>”
   一开始以为是Xcode的beta版本的问题，后来发现不对，肯定是自己配置的问题，goggle一番后在github找到一篇番文，从而尝试之，奇效显著。&lt;a href="https://github.com/meteor/meteor/issues/4560">原文&lt;/a>&lt;br>
   解决方法：在App中的&lt;code>info.plist&lt;/code>中添加&lt;code>NSAppTransportSecurity&lt;/code>(Dictionary)，在其中添加一个key,&lt;code>NSAllowsArbitraryLoads&lt;/code>(Boolean)并设置为&lt;code>YES&lt;/code>.&lt;br>
-希望可以帮助到大家。&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
+希望可以帮助到大家。&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de--xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de--xie-keng/</guid><description>
 &lt;p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。&lt;/p>
 &lt;p>先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的&lt;/p>
 &lt;p>###改动1

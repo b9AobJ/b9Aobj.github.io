@@ -86,7 +86,7 @@
 删除分支：&lt;code>git branch -d &amp;lt;name&amp;gt;&lt;/code>&lt;/p>
 &lt;h5 id="21解决冲突">21、&lt;strong>解决冲突&lt;/strong>&lt;/h5>
 &lt;p>&lt;code>git status&lt;/code>可以告诉我们冲突的文件&lt;br>
-Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;*标记出不同分支的内容&lt;br>
+Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&lt;em>，&lt;/em>=======&lt;em>，&lt;/em>&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;*标记出不同分支的内容&lt;br>
 先手动修改冲突，再提交合并。&lt;/p>
 &lt;p>用带参数的&lt;strong>git log&lt;/strong>看到分支的合并情况&lt;br>
 &lt;code>git log --graph --pretty=oneline --abbrev-commit&lt;/code>&lt;/p>

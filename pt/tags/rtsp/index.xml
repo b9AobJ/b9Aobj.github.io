@@ -8,9 +8,9 @@
 &lt;li>然后运行&lt;code>make&lt;/code>。如果你想打包live555库，可以运行&lt;code>make install&lt;/code>。解决端口占用，最好运行这个命令&lt;code>make CPPFLAGS=-DALLOW_RTSP_SERVER_PORT_REUSE=1 install&lt;/code>&lt;/li>
 &lt;/ol>
 &lt;p>编译完成之后就会生成mediaServer文件夹，会有一个live555MediaServer可执行文件。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd mediaServer
-&lt;span class="ln">2&lt;/span>./live555MediaServer
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">cd mediaServer
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">./live555MediaServer
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
 &lt;p>可以看到支持格式有：h264、h265、.aac、.ac3、.amr、.dv、.m4e、.mkv、.mp3、.mpg、.ogg、.ts、.vod、.wav、.webm&lt;/p>
 &lt;p>推流步骤：&lt;br>
 将NARUTO.mkv文件复制到和上面live555MediaServer可执行文件的同一个目录，

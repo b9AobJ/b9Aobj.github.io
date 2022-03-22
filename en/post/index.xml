@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Clarity</title><link>https://b9aobj.github.io/en/post/</link><description>Recent content in Posts on Clarity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 12 May 2021 20:37:14 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/en/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Ffmpeg文档</title><link>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</link><pubDate>Wed, 12 May 2021 20:37:14 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Clarity</title><link>https://b9aobj.github.io/en/post/</link><description>Recent content in Posts on Clarity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 12 May 2021 20:37:14 +0800</lastBuildDate><atom:link href="https://b9aobj.github.io/en/post/index.xml" rel="self" type="application/rss+xml"/><item><title>FFmpeg文档</title><link>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</link><pubDate>Wed, 12 May 2021 20:37:14 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2020/ffmpeg%E6%96%87%E6%A1%A3/</guid><description>
 &lt;p>&lt;strong>Insert Lead paragraph here.&lt;/strong>&lt;/p></description></item><item><title>Cas接入</title><link>https://b9aobj.github.io/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</link><pubDate>Tue, 11 May 2021 16:34:30 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2020/cas%E6%8E%A5%E5%85%A5/</guid><description>
 &lt;h3 id="sso介绍">SSO介绍&lt;/h3>
 &lt;h4 id="背景">背景&lt;/h4>
@@ -61,7 +61,7 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 4. 登录成功后，SSO 服务器构建用户在 SSO 登录的 TGT（又一个票据），同时返回一个 http 重定向。这里注意：重定向地址为之前写在 query 里的 a 页面。重定向地址的 query 中包含 sso 服务器派发的 ST。重定向的 http response 中包含写 cookie 的 header。这个 cookie 代表用户在 SSO 中的登录状态，它的值就是 TGC。
 5. 浏览器重定向到产品 a。此时重定向的 url 中携带着 SSO 服务器生成的 ST。
 6. 根据 ST，a 服务器向 SSO 服务器发送请求，SSO 服务器验证票据的有效性。验证成功后，a 服务器知道用户已经在 sso 登录了，于是 a 服务器构建用户登录 session，记为 a session。并将 cookie 写入浏览器。注意，此处的 cookie 和 session 保存的是用户在 a 服务器的登录状态，和 CAS 无关。
-7. 之后用户访问产品 b，域名是 &lt;a href="http://www.b.cn">www.b.cn&lt;/a>。
+7. 之后用户访问产品 b，域名是 &lt;a href="https://www.b.cn">www.b.cn&lt;/a>。
 8. 由于用户没有携带在 b 服务器上登录的 b cookie，所以 b 服务器返回 http 重定向，重定向的 url 是 SSO 服务器的地址，去询问用户在 SSO 中的登录状态。
 9. 浏览器重定向到 SSO。注意，第 4 步中已经向浏览器写入了携带 TGC 的cookie，所以此时 SSO 服务器可以拿到，根据 TGC 去查找 TGT，如果找到，就判断用户已经在 sso 登录过了。
 10. SSO 服务器返回一个重定向，重定向携带 ST。注意，这里的 ST 和第4步中的 ST 是不一样的，事实上，每次生成的 ST 都是不一样的。
@@ -72,173 +72,173 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;h4 id="cas-域名配置">CAS 域名配置&lt;/h4>
 &lt;ul>
 &lt;li>cas server 域名 &lt;a href="https://cas.ucloudadmin.com">https://cas.ucloudadmin.com&lt;/a>&lt;/li>
-&lt;li>cas client 域名 &lt;a href="http://www.clienta.com">www.clienta.com&lt;/a> www.clientb.com&lt;/li>
+&lt;li>cas client 域名 &lt;a href="https://www.clienta.com">www.clienta.com&lt;/a> www.clientb.com&lt;/li>
 &lt;/ul>
 &lt;h4 id="host-配置">host 配置&lt;/h4>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>#CAS
-&lt;span class="ln">2&lt;/span>127.0.0.1 clienta.com
-&lt;span class="ln">3&lt;/span>127.0.0.1 clientb.com
-&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="nginx-配置">nginx 配置&lt;/h4>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>server {
-&lt;span class="ln"> 2&lt;/span>listen 80;
-&lt;span class="ln"> 3&lt;/span>server_name clienta.com;
-&lt;span class="ln"> 4&lt;/span>
-&lt;span class="ln"> 5&lt;/span>location / {
-&lt;span class="ln"> 6&lt;/span>proxy_set_header Host $host;
-&lt;span class="ln"> 7&lt;/span>proxy_set_header X-Real-IP $remote_addr;
-&lt;span class="ln"> 8&lt;/span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-&lt;span class="ln"> 9&lt;/span>proxy_pass http://127.0.0.1:1024;
-&lt;span class="ln">10&lt;/span>}
-&lt;span class="ln">11&lt;/span>}
-&lt;span class="ln">12&lt;/span>
-&lt;span class="ln">13&lt;/span>server {
-&lt;span class="ln">14&lt;/span>listen 80;
-&lt;span class="ln">15&lt;/span>server_name clientb.com;
-&lt;span class="ln">16&lt;/span>
-&lt;span class="ln">17&lt;/span>location / {
-&lt;span class="ln">18&lt;/span>proxy_set_header Host $host;
-&lt;span class="ln">19&lt;/span>proxy_set_header X-Real-IP $remote_addr;
-&lt;span class="ln">20&lt;/span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-&lt;span class="ln">21&lt;/span>proxy_pass http://127.0.0.1:1025;
-&lt;span class="ln">22&lt;/span>}
-&lt;span class="ln">23&lt;/span>}
-&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="使用">使用&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">#CAS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">127.0.0.1 clienta.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">127.0.0.1 clientb.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="nginx-配置">nginx 配置&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln"> 1&lt;/span>&lt;span class="cl">server {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 2&lt;/span>&lt;span class="cl">listen 80;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 3&lt;/span>&lt;span class="cl">server_name clienta.com;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 4&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 5&lt;/span>&lt;span class="cl">location / {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 6&lt;/span>&lt;span class="cl">proxy_set_header Host $host;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 7&lt;/span>&lt;span class="cl">proxy_set_header X-Real-IP $remote_addr;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 8&lt;/span>&lt;span class="cl">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 9&lt;/span>&lt;span class="cl">proxy_pass http://127.0.0.1:1024;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">10&lt;/span>&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">11&lt;/span>&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">12&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">13&lt;/span>&lt;span class="cl">server {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">14&lt;/span>&lt;span class="cl">listen 80;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">15&lt;/span>&lt;span class="cl">server_name clientb.com;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">16&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">17&lt;/span>&lt;span class="cl">location / {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">18&lt;/span>&lt;span class="cl">proxy_set_header Host $host;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">19&lt;/span>&lt;span class="cl">proxy_set_header X-Real-IP $remote_addr;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">20&lt;/span>&lt;span class="cl">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">21&lt;/span>&lt;span class="cl">proxy_pass http://127.0.0.1:1025;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">22&lt;/span>&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">23&lt;/span>&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="使用">使用&lt;/h4>
 &lt;h5 id="启动-cas-client-服务">启动 cas client 服务&lt;/h5>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd clienta
-&lt;span class="ln">2&lt;/span>npm start // or node app.js
-&lt;span class="ln">3&lt;/span>cd clientb
-&lt;span class="ln">4&lt;/span>npm start // or node app.js
-&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="clienta-代码">clienta 代码&lt;/h5>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>// app.js
-&lt;span class="ln"> 2&lt;/span>const express = require(&amp;#39;express&amp;#39;)
-&lt;span class="ln"> 3&lt;/span>const app = express()
-&lt;span class="ln"> 4&lt;/span>const session = require(&amp;#39;express-session&amp;#39;);
-&lt;span class="ln"> 5&lt;/span>const cas = require(&amp;#39;connect-cas&amp;#39;);
-&lt;span class="ln"> 6&lt;/span>const URL = require(&amp;#39;url&amp;#39;);
-&lt;span class="ln"> 7&lt;/span>const querystring = require(&amp;#34;querystring&amp;#34;);
-&lt;span class="ln"> 8&lt;/span>
-&lt;span class="ln"> 9&lt;/span>const casServer = &amp;#39;cas.ucloudadmin.com&amp;#39;
-&lt;span class="ln"> 10&lt;/span>const casClient = &amp;#39;clienta.com&amp;#39;
-&lt;span class="ln"> 11&lt;/span>
-&lt;span class="ln"> 12&lt;/span>// var _defaults = {
-&lt;span class="ln"> 13&lt;/span>// protocol: &amp;#39;https&amp;#39;,
-&lt;span class="ln"> 14&lt;/span>// host: undefined,
-&lt;span class="ln"> 15&lt;/span>// hostname: undefined, // ex. google
-&lt;span class="ln"> 16&lt;/span>// port: 443,
-&lt;span class="ln"> 17&lt;/span>// gateway: false, // set to true only if you wish to do authentication instead of authorization
-&lt;span class="ln"> 18&lt;/span>// paths: {
-&lt;span class="ln"> 19&lt;/span>// validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
-&lt;span class="ln"> 20&lt;/span>// serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
-&lt;span class="ln"> 21&lt;/span>// proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
-&lt;span class="ln"> 22&lt;/span>// proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
-&lt;span class="ln"> 23&lt;/span>// login: &amp;#39;/cas/login&amp;#39;,
-&lt;span class="ln"> 24&lt;/span>// logout: &amp;#39;/cas/logout&amp;#39;
-&lt;span class="ln"> 25&lt;/span>// }
-&lt;span class="ln"> 26&lt;/span>// }
-&lt;span class="ln"> 27&lt;/span>
-&lt;span class="ln"> 28&lt;/span>/*
-&lt;span class="ln"> 29&lt;/span>var myOptions = {
-&lt;span class="ln"> 30&lt;/span> protocol: &amp;#39;https&amp;#39;,
-&lt;span class="ln"> 31&lt;/span> host: &amp;#39;cas.ucloudadmin.com&amp;#39;,
-&lt;span class="ln"> 32&lt;/span> hostname: &amp;#39;ucloud&amp;#39;, // ex. google
-&lt;span class="ln"> 33&lt;/span> port: 443,
-&lt;span class="ln"> 34&lt;/span> gateway: false, // set to true only if you wish to do authentication instead of authorization
-&lt;span class="ln"> 35&lt;/span> paths: {
-&lt;span class="ln"> 36&lt;/span> validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
-&lt;span class="ln"> 37&lt;/span> serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
-&lt;span class="ln"> 38&lt;/span> proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
-&lt;span class="ln"> 39&lt;/span> proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
-&lt;span class="ln"> 40&lt;/span> login: &amp;#39;/cas/login&amp;#39;,
-&lt;span class="ln"> 41&lt;/span> logout: &amp;#39;/cas/logout&amp;#39;
-&lt;span class="ln"> 42&lt;/span> }
-&lt;span class="ln"> 43&lt;/span>}
-&lt;span class="ln"> 44&lt;/span>cas.configure(myOptions);
-&lt;span class="ln"> 45&lt;/span>*/
-&lt;span class="ln"> 46&lt;/span>
-&lt;span class="ln"> 47&lt;/span>// Your CAS server&amp;#39;s hostname
-&lt;span class="ln"> 48&lt;/span>cas.configure({
-&lt;span class="ln"> 49&lt;/span> protocol: &amp;#39;https&amp;#39;,
-&lt;span class="ln"> 50&lt;/span> host: casServer,
-&lt;span class="ln"> 51&lt;/span>});
-&lt;span class="ln"> 52&lt;/span>console.log(cas.configure());
-&lt;span class="ln"> 53&lt;/span>
-&lt;span class="ln"> 54&lt;/span>app.use(express.json());
-&lt;span class="ln"> 55&lt;/span>app.use(express.urlencoded({ extended: true }))
-&lt;span class="ln"> 56&lt;/span>
-&lt;span class="ln"> 57&lt;/span>app.use(
-&lt;span class="ln"> 58&lt;/span> session({
-&lt;span class="ln"> 59&lt;/span> secret: &amp;#39;clienta&amp;#39;,
-&lt;span class="ln"> 60&lt;/span> name: &amp;#39;SESSIONID&amp;#39;,
-&lt;span class="ln"> 61&lt;/span> resave: true,
-&lt;span class="ln"> 62&lt;/span> saveUninitialized: true,
-&lt;span class="ln"> 63&lt;/span> cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }, //过期时间 24 小时
-&lt;span class="ln"> 64&lt;/span> }),
-&lt;span class="ln"> 65&lt;/span>);
-&lt;span class="ln"> 66&lt;/span>
-&lt;span class="ln"> 67&lt;/span>// 用户验证
-&lt;span class="ln"> 68&lt;/span>app.use(function (req, res, next) {
-&lt;span class="ln"> 69&lt;/span> console.log(&amp;#39;req.url&amp;#39;, req.url);
-&lt;span class="ln"> 70&lt;/span> let path = req.url.split(&amp;#39;?&amp;#39;)[0]
-&lt;span class="ln"> 71&lt;/span> // 跳过登录请求
-&lt;span class="ln"> 72&lt;/span> if (path === &amp;#39;/login&amp;#39;) {
-&lt;span class="ln"> 73&lt;/span> next()
-&lt;span class="ln"> 74&lt;/span> } else {
-&lt;span class="ln"> 75&lt;/span> if (req.session.cas &amp;amp;&amp;amp; req.session.cas.user) {
-&lt;span class="ln"> 76&lt;/span> next()
-&lt;span class="ln"> 77&lt;/span> } else {
-&lt;span class="ln"> 78&lt;/span> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://b9aobj.github.io/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
-&lt;span class="ln"> 79&lt;/span> // 自动跳转登录
-&lt;span class="ln"> 80&lt;/span> // return res.redirect(`/login?service=http://${casClient}${req.url}`);
-&lt;span class="ln"> 81&lt;/span> }
-&lt;span class="ln"> 82&lt;/span> }
-&lt;span class="ln"> 83&lt;/span>});
-&lt;span class="ln"> 84&lt;/span>
-&lt;span class="ln"> 85&lt;/span>app.get(&amp;#39;/&amp;#39;, function (req, res) {
-&lt;span class="ln"> 86&lt;/span> console.log(&amp;#39;get /&amp;#39;, req.url)
-&lt;span class="ln"> 87&lt;/span> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clienta&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user + &amp;#39;. &amp;lt;a href=&amp;#34;/logout&amp;#34;&amp;gt;Log Out&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;#39;);
-&lt;span class="ln"> 88&lt;/span>});
-&lt;span class="ln"> 89&lt;/span>
-&lt;span class="ln"> 90&lt;/span>app.get(&amp;#39;/login&amp;#39;, cas.serviceValidate(), cas.authenticate(), function (req, res) {
-&lt;span class="ln"> 91&lt;/span> console.log(&amp;#39;/login&amp;#39;, req.url)
-&lt;span class="ln"> 92&lt;/span> let arg = URL.parse(req.url).query;
-&lt;span class="ln"> 93&lt;/span> let params = querystring.parse(arg);
-&lt;span class="ln"> 94&lt;/span> // console.log(&amp;#34;params-service &amp;#34; + params.service);
-&lt;span class="ln"> 95&lt;/span> // 重定向到初始请求地址
-&lt;span class="ln"> 96&lt;/span> return res.redirect(params.service || &amp;#39;/&amp;#39;);
-&lt;span class="ln"> 97&lt;/span>});
-&lt;span class="ln"> 98&lt;/span>
-&lt;span class="ln"> 99&lt;/span>app.get(&amp;#39;/logout&amp;#39;, function (req, res) {
-&lt;span class="ln">100&lt;/span> if (!req.session) {
-&lt;span class="ln">101&lt;/span> return res.redirect(&amp;#39;/&amp;#39;);
-&lt;span class="ln">102&lt;/span> }
-&lt;span class="ln">103&lt;/span> // Forget our own login session
-&lt;span class="ln">104&lt;/span> if (req.session.destroy) {
-&lt;span class="ln">105&lt;/span> req.session.destroy();
-&lt;span class="ln">106&lt;/span> } else {
-&lt;span class="ln">107&lt;/span> // Cookie-based sessions have no destroy()
-&lt;span class="ln">108&lt;/span> req.session = null;
-&lt;span class="ln">109&lt;/span> }
-&lt;span class="ln">110&lt;/span> // Send the user to the official campus-wide logout URL
-&lt;span class="ln">111&lt;/span> var options = cas.configure();
-&lt;span class="ln">112&lt;/span> options.pathname = options.paths.logout;
-&lt;span class="ln">113&lt;/span> return res.redirect(URL.format(options));
-&lt;span class="ln">114&lt;/span>});
-&lt;span class="ln">115&lt;/span>
-&lt;span class="ln">116&lt;/span>
-&lt;span class="ln">117&lt;/span>// 业务接口路由
-&lt;span class="ln">118&lt;/span>app.get(&amp;#39;/api&amp;#39;, function (req, res) {
-&lt;span class="ln">119&lt;/span> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clientA API Page&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user);
-&lt;span class="ln">120&lt;/span>});
-&lt;span class="ln">121&lt;/span>app.get(&amp;#39;/api/userInfo&amp;#39;, function (req, res) {
-&lt;span class="ln">122&lt;/span> res.json({ retCode: &amp;#39;1&amp;#39;, data: req.session.cas });
-&lt;span class="ln">123&lt;/span>});
-&lt;span class="ln">124&lt;/span>
-&lt;span class="ln">125&lt;/span>// ......
-&lt;span class="ln">126&lt;/span>
-&lt;span class="ln">127&lt;/span>app.listen(1024, () =&amp;gt; {
-&lt;span class="ln">128&lt;/span> console.log(&amp;#39;示例程序正在监听 1024 端口！&amp;#39;)
-&lt;span class="ln">129&lt;/span>});
-&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="登录-cas-client-前台">登录 cas client 前台&lt;/h5>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">cd clienta
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">npm start // or node app.js
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">cd clientb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">4&lt;/span>&lt;span class="cl">npm start // or node app.js
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="clienta-代码">clienta 代码&lt;/h5>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln"> 1&lt;/span>&lt;span class="cl">// app.js
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 2&lt;/span>&lt;span class="cl">const express = require(&amp;#39;express&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 3&lt;/span>&lt;span class="cl">const app = express()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 4&lt;/span>&lt;span class="cl">const session = require(&amp;#39;express-session&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 5&lt;/span>&lt;span class="cl">const cas = require(&amp;#39;connect-cas&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 6&lt;/span>&lt;span class="cl">const URL = require(&amp;#39;url&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 7&lt;/span>&lt;span class="cl">const querystring = require(&amp;#34;querystring&amp;#34;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 8&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 9&lt;/span>&lt;span class="cl">const casServer = &amp;#39;cas.ucloudadmin.com&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 10&lt;/span>&lt;span class="cl">const casClient = &amp;#39;clienta.com&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 11&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 12&lt;/span>&lt;span class="cl">// var _defaults = {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 13&lt;/span>&lt;span class="cl">// protocol: &amp;#39;https&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 14&lt;/span>&lt;span class="cl">// host: undefined,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 15&lt;/span>&lt;span class="cl">// hostname: undefined, // ex. google
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 16&lt;/span>&lt;span class="cl">// port: 443,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 17&lt;/span>&lt;span class="cl">// gateway: false, // set to true only if you wish to do authentication instead of authorization
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 18&lt;/span>&lt;span class="cl">// paths: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 19&lt;/span>&lt;span class="cl">// validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 20&lt;/span>&lt;span class="cl">// serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 21&lt;/span>&lt;span class="cl">// proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 22&lt;/span>&lt;span class="cl">// proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 23&lt;/span>&lt;span class="cl">// login: &amp;#39;/cas/login&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 24&lt;/span>&lt;span class="cl">// logout: &amp;#39;/cas/logout&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 25&lt;/span>&lt;span class="cl">// }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 26&lt;/span>&lt;span class="cl">// }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 27&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 28&lt;/span>&lt;span class="cl">/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 29&lt;/span>&lt;span class="cl">var myOptions = {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 30&lt;/span>&lt;span class="cl"> protocol: &amp;#39;https&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 31&lt;/span>&lt;span class="cl"> host: &amp;#39;cas.ucloudadmin.com&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 32&lt;/span>&lt;span class="cl"> hostname: &amp;#39;ucloud&amp;#39;, // ex. google
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 33&lt;/span>&lt;span class="cl"> port: 443,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 34&lt;/span>&lt;span class="cl"> gateway: false, // set to true only if you wish to do authentication instead of authorization
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 35&lt;/span>&lt;span class="cl"> paths: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 36&lt;/span>&lt;span class="cl"> validate: &amp;#39;/cas/validate&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 37&lt;/span>&lt;span class="cl"> serviceValidate: &amp;#39;/cas/serviceValidate&amp;#39;, // CAS 2.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 38&lt;/span>&lt;span class="cl"> proxyValidate: &amp;#39;/cas/proxyValidate&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 39&lt;/span>&lt;span class="cl"> proxy: &amp;#39;/cas/proxy&amp;#39;, // not implemented
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 40&lt;/span>&lt;span class="cl"> login: &amp;#39;/cas/login&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 41&lt;/span>&lt;span class="cl"> logout: &amp;#39;/cas/logout&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 42&lt;/span>&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 43&lt;/span>&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 44&lt;/span>&lt;span class="cl">cas.configure(myOptions);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 45&lt;/span>&lt;span class="cl">*/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 46&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 47&lt;/span>&lt;span class="cl">// Your CAS server&amp;#39;s hostname
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 48&lt;/span>&lt;span class="cl">cas.configure({
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 49&lt;/span>&lt;span class="cl"> protocol: &amp;#39;https&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 50&lt;/span>&lt;span class="cl"> host: casServer,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 51&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 52&lt;/span>&lt;span class="cl">console.log(cas.configure());
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 53&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 54&lt;/span>&lt;span class="cl">app.use(express.json());
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 55&lt;/span>&lt;span class="cl">app.use(express.urlencoded({ extended: true }))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 56&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 57&lt;/span>&lt;span class="cl">app.use(
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 58&lt;/span>&lt;span class="cl"> session({
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 59&lt;/span>&lt;span class="cl"> secret: &amp;#39;clienta&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 60&lt;/span>&lt;span class="cl"> name: &amp;#39;SESSIONID&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 61&lt;/span>&lt;span class="cl"> resave: true,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 62&lt;/span>&lt;span class="cl"> saveUninitialized: true,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 63&lt;/span>&lt;span class="cl"> cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }, //过期时间 24 小时
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 64&lt;/span>&lt;span class="cl"> }),
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 65&lt;/span>&lt;span class="cl">);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 66&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 67&lt;/span>&lt;span class="cl">// 用户验证
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 68&lt;/span>&lt;span class="cl">app.use(function (req, res, next) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 69&lt;/span>&lt;span class="cl"> console.log(&amp;#39;req.url&amp;#39;, req.url);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 70&lt;/span>&lt;span class="cl"> let path = req.url.split(&amp;#39;?&amp;#39;)[0]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 71&lt;/span>&lt;span class="cl"> // 跳过登录请求
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 72&lt;/span>&lt;span class="cl"> if (path === &amp;#39;/login&amp;#39;) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 73&lt;/span>&lt;span class="cl"> next()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 74&lt;/span>&lt;span class="cl"> } else {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 75&lt;/span>&lt;span class="cl"> if (req.session.cas &amp;amp;&amp;amp; req.session.cas.user) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 76&lt;/span>&lt;span class="cl"> next()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 77&lt;/span>&lt;span class="cl"> } else {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 78&lt;/span>&lt;span class="cl"> return res.send(`&amp;lt;h2&amp;gt;this is clientA&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are not logged in. &amp;lt;a href=https://b9aobj.github.io/login?service=http://${casClient}${req.url}&amp;gt;Log in now.&amp;lt;/a&amp;gt;&amp;lt;p&amp;gt;`);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 79&lt;/span>&lt;span class="cl"> // 自动跳转登录
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 80&lt;/span>&lt;span class="cl"> // return res.redirect(`/login?service=http://${casClient}${req.url}`);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 81&lt;/span>&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 82&lt;/span>&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 83&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 84&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 85&lt;/span>&lt;span class="cl">app.get(&amp;#39;/&amp;#39;, function (req, res) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 86&lt;/span>&lt;span class="cl"> console.log(&amp;#39;get /&amp;#39;, req.url)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 87&lt;/span>&lt;span class="cl"> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clienta&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user + &amp;#39;. &amp;lt;a href=&amp;#34;/logout&amp;#34;&amp;gt;Log Out&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 88&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 89&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 90&lt;/span>&lt;span class="cl">app.get(&amp;#39;/login&amp;#39;, cas.serviceValidate(), cas.authenticate(), function (req, res) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 91&lt;/span>&lt;span class="cl"> console.log(&amp;#39;/login&amp;#39;, req.url)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 92&lt;/span>&lt;span class="cl"> let arg = URL.parse(req.url).query;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 93&lt;/span>&lt;span class="cl"> let params = querystring.parse(arg);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 94&lt;/span>&lt;span class="cl"> // console.log(&amp;#34;params-service &amp;#34; + params.service);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 95&lt;/span>&lt;span class="cl"> // 重定向到初始请求地址
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 96&lt;/span>&lt;span class="cl"> return res.redirect(params.service || &amp;#39;/&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 97&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 98&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln"> 99&lt;/span>&lt;span class="cl">app.get(&amp;#39;/logout&amp;#39;, function (req, res) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">100&lt;/span>&lt;span class="cl"> if (!req.session) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">101&lt;/span>&lt;span class="cl"> return res.redirect(&amp;#39;/&amp;#39;);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">102&lt;/span>&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">103&lt;/span>&lt;span class="cl"> // Forget our own login session
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">104&lt;/span>&lt;span class="cl"> if (req.session.destroy) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">105&lt;/span>&lt;span class="cl"> req.session.destroy();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">106&lt;/span>&lt;span class="cl"> } else {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">107&lt;/span>&lt;span class="cl"> // Cookie-based sessions have no destroy()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">108&lt;/span>&lt;span class="cl"> req.session = null;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">109&lt;/span>&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">110&lt;/span>&lt;span class="cl"> // Send the user to the official campus-wide logout URL
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">111&lt;/span>&lt;span class="cl"> var options = cas.configure();
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">112&lt;/span>&lt;span class="cl"> options.pathname = options.paths.logout;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">113&lt;/span>&lt;span class="cl"> return res.redirect(URL.format(options));
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">114&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">115&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">116&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">117&lt;/span>&lt;span class="cl">// 业务接口路由
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">118&lt;/span>&lt;span class="cl">app.get(&amp;#39;/api&amp;#39;, function (req, res) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">119&lt;/span>&lt;span class="cl"> return res.send(&amp;#39;&amp;lt;h2&amp;gt;this is clientA API Page&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;You are logged in. Your username is &amp;#39; + req.session.cas.user);
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">120&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">121&lt;/span>&lt;span class="cl">app.get(&amp;#39;/api/userInfo&amp;#39;, function (req, res) {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">122&lt;/span>&lt;span class="cl"> res.json({ retCode: &amp;#39;1&amp;#39;, data: req.session.cas });
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">123&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">124&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">125&lt;/span>&lt;span class="cl">// ......
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">126&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">127&lt;/span>&lt;span class="cl">app.listen(1024, () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">128&lt;/span>&lt;span class="cl"> console.log(&amp;#39;示例程序正在监听 1024 端口！&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">129&lt;/span>&lt;span class="cl">});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="登录-cas-client-前台">登录 cas client 前台&lt;/h5>
 &lt;ul>
 &lt;li>
 &lt;p>浏览器打开 clientA clientB&lt;/p>
@@ -588,41 +588,41 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;/tbody>
 &lt;/table></description></item><item><title>中文匹配</title><link>https://b9aobj.github.io/en/post/en/2021/zhongwenzhengze/</link><pubDate>Fri, 30 Apr 2021 14:55:12 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2021/zhongwenzhengze/</guid><description>
 &lt;p>\w匹配的仅仅是中文，数字，字母，对于国人来讲，仅匹配中文时常会用到，见下&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>匹配双字节字符(包括汉字在内)：[^\x00-\xff]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>或许你也需要匹配双字节字符，中文也是双字节的字符&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">匹配双字节字符(包括汉字在内)：[^\x00-\xff]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）
 更多常用正则表达式匹配规则：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>英文字母:[a-zA-Z]
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>数字:[0-9]
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>匹配中文，英文字母和数字及_:&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\u4e00-\u9fa5_a-zA-Z0-9]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时判断输入长度：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>[\u4e00-\u9fa5_a-zA-Z0-9_]{4,10}
-&lt;span class="ln">2&lt;/span>^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>1、一个正则表达式，只含有汉字、数字、字母、下划线不能以下划线开头和结尾：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">英文字母:[a-zA-Z]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">数字:[0-9]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>匹配中文，英文字母和数字及_:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[\u4e00-\u9fa5_a-zA-Z0-9]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>同时判断输入长度：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">[\u4e00-\u9fa5_a-zA-Z0-9_]{4,10}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>1、一个正则表达式，只含有汉字、数字、字母、下划线不能以下划线开头和结尾：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中：&lt;/p>
 &lt;p>^ 与字符串开始的地方匹配&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>(?!_)　　不能以_开头
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>(?!.*?_$)　　不能以_结尾
-&lt;span class="ln">4&lt;/span>
-&lt;span class="ln">5&lt;/span>[a-zA-Z0-9_\u4e00-\u9fa5]+　　至少一个汉字、数字、字母、下划线
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>$　　与字符串结束的地方匹配&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>放在程序里前面加@，否则需要\\进行转义 @&amp;#34;^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$&amp;#34;
-&lt;span class="ln">2&lt;/span>
-&lt;span class="ln">3&lt;/span>（或者：@&amp;#34;^(?!_)\w*(?&amp;lt;!_)$&amp;#34; 或者 @&amp;#34; ^[\u4E00-\u9FA50-9a-zA-Z_]+$ &amp;#34; )
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>2、只含有汉字、数字、字母、下划线，下划线位置不限：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[a-zA-Z0-9_\u4e00-\u9fa5]+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>3、由数字、26个英文字母或者下划线组成的字符串&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^\w+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>4、2~4个汉字&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>@&amp;#34;^[\u4E00-\u9FA5]{2,4}$&amp;#34;;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>5、&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>用：(Abc)+ 来分析： XYZAbcAbcAbcXYZAbcAb&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">(?!_)　　不能以_开头
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">(?!.*?_$)　　不能以_结尾
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">4&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">5&lt;/span>&lt;span class="cl">[a-zA-Z0-9_\u4e00-\u9fa5]+　　至少一个汉字、数字、字母、下划线
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>$　　与字符串结束的地方匹配&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">放在程序里前面加@，否则需要\\进行转义 @&amp;#34;^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">3&lt;/span>&lt;span class="cl">（或者：@&amp;#34;^(?!_)\w*(?&amp;lt;!_)$&amp;#34; 或者 @&amp;#34; ^[\u4E00-\u9FA50-9a-zA-Z_]+$ &amp;#34; )
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>2、只含有汉字、数字、字母、下划线，下划线位置不限：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[a-zA-Z0-9_\u4e00-\u9fa5]+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>3、由数字、26个英文字母或者下划线组成的字符串&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^\w+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>4、2~4个汉字&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">@&amp;#34;^[\u4E00-\u9FA5]{2,4}$&amp;#34;;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>5、&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>用：(Abc)+ 来分析： XYZAbcAbcAbcXYZAbcAb&lt;/p>
 &lt;p>作者：每一天为明天168&lt;br>
 链接：https://www.jianshu.com/p/8695c2ba8ace&lt;br>
 来源：简书&lt;br>
@@ -636,9 +636,9 @@ ST是CAS用户签发的访问某一service的票据。用户访问service时，s
 &lt;li>然后运行&lt;code>make&lt;/code>。如果你想打包live555库，可以运行&lt;code>make install&lt;/code>。解决端口占用，最好运行这个命令&lt;code>make CPPFLAGS=-DALLOW_RTSP_SERVER_PORT_REUSE=1 install&lt;/code>&lt;/li>
 &lt;/ol>
 &lt;p>编译完成之后就会生成mediaServer文件夹，会有一个live555MediaServer可执行文件。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>cd mediaServer
-&lt;span class="ln">2&lt;/span>./live555MediaServer
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="ln">1&lt;/span>&lt;span class="cl">cd mediaServer
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="ln">2&lt;/span>&lt;span class="cl">./live555MediaServer
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就启动了一个 rtsp server，根据提示当前只支持部分视频格式，并不支持.mp4后缀的文件。&lt;/p>
 &lt;p>可以看到支持格式有：h264、h265、.aac、.ac3、.amr、.dv、.m4e、.mkv、.mp3、.mpg、.ogg、.ts、.vod、.wav、.webm&lt;/p>
 &lt;p>推流步骤：&lt;br>
 将NARUTO.mkv文件复制到和上面live555MediaServer可执行文件的同一个目录，
@@ -758,7 +758,7 @@ Interface Builder 设计画布已经彻底再造工程，让你更快地工作�
 删除分支：&lt;code>git branch -d &amp;lt;name&amp;gt;&lt;/code>&lt;/p>
 &lt;h5 id="21解决冲突">21、&lt;strong>解决冲突&lt;/strong>&lt;/h5>
 &lt;p>&lt;code>git status&lt;/code>可以告诉我们冲突的文件&lt;br>
-Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;*，*=======*，*&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;*标记出不同分支的内容&lt;br>
+Git用*&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&lt;em>，&lt;/em>=======&lt;em>，&lt;/em>&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;*标记出不同分支的内容&lt;br>
 先手动修改冲突，再提交合并。&lt;/p>
 &lt;p>用带参数的&lt;strong>git log&lt;/strong>看到分支的合并情况&lt;br>
 &lt;code>git log --graph --pretty=oneline --abbrev-commit&lt;/code>&lt;/p>
@@ -1009,7 +1009,7 @@ rake install['slimpress']&lt;/p>
 &lt;p>###修改&lt;code>_config.yml&lt;/code>
 *日期格式： &lt;code>date-formate: %Y年-%m月-%d日&lt;/code>&lt;br>
 *分类前缀显示为中文：&lt;code>category_title_prefix: &amp;quot;分类&amp;quot;&lt;/code>
-*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de-xie-keng/</guid><description>
+*继续阅读/阅读全文：&lt;code>excerpt_link: &amp;quot;阅读全文 &amp;amp;arr;&amp;quot;&lt;/code>&lt;/p></description></item><item><title>使用MWPhotoBrowser时出现的一些坑</title><link>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de--xie-keng/</link><pubDate>Tue, 17 Mar 2015 09:40:11 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-03-17-shi-yong-mwphotobrowsershi-chu-xian-de--xie-keng/</guid><description>
 &lt;p>在使用MWPhotoBrowser时，公司项目需求要将这类型的图片浏览由横向拖动改为竖向拖动，我了个去，被玩坏了。。。。&lt;/p>
 &lt;p>先说些错误吧，其实都是自己的问题，在没有搞清楚该项目架构的时候就在那里胡乱修改，导致后面直接重置后再修改，那工作量，不说了，都是自己惹的&lt;/p>
 &lt;p>###改动1
@@ -1094,7 +1094,7 @@ int const *a const;
 &lt;ol start="6">
 &lt;li>关注更多信息&lt;/li>
 &lt;/ol>
-&lt;p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he-xie-she-zhi-wen-ti/</guid><description>
+&lt;p>多参加各种技术沙龙，与其他人多交流交流经验，因为这会让我自己会去学习哪方面的知识，因为不懂交流不了啊，哈哈。然后多去走走那些博览会，活动场之类的，多看看时间的乐趣与趣味以及发展。&lt;/p></description></item><item><title>解决Octopress访问慢和一些设置问题</title><link>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he--xie-she-zhi-wen-ti/</link><pubDate>Sun, 04 Jan 2015 13:55:57 +0800</pubDate><guid>https://b9aobj.github.io/en/post/en/2015/2015-01-04-jie-jue-octopressfang-wen-man-he--xie-she-zhi-wen-ti/</guid><description>
 &lt;p>When我刚搭建好Octopress的时候，O(∩_∩)O~心情挺好的，感觉棒棒哒。&lt;/p>
 &lt;p>And我点击Command+R刷新页面的时候，尼玛我脸都绿了。。。。由于GFW的原因，造成页面load很慢,从Console窗口可以看出主要就是Google的各种服务被墙了。。。&lt;p>&lt;/p>
 &lt;p>&lt;b1>What the hell!&lt;/b1>&lt;/p>
